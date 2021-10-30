@@ -43,7 +43,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scheduler.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -84,7 +84,7 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
         <Label alignment="CENTER" layoutX="37.0" layoutY="30.0" style="&#10;" text="Login" textAlignment="CENTER" wrapText="false">
           <font>
@@ -102,9 +102,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextField layoutX="109.0" layoutY="133.0" promptText="username" />
-            <TextField layoutX="109.0" layoutY="160.0" promptText="password" />
-            <Button layoutX="197.0" layoutY="196.0" mnemonicParsing="false" text="Login">
+            <TextField fx:id="usernameTextField" layoutX="109.0" layoutY="133.0" prefWidth="163.0" promptText="username" />
+            <TextField fx:id="passwordTextField" layoutX="109.0" layoutY="160.0" prefHeight="23.0" prefWidth="163.0" promptText="password" />
+            <Button fx:id="loginButton" layoutX="109.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#loginButtonListener" prefHeight="31.0" prefWidth="74.0" text="Login">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitButton" layoutX="196.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#exitButtonListener" prefHeight="31.0" prefWidth="74.0" text="Exit">
                <font>
                   <Font size="18.0" />
                </font>
