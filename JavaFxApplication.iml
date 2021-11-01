@@ -9,10 +9,10 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" name="JavaFX" level="project" />
-    <orderEntry type="library" exported="" name="javafx" level="project" />
     <orderEntry type="library" name="javafx" level="project" />
     <orderEntry type="library" name="javafx" level="project" />
     <orderEntry type="library" name="javafx" level="project" />
     <orderEntry type="library" name="mysql-connector-java-8.0.27" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
   </component>
 </module>
