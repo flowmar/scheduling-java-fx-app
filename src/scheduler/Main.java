@@ -10,12 +10,9 @@ import tools.DBQuery;
 import tools.JDBC;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.Scanner;
 
 public class Main extends Application
 {
@@ -29,7 +26,7 @@ public class Main extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource( "../view/login.fxml" ));
         primaryStage.setTitle("Welcome");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
@@ -51,68 +48,52 @@ public static void main(String[] args) throws SQLException
         // Assign the connection to a variable
         Connection connection = JDBC.getConnection();
         
-        // Create the Statement object
-        DBQuery.setStatement(connection);
+//        String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Updated_By)" +
+//                                     "VALUES (?, ?, ?, ?)";
+    
+        String updateStatement = "UPDATE countries SET Country = ?, Created_By = ?, WHERE Country = ?";
         
-        // Get the Statement Reference
-        Statement statement = DBQuery.getStatement();
+        // Create PreparedStatement Object
+        DBQuery.setPreparedStatement(connection, updateStatement);
+    
+        PreparedStatement ps = DBQuery.getPreparedStatement();
         
-        
-        String selectStatement = "SELECT * FROM countries"; // SELECT statement
-        
-        statement.execute(selectStatement); // Execute statement
-        
-        ResultSet rs = statement.getResultSet();
-        
-        // Forward Scroll ResultSet
-        while (rs.next())
-        {
-            int       countryId   = rs.getInt("Country_ID");
-            String    countryName = rs.getString("Country");
-            LocalDate createDate  = rs.getDate("Create_Date").toLocalDate();
-            LocalTime time        = rs.getTime("Create_Date").toLocalTime();
-            String createdBy = rs.getString("Created_By");
-            LocalDateTime lastUpdate = rs.getTimestamp("Last_Update").toLocalDateTime();
-            
-            // Display
-            System.out.println( countryId + " | " + countryName + " | " + createDate + " |" + time + " |" + createdBy + " |" + lastUpdate);
-        }
-        
-        
-        // SQL Insert Statement
-//        String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Update," +
-//                                     "Last_Updated_By) " +
-//                                     "VALUES " +
-//                                     "('US'," +
-//                                     "'2021-11-1 00:00:00', 'admin', NOW(),'admin');"; // Insert Statement
-        
-        // Variable Insert
-//        String countryName = "Canada";
-//        String createDate = "2020-11-2 00:00:00";
+        String countryName, newCountry, createdBy;
+//        String countryName;
+//        String createDate = "2021-11-02 00:00:00";
 //        String createdBy = "admin";
-//        String lastUpdate = "admin";
-//
-//        String insertStatement = "INSERT INTO countries(Country, Create_Date, Created_By, Last_Update, " +
-//                                     "Last_Updated_By) VALUES(" +
-//                                     "'" + countryName + "'," +
-//                                     "'" + createDate + "'," +
-//                                     "'" + createdBy + "'," +
-//                                     "'" + lastUpdate + "')";
-//        // Execute Statement
-//        statement.execute(insertStatement);
+//        String lastUpdateBy = "admin";
         
-        // Rows affected Confirmation
-        if ( statement != null )
-        {
-            if(statement.getUpdateCount() > 0)
-            {
-                System.out.println(statement.getUpdateCount() + " row(s) affected.");
-            }
-            else
-            {
-                System.out.println("No changes occurred.");
-            }
-        }
+        // Get user input
+        Scanner keyboard = new Scanner(System.in);
+        
+        System.out.print("Enter new country: ");
+        newCountry = keyboard.nextLine();
+    
+        System.out.print("Enter user: " );
+        createdBy = keyboard.nextLine();
+    
+        System.out.print("Enter old country: " );
+        countryName = keyboard.nextLine();
+        
+        // Key-value mapping
+//        ps.setString(1, countryName);
+//        ps.setString(2, createDate);
+//        ps.setString(3, createdBy);
+//        ps.setString(4, lastUpdateBy);
+        
+        ps.setString(1, countryName);
+        ps.setString(2, createdBy);
+        ps.setString(3, newCountry);
+       
+    
+        ps.execute(); // Execute the PreparedStatement
+        
+        // Confirming rows affected
+        if(ps.getUpdateCount() > 0)
+            System.out.println(ps.getUpdateCount() + " row(s) affected.");
+        else
+            System.out.println("No rows changed.");
         
         launch(args);
     

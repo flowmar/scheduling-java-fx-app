@@ -1,6 +1,6 @@
-package scheduler;
+package controller;
 
-import Models.Countries;
+import models.Countries;
 import databaseAccess.DBCountries;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
