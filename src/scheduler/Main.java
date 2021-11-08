@@ -12,7 +12,7 @@ import tools.JDBC;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.Locale;
 
 public class Main extends Application
 {
@@ -26,10 +26,24 @@ public class Main extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource( "../view/login.fxml" ));
-        primaryStage.setTitle("Welcome");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+        Locale locale = Locale.getDefault();
+        
+        if (locale.toString().equals("en_US"))
+        {
+            Parent root = FXMLLoader.load( getClass( ).getResource( "../view/login.fxml" ) );
+            primaryStage.setTitle( "Welcome" );
+            primaryStage.setScene( new Scene( root, 640, 378 ) );
+            primaryStage.show( );
+        }
+        else if (locale.toString().equals( "fr_US" ))
+        {
+            Parent root = FXMLLoader.load(getClass().getResource( "../view/login.fxml" ));
+            primaryStage.setTitle("Bienvenue");
+            Scene scene = new Scene(root, 640, 380);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
+        
     }
 
 /**
@@ -65,16 +79,16 @@ public static void main(String[] args) throws SQLException
 //        String lastUpdateBy = "admin";
         
         // Get user input
-        Scanner keyboard = new Scanner(System.in);
-        
-        System.out.print("Enter new country: ");
-        newCountry = keyboard.nextLine();
-    
-        System.out.print("Enter user: " );
-        createdBy = keyboard.nextLine();
-    
-        System.out.print("Enter old country: " );
-        countryName = keyboard.nextLine();
+//        Scanner keyboard = new Scanner(System.in);
+//
+//        System.out.print("Enter new country: ");
+//        newCountry = keyboard.nextLine();
+//
+//        System.out.print("Enter user: " );
+//        createdBy = keyboard.nextLine();
+//
+//        System.out.print("Enter old country: " );
+//        countryName = keyboard.nextLine();
         
         // Key-value mapping
 //        ps.setString(1, countryName);
@@ -82,12 +96,12 @@ public static void main(String[] args) throws SQLException
 //        ps.setString(3, createdBy);
 //        ps.setString(4, lastUpdateBy);
         
-        ps.setString(1, countryName);
-        ps.setString(2, createdBy);
-        ps.setString(3, newCountry);
+//        ps.setString(1, countryName);
+//        ps.setString(2, createdBy);
+//        ps.setString(3, newCountry);
        
     
-        ps.execute(); // Execute the PreparedStatement
+//        ps.execute(); // Execute the PreparedStatement
         
         // Confirming rows affected
         if(ps.getUpdateCount() > 0)
