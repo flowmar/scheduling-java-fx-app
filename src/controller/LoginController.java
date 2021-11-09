@@ -5,11 +5,15 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import models.Countries;
 import tools.JDBC;
 
@@ -148,26 +152,83 @@ public void loginButtonListener(ActionEvent actionEvent)
   String usernameText = usernameTextField.getText();
   String passwordText = passwordTextField.getText();
   
-  // Check if username is correct.
-  if (usernameText.equals("Bob2"))
-  {
-    System.out.println( "Username correct!" );
-  } else {
-    System.out.println( "Username incorrect!");
-  }
+//  // Check if username is correct.
+//  if (usernameText.equals("Bob2"))
+//  {
+//    System.out.println( "Username correct!" );
+//  } else {
+//    System.out.println( "Username incorrect!");
+//  }
+//
+//  // Check if password is correct.
+//  if(passwordText.equals("opensesaME"))
+//  {
+//    loginErrorLabel.setText("Welcome! Logging in...");
+//    loginErrorLabel.setTextFill(Color.GREEN);
+//    System.out.println("Password correct!");
+//    System.out.println("Logging in...");
+//  }  else {
+//    loginErrorLabel.setText("Invalid credentials");
+//    loginErrorLabel.setTextFill(Color.RED);
+//    System.out.println( "Password incorrect!");
+//
+//  }
   
-  // Check if password is correct.
-  if(passwordText.equals("opensesaME"))
+  // Check if username and password combination are correct
+  if(usernameText.equals("Bob2") && passwordText.equals("opensesaME"))
   {
-    loginErrorLabel.setText("Welcome! Logging in...");
-    loginErrorLabel.setTextFill(Color.GREEN);
-    System.out.println("Password correct!");
-    System.out.println("Logging in...");
-  }  else {
-    loginErrorLabel.setText("Invalid credentials");
-    loginErrorLabel.setTextFill(Color.RED);
-    System.out.println( "Password incorrect!");
     
+    
+    // Delay to simulate 'logging in' action
+    try
+    {
+      // Display confirmation
+      loginErrorLabel.setText("Welcome! Logging in..." );
+      loginErrorLabel.setTextFill(Color.GREEN);
+      Thread.sleep(2000);
+    }
+    catch (InterruptedException e)
+    {
+      e.printStackTrace();
+      e.getMessage();
+    }
+    
+    // Close out Login window and display Customer Records
+    Parent secondRoot = null;
+    try {
+      secondRoot = FXMLLoader.load(getClass().getResource("../view/viewCustomerRecords.fxml"));
+    }
+    catch ( IOException e ) {
+      e.printStackTrace( );
+    }
+    
+    // New Scene
+    Scene secondScene = new Scene(secondRoot, 1200, 400);
+    
+    // New Stage
+    Stage secondStage = new Stage();
+    secondStage.setTitle("Customer Records");
+    secondStage.setScene(secondScene);
+    
+    // Close the 'Login' window
+    Stage stage = (Stage) loginButton.getScene().getWindow();
+    stage.close();
+    
+    // Open the new window
+    secondStage.show();
+    
+  }
+  else
+  {
+    loginErrorLabel.setText("Invalid Credentials.");
+    loginErrorLabel.setTextFill(Color.RED);
+    try {
+      Thread.sleep(1000);
+    }
+    catch ( InterruptedException e ) {
+      e.printStackTrace( );
+    }
+    loginErrorLabel.setText("");
   }
 }
 
