@@ -15,12 +15,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Countries;
+import tools.DBQuery;
 import tools.JDBC;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -158,40 +163,17 @@ public void displayCountries(ActionEvent actionEvent)
  * Records Menu in a new window and closes out the Login window if correct. Displays an error message if incorrect.
  * @param actionEvent A user click on the button
  */
-public void loginButtonListener(ActionEvent actionEvent)
-{
+public void loginButtonListener(ActionEvent actionEvent) throws SQLException {
   // Get the text from the Username and Password TextFields
   System.out.println("Login Clicked!");
   String usernameText = usernameTextField.getText();
   String passwordText = passwordTextField.getText();
   
-//  // Check if username is correct.
-//  if (usernameText.equals("Bob2"))
-//  {
-//    System.out.println( "Username correct!" );
-//  } else {
-//    System.out.println( "Username incorrect!");
-//  }
-//
-//  // Check if password is correct.
-//  if(passwordText.equals("opensesaME"))
-//  {
-//    loginErrorLabel.setText("Welcome! Logging in...");
-//    loginErrorLabel.setTextFill(Color.GREEN);
-//    System.out.println("Password correct!");
-//    System.out.println("Logging in...");
-//  }  else {
-//    loginErrorLabel.setText("Invalid credentials");
-//    loginErrorLabel.setTextFill(Color.RED);
-//    System.out.println( "Password incorrect!");
-//
-//  }
+  boolean checkPassed = checkCredentials(usernameText, passwordText);
   
   // Check if username and password combination are correct
-  if(usernameText.equals("Bob2") && passwordText.equals("opensesaME"))
+  if(checkPassed)
   {
-    
-    
     // Delay to simulate 'logging in' action
     try
     {
@@ -205,7 +187,7 @@ public void loginButtonListener(ActionEvent actionEvent)
       e.printStackTrace();
       e.getMessage();
     }
-    
+
     // Close out Login window and display Customer Records
     Parent secondRoot = null;
     try {
@@ -214,46 +196,88 @@ public void loginButtonListener(ActionEvent actionEvent)
     catch ( IOException e ) {
       e.printStackTrace( );
     }
-    
+
     // New Scene
     Scene secondScene = new Scene(secondRoot, 1200, 400);
-    
+
     // New Stage
     Stage secondStage = new Stage();
     secondStage.setTitle("Customer Records");
     secondStage.setScene(secondScene);
-    
+
     // Close the 'Login' window
     Stage stage = (Stage) loginButton.getScene().getWindow();
     stage.close();
-    
+
     // Open the new window
     secondStage.show();
-    
   }
   else
   {
-    // Display error message if credentials are incorrect
+//     Display error message if credentials are incorrect
     loginErrorLabel.setText("Invalid Credentials.");
     loginErrorLabel.setTextFill(Color.RED);
-//    try {
-//      Thread.sleep(1000);
-//    }
-//    catch ( InterruptedException e ) {
-//      e.printStackTrace( );
-//    }
-//    loginErrorLabel.setText("");
   }
+
 }
 
 /**
  * Handles click of 'Exit' button. Closes the database connection and exits the application.
- * @param actionEvent A user click on the button
+ * @param actionEvent A user click on the button.
  */
 public void exitButtonListener(ActionEvent actionEvent)
 {
   JDBC.closeConnection();
   System.out.println("Exit Clicked!");
   Platform.exit();
+}
+
+/**
+ * Checks the user input for username and password against the stored credentials in the database.
+ * @param username The user input from the Username Text Field.
+ * @param password The user input from the Password Text Field.
+ * @return Returns true if it passes the credential comparison.
+ * @throws SQLException Throws a SQLException if the SQL is malformed.
+ */
+public boolean checkCredentials(String username, String password) throws SQLException
+{
+  String  storedPassword = "";
+  boolean passwordMatch  = false;
+  // Retrieve the password for the corresponding user
+  try
+  {
+    Connection connection = JDBC.getConnection();
+    
+    String     sql        = "SELECT * FROM users WHERE User_Name = ?";
+    
+    DBQuery.setPreparedStatement(connection, sql);
+  
+    PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+    
+    preparedStatement.setString(1, username);
+    
+    ResultSet userResultSet = preparedStatement.executeQuery();
+    
+    while ( userResultSet.next( ) )
+    {
+      storedPassword = userResultSet.getString( "Password" );
+      
+      if ( storedPassword.equals( password ) )
+      {
+        passwordMatch = true;
+      }
+      else
+      {
+        passwordMatch = false;
+      }
+    }
+    
+  }
+  catch ( SQLException e )
+  {
+    e.printStackTrace( );
+  }
+  return passwordMatch;
+  
 }
 }
