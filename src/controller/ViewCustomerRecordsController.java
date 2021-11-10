@@ -75,7 +75,12 @@ private Button addButton;
 public void initialize( URL url, ResourceBundle resourceBundle )
 {
   System.out.println( "View Customer Records Initialize" );
-  DBCustomerRecords.getAllCustomerRecords();
+  try {
+    DBCustomerRecords.getAllCustomerRecords();
+  }
+  catch ( SQLException e ) {
+    e.printStackTrace( );
+  }
 }
 
 /**
