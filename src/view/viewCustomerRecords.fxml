@@ -45,7 +45,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewCustomerRecordsController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -86,9 +86,9 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: GREY;" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: navy;" VBox.vgrow="ALWAYS">
       <children>
-            <TableView fx:id="customerRecords" layoutX="14.0" layoutY="77.0" prefHeight="200.0" prefWidth="1159.0">
+            <TableView fx:id="customerRecordsTableView" layoutX="14.0" layoutY="77.0" prefHeight="200.0" prefWidth="1159.0">
               <columns>
                 <TableColumn fx:id="colCustomerID" prefWidth="54.0" text="ID" />
                 <TableColumn fx:id="colCustomerName" prefWidth="166.0" text="Name" />
@@ -99,15 +99,44 @@
                   <TableColumn fx:id="colPhone" prefWidth="207.0" text="Phone" />
               </columns>
             </TableView>
-            <Label layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="204.0" text="Customer Records">
+            <Label fx:id="titleLabel" layoutX="14.0" layoutY="14.0" prefHeight="55.0" prefWidth="204.0" text="Customer Records" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <Button layoutX="1023.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" text="View Appointments" />
-            <Button layoutX="525.0" layoutY="294.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" text="Add New Customer" />
-            <Button layoutX="704.0" layoutY="294.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" text="Update Customer" />
-            <Button alignment="CENTER" layoutX="880.0" layoutY="294.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: firebrick; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Delete Customer" textAlignment="CENTER">
+            <Button fx:id="exitButton" alignment="CENTER" layoutX="1015.0" layoutY="304.0" mnemonicParsing="false" onAction="#exitButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: firebrick; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Exit" textAlignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="deleteButton" alignment="CENTER" layoutX="1015.0" layoutY="25.0" mnemonicParsing="false" onAction="#deleteButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: crimson; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Delete" textAlignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="viewAppointmentsButton" alignment="CENTER" layoutX="14.0" layoutY="304.0" mnemonicParsing="false" onAction="#viewAppointmentsButtonListener" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: deepskyblue; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="View Appointments" textAlignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="updateButton" alignment="CENTER" layoutX="859.0" layoutY="25.0" mnemonicParsing="false" onAction="#updateButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: goldenrod; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Update" textAlignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="addButton" alignment="CENTER" layoutX="703.0" layoutY="25.0" mnemonicParsing="false" onAction="#addButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: seagreen; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Add" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>

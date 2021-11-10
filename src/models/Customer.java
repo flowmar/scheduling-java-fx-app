@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  *
  */
-public class Customers {
+public class Customer {
 
 /**
  *
@@ -34,9 +34,9 @@ private int divisionId;
  * @param lastUpdatedBy
  * @param divisionId
  */
-public Customers(int customerId, String customerName, String address, String postalCode, String phoneNumber,
-                       LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy,
-                       int divisionId)
+public Customer( int customerId, String customerName, String address, String postalCode, String phoneNumber,
+                 LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy,
+                 int divisionId)
 {
   this.customerId = customerId;
   this.customerName = customerName;

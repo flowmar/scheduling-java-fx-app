@@ -26,6 +26,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
 /**
  * Fields
  */
@@ -60,6 +61,15 @@ private Label passwordLabel;
 @FXML
 private Label loginTitleLabel;
 
+/**
+ * Methods
+ */
+
+/**
+ * Initializes the Login Form.
+ * @param url
+ * @param resourceBundle
+ */
 @Override
 public void initialize(URL url, ResourceBundle resourceBundle) {
   findUserLocation();
@@ -67,8 +77,10 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
   translateLabels();
 }
 
+
+
 /**
- *
+ * Obtains the user's system locale and displays it on the Login form.
  */
 public void findUserLocation()
 {
@@ -84,7 +96,7 @@ public void findUserLocation()
 }
 
 /**
- *
+ * Translates the Login Form if the user's set language is French.
  */
 public void translateLabels()
 {
@@ -142,8 +154,9 @@ public void displayCountries(ActionEvent actionEvent)
 }
 
 /**
- * Handles click of 'Login' Button
- * @param actionEvent
+ * Handles click of 'Login' Button. Checks to see if the username and password are correct. Opens the Customer
+ * Records Menu in a new window and closes out the Login window if correct. Displays an error message if incorrect.
+ * @param actionEvent A user click on the button
  */
 public void loginButtonListener(ActionEvent actionEvent)
 {
@@ -220,21 +233,22 @@ public void loginButtonListener(ActionEvent actionEvent)
   }
   else
   {
+    // Display error message if credentials are incorrect
     loginErrorLabel.setText("Invalid Credentials.");
     loginErrorLabel.setTextFill(Color.RED);
-    try {
-      Thread.sleep(1000);
-    }
-    catch ( InterruptedException e ) {
-      e.printStackTrace( );
-    }
-    loginErrorLabel.setText("");
+//    try {
+//      Thread.sleep(1000);
+//    }
+//    catch ( InterruptedException e ) {
+//      e.printStackTrace( );
+//    }
+//    loginErrorLabel.setText("");
   }
 }
 
 /**
- * Handles click of 'Exit' button
- * @param actionEvent
+ * Handles click of 'Exit' button. Closes the database connection and exits the application.
+ * @param actionEvent A user click on the button
  */
 public void exitButtonListener(ActionEvent actionEvent)
 {
