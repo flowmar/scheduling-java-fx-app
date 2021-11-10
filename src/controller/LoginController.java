@@ -243,21 +243,20 @@ public boolean checkCredentials(String username, String password) throws SQLExce
 {
   String  storedPassword = "";
   boolean passwordMatch  = false;
-  // Retrieve the password for the corresponding user
+  
   try
   {
+    // Check the database for the username from user input
     Connection connection = JDBC.getConnection();
-    
     String     sql        = "SELECT * FROM users WHERE User_Name = ?";
     
+    // Create an injection-resistant PreparedStatement
     DBQuery.setPreparedStatement(connection, sql);
-  
     PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
-    
     preparedStatement.setString(1, username);
     
+    // Check the user input against the database
     ResultSet userResultSet = preparedStatement.executeQuery();
-    
     while ( userResultSet.next( ) )
     {
       storedPassword = userResultSet.getString( "Password" );
@@ -278,6 +277,5 @@ public boolean checkCredentials(String username, String password) throws SQLExce
     e.printStackTrace( );
   }
   return passwordMatch;
-  
 }
 }
