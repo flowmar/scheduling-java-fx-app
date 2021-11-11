@@ -2,6 +2,8 @@ package controller;
 
 import databaseAccess.DBCustomerRecords;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import models.Customer;
 import tools.JDBC;
 
 import java.io.IOException;
@@ -26,7 +30,7 @@ public class ViewCustomerRecordsController implements Initializable {
  */
 
 @FXML
-private TableView customerRecordsTableView;
+private TableView<Customer> customerRecordsTableView;
 
 @FXML
 private TableColumn colCustomerID;
@@ -64,7 +68,7 @@ private Button updateButton;
 @FXML
 private Button addButton;
 
-
+public static ObservableList<Customer> customerRecords;
 /**
  * Methods
  */
@@ -80,12 +84,69 @@ private Button addButton;
 public void initialize( URL url, ResourceBundle resourceBundle )
 {
   System.out.println( "View Customer Records Initialize" );
-  try {
-    DBCustomerRecords.getAllCustomerRecords();
+  
+  // Obtain all customer records from the database
+  try
+  {
+    customerRecords = FXCollections.observableArrayList( DBCustomerRecords.getAllCustomerRecords());
   }
-  catch ( SQLException e ) {
-    e.printStackTrace( );
+  catch (SQLException err)
+  {
+    err.printStackTrace();
   }
+  
+  // Create the columns for the TableView
+  TableColumn<Customer, Integer> colCustomerID = new TableColumn<>("ID");
+  TableColumn<Customer, String> colCustomerName = new TableColumn<>("Name");
+  TableColumn<Customer, String> colAddress = new TableColumn<>("Address");
+  TableColumn<Customer, String> colPostalCode = new TableColumn<>("Postal Code");
+  TableColumn<Customer, String> colDivision = new TableColumn<>("Division");
+  TableColumn<Customer, String> colCountry = new TableColumn<>("Country");
+  TableColumn<Customer, String> colPhone = new TableColumn<>("Phone");
+  
+  // Set the cell values for each column
+  colCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+  colCustomerName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+  colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+  colPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+  colDivision.setCellValueFactory(new PropertyValueFactory<>("division"));
+  colCountry.setCellValueFactory(new PropertyValueFactory<>("country"));
+  colPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+  
+  //
+  customerRecordsTableView.setItems(customerRecords);
+  // Add the columns to the TableView
+  customerRecordsTableView.getColumns().setAll(colCustomerID, colCustomerName, colAddress, colPostalCode, colDivision
+      , colCountry, colPhone);
+  
+  // Loop through the customerRecords ObservableList and add each Customer to the TableView
+//  for (Customer customer: customerRecords)
+//  {
+//    customerRecordsTableView.getItems().add(new Customer(customer.getCustomerId(), customer.getCustomerName(),
+//        customer.getAddress(), customer.getPostalCode(), customer.getDivision(), customer.getCountry(), customer.getPhoneNumber()));
+//  }
+  
+//  try
+//  {
+//    for (Customer customer : customerRecords)
+//    {
+//      ObservableList<String> row = FXCollections.observableArrayList();
+//      for(int i = 0; i < customerRecords.size(); i++)
+//      {
+//        System.out.println(customerRecords.get(i).getCustomerId());
+//        System.out.println(customerRecords.get(i).getCustomerName());
+//        row.add(String.valueOf( customerRecords.get(i).getCustomerId()));
+//        row.add(customerRecords.get(i).getCustomerName());
+//      }
+//      data.add(row);
+//    }
+//    customerRecordsTableView.setItems(data);
+//  }
+//  catch (Exception err)
+//  {
+//    err.printStackTrace();
+//  }
+  
 }
 
 /**

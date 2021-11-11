@@ -1,19 +1,29 @@
 package databaseAccess;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import models.Customer;
 import tools.JDBC;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBCustomerRecords
 {
 
 /**
  * Retrieves all customer records from the customer table.
+ * @return Returns an ArrayList containing all the customers from the database.
+ * @throws SQLException Throws a SQLException if the SQL is malformed.
  */
-  public static void getAllCustomerRecords() throws SQLException
+  public static List<Customer> getAllCustomerRecords() throws SQLException
   {
+    List<Customer> customers = new ArrayList<>();
     // Retrieve all stored customers from the database
     try
     {
@@ -26,26 +36,59 @@ public class DBCustomerRecords
       
       while (customersResultSet.next())
       {
+        // Get the information from the database
         int customerId = customersResultSet.getInt("Customer_ID");
         String customerName = customersResultSet.getString("Customer_Name");
         String customerAddress = customersResultSet.getString("Address");
         String customerPostalCode = customersResultSet.getString("Postal_Code");
         String customerPhoneNumber = customersResultSet.getString("Phone");
         int customerDivisionId = customersResultSet.getInt("Division_ID");
+        String createDate = customersResultSet.getString("Create_Date");
+        String createdBy = customersResultSet.getString("Created_By");
+        String lastUpdate = customersResultSet.getString("Last_Update");
+        String lastUpdatedBy = customersResultSet.getString("Last_Updated_By");
         
+        // Convert all to Properties to display in the TableView
+        IntegerProperty customerIdProperty = new SimpleIntegerProperty(customerId);
+        StringProperty customerNameProperty = new SimpleStringProperty(customerName);
+        StringProperty  customerAddressProperty = new SimpleStringProperty(customerAddress);
+        StringProperty customerPostalCodeProperty = new SimpleStringProperty(customerPostalCode);
+        StringProperty customerPhoneNumberProperty = new SimpleStringProperty(customerPhoneNumber);
+        IntegerProperty customerDivisionIdProperty = new SimpleIntegerProperty(customerDivisionId);
+        StringProperty createDateProperty = new SimpleStringProperty(createDate);
+        StringProperty createdByProperty = new SimpleStringProperty(createdBy);
+        StringProperty lastUpdateProperty = new SimpleStringProperty(lastUpdate);
+        StringProperty lastUpdatedByProperty = new SimpleStringProperty(lastUpdatedBy);
         
         // Use the Division ID to look up the name of the Division
         String customerDivisionName = lookUpDivisionName(customerDivisionId);
+        
+        StringProperty customerDivisionNameProperty = new SimpleStringProperty(customerDivisionName);
   
         // Use the Division name to look up the Country ID
         int customerCountryId = lookUpCountryId(customerDivisionId);
+        
+        IntegerProperty customerCountryIdProperty = new SimpleIntegerProperty(customerCountryId);
   
         // Use the Country ID to look up the Country name
         String customerCountryName = lookUpCountryName(customerCountryId);
+        
+        StringProperty customerCountryNameProperty = new SimpleStringProperty(customerCountryName);
   
         System.out.println("Customer Information: " + customerId + " " + customerName + " " + customerAddress + " "
                                + customerPostalCode + " " + customerPhoneNumber + " " + customerDivisionId + " " + customerDivisionName + " " + customerCountryId + " " + customerCountryName);
         
+        
+        // Create a new Customer using the data obtained from the database
+        Customer currentCustomer = new Customer(customerIdProperty, customerNameProperty, customerAddressProperty,
+            customerPostalCodeProperty,
+            customerPhoneNumberProperty, createDateProperty, createdByProperty, lastUpdateProperty,
+            lastUpdatedByProperty,
+            customerDivisionIdProperty,
+            customerDivisionNameProperty, customerCountryIdProperty, customerCountryNameProperty);
+        
+        // Add the customer to the customers ArrayList
+        customers.add(currentCustomer);
       }
     }
     catch (SQLException e)
@@ -53,7 +96,7 @@ public class DBCustomerRecords
       e.printStackTrace();
     }
     
-    
+    return customers;
   }
 
 /**
