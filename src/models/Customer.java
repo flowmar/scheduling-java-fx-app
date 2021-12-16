@@ -15,16 +15,16 @@ public class Customer {
  */
 private IntegerProperty customerId;
 private StringProperty  customerName;
-private StringProperty          address;
+private StringProperty  address;
 private StringProperty postalCode;
 private StringProperty phoneNumber;
 private StringProperty createDate;
 private StringProperty createdBy;
 private StringProperty lastUpdate;
 private StringProperty lastUpdatedBy;
-private IntegerProperty    divisionId;
+private IntegerProperty divisionId;
 private StringProperty division;
-private IntegerProperty    countryId;
+private IntegerProperty countryId;
 private StringProperty country;
 
 /**
@@ -117,23 +117,33 @@ public StringProperty addressProperty()
 /**
  * @return
  */
-public StringProperty getPostalCode( ) {
+public String getPostalCode( ) {
+  return postalCodeProperty().get();
+}
+
+public StringProperty postalCodeProperty()
+{
+  if (postalCode == null) postalCode = new SimpleStringProperty(this, "postalCode");
   return postalCode;
 }
 
 /**
  * @return
  */
-public StringProperty getPhoneNumber( ) {
+public String getPhoneNumber( ) {
+  return phoneNumberProperty().get();
+}
+
+public StringProperty phoneNumberProperty()
+{
+  if (phoneNumber == null) phoneNumber = new SimpleStringProperty( this, "phoneNumber" );
   return phoneNumber;
 }
 
 /**
  * @return
  */
-public StringProperty getCreateDate( ) {
-  return createDate;
-}
+public StringProperty getCreateDate( ) {return createDate;}
 
 /**
  * @return
@@ -167,7 +177,13 @@ public IntegerProperty getDivisionId( ) {
  *
  * @return
  */
-public StringProperty getDivision( ) { return division; }
+public String getDivision( ) { return divisionProperty().get(); }
+
+public StringProperty divisionProperty()
+{
+  if (division == null) division = new SimpleStringProperty( this, "division" );
+  return division;
+}
 
 /**
  *
@@ -179,6 +195,12 @@ public IntegerProperty getCountryId( ){ return countryId; }
  *
  * @return
  */
-public StringProperty getCountry() { return country; }
+public String getCountry() { return countryProperty().get(); }
+
+public StringProperty countryProperty()
+{
+  if (country == null) country = new SimpleStringProperty( this, "country" );
+  return country;
+}
 
 }

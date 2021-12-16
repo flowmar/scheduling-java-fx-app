@@ -144,7 +144,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="countryComboBox" layoutX="784.0" layoutY="157.0" prefWidth="150.0" />
+            <ComboBox fx:id="countryComboBox" layoutX="784.0" layoutY="157.0" onAction="#countryComboBoxListener" prefWidth="150.0" />
             <ComboBox fx:id="divisionComboBox" layoutX="784.0" layoutY="195.0" prefWidth="150.0" />
             <TextField fx:id="customerIDTextField" disable="true" layoutX="191.0" layoutY="80.0" prefHeight="23.0" prefWidth="210.0" />
             <TextField fx:id="customerNameTextField" layoutX="191.0" layoutY="118.0" prefHeight="23.0" prefWidth="210.0" />

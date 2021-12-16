@@ -1,20 +1,18 @@
 package models;
 
-import java.time.LocalDateTime;
-
 /**
  *
  */
-public class FirstLevelDivisions
+public class Division
 {
 /**
  *
  */
 private int           divisionId;
     private String        division;
-    private LocalDateTime date;
+    private String date;
     private String createdBy;
-    private LocalDateTime lastUpdate;
+    private String lastUpdate;
     private String lastUpdatedBy;
     private int countryId;
 
@@ -28,8 +26,8 @@ private int           divisionId;
  * @param lastUpdatedBy
  * @param countryId
  */
-public FirstLevelDivisions( int divisionId, String division, LocalDateTime date, String createdBy,
-                                LocalDateTime lastUpdate, String lastUpdatedBy, int countryId )
+public Division( int divisionId, String division, String date, String createdBy,
+                 String lastUpdate, String lastUpdatedBy, int countryId )
     {
       this.divisionId = divisionId;
       this.division =division;
@@ -62,7 +60,7 @@ public String getDivision()
  *
  * @return
  */
-public LocalDateTime date()
+public String date()
    {
      return date;
    }
@@ -80,7 +78,7 @@ public String createdBy()
  *
  * @return
  */
-public LocalDateTime lastUpdate()
+public String lastUpdate()
    {
      return lastUpdate;
    }
@@ -103,5 +101,9 @@ public int countryId()
      return countryId;
    }
    
-
+@Override
+public String toString()
+{
+  return (divisionId + " : " + division);
+}
 }

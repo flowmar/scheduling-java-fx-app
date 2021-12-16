@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Locale;
 
+
+
 public class Main extends Application
 {
 
@@ -116,4 +118,6 @@ public static void main(String[] args) throws SQLException
         connection.close();
     
     }
+
+public static int currentId = 3;
 }

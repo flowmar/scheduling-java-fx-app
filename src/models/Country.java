@@ -3,7 +3,7 @@ package models;
 /**
  *
  */
-public class Countries
+public class Country
 {
 /**
  *
@@ -16,7 +16,7 @@ private int id;
   * @param id
  * @param name
  */
-public Countries(int id, String name)
+public Country( int id, String name)
     {
         this.id = id;
         this.name = name;
@@ -38,5 +38,14 @@ public int getId()
 public String getName()
     {
         return name;
+    }
+
+/**
+ *
+ * @return
+ */
+@Override
+    public String toString() {
+        return ("#" + Integer.toString(id) + ": " + name);
     }
 }

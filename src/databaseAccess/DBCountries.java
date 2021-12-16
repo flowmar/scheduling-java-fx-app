@@ -1,6 +1,6 @@
 package databaseAccess;
 
-import models.Countries;
+import models.Country;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tools.JDBC;
@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 
 public class DBCountries
 {
-  public static ObservableList<Countries> getAllCountries()
+  public static ObservableList<Country> getAllCountries()
   {
-    ObservableList<Countries> countryList = FXCollections.observableArrayList();
+    ObservableList<Country> countryList = FXCollections.observableArrayList();
     
     try
     {
@@ -27,8 +27,8 @@ public class DBCountries
       while (rs.next())
       {
         int countryId = rs.getInt("Country_ID");
-        String    countryName = rs.getString("Country");
-        Countries c           = new Countries(countryId, countryName);
+        String  countryName = rs.getString("Country");
+        Country c           = new Country(countryId, countryName);
         countryList.add(c);
       }
     }

@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import models.Countries;
+import models.Country;
 import tools.DBQuery;
 import tools.JDBC;
 
@@ -151,8 +151,8 @@ public void translateLabels()
 public void displayCountries(ActionEvent actionEvent)
 {
   
-  ObservableList<Countries>  countryList = DBCountries.getAllCountries( );
-  for (Countries c : countryList)
+  ObservableList<Country> countryList = DBCountries.getAllCountries( );
+  for ( Country c : countryList)
   {
     System.out.println("Country Id: " + c.getId() + "Name: " + c.getName());
   }

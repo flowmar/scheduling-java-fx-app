@@ -118,35 +118,6 @@ public void initialize( URL url, ResourceBundle resourceBundle )
   // Add the columns to the TableView
   customerRecordsTableView.getColumns().setAll(colCustomerID, colCustomerName, colAddress, colPostalCode, colDivision
       , colCountry, colPhone);
-  
-  // Loop through the customerRecords ObservableList and add each Customer to the TableView
-//  for (Customer customer: customerRecords)
-//  {
-//    customerRecordsTableView.getItems().add(new Customer(customer.getCustomerId(), customer.getCustomerName(),
-//        customer.getAddress(), customer.getPostalCode(), customer.getDivision(), customer.getCountry(), customer.getPhoneNumber()));
-//  }
-  
-//  try
-//  {
-//    for (Customer customer : customerRecords)
-//    {
-//      ObservableList<String> row = FXCollections.observableArrayList();
-//      for(int i = 0; i < customerRecords.size(); i++)
-//      {
-//        System.out.println(customerRecords.get(i).getCustomerId());
-//        System.out.println(customerRecords.get(i).getCustomerName());
-//        row.add(String.valueOf( customerRecords.get(i).getCustomerId()));
-//        row.add(customerRecords.get(i).getCustomerName());
-//      }
-//      data.add(row);
-//    }
-//    customerRecordsTableView.setItems(data);
-//  }
-//  catch (Exception err)
-//  {
-//    err.printStackTrace();
-//  }
-  
 }
 
 /**
@@ -186,13 +157,20 @@ public void addButtonListener(ActionEvent actionEvent) throws IOException
     e.printStackTrace( );
   }
   
-  Scene addCustomerScene = new Scene(addCustomerFXML, 975, 400);
+  try
+  {
+    Scene addCustomerScene = new Scene( addCustomerFXML, 975, 400 );
   
-  Stage addCustomerStage = new Stage();
-  addCustomerStage.setTitle("Add Customer");
-  addCustomerStage.setScene(addCustomerScene);
+    Stage addCustomerStage = new Stage( );
+    addCustomerStage.setTitle( "Add Customer" );
+    addCustomerStage.setScene( addCustomerScene );
   
-  addCustomerStage.show();
+    addCustomerStage.show( );
+  }
+  catch ( Exception e)
+  {
+    e.printStackTrace();
+  }
 }
 
 /**
