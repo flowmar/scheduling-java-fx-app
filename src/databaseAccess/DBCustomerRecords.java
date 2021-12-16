@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import models.Customer;
+import models.Division;
 import tools.JDBC;
 
 import java.sql.PreparedStatement;
@@ -132,6 +133,13 @@ public static String lookUpDivisionName(int divisionId) throws SQLException
     
     return divisionName;
   }
+  
+public static String lookUpDivisionId( Division division)
+{
+    // Remove all characters past the ID number
+    String divisionIdString = division.toString().substring(0,division.toString().indexOf(" ", 0));
+    return divisionIdString;
+}
 
 /**
  * Uses a Division ID to look up the ID number of the Country that it belongs to in the first_level_divisions table.
@@ -198,4 +206,6 @@ public static String lookUpCountryName(int countryId) throws SQLException
     }
     return countryName;
   }
+  
+
 }

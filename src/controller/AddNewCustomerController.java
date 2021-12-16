@@ -1,6 +1,7 @@
 package controller;
 
 import databaseAccess.DBCountries;
+import databaseAccess.DBCustomerRecords;
 import databaseAccess.DBDivisions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,8 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Country;
 import models.Division;
+import tools.DBQuery;
+import tools.JDBC;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -111,11 +116,48 @@ public void cancelButtonListener( ActionEvent actionEvent ) {
 public void saveButtonListener( ActionEvent actionEvent ) throws SQLException {
   System.out.println( "Save Button Clicked!" );
   // Get values within the text fields
-  String customerName = customerNameTextField.getText( );
+  String name = customerNameTextField.getText( );
   String address      = addressTextField.getText( );
   String postalCode   = postalCodeTextField.getText( );
   String phoneNumber  = phoneNumberTextField.getText( );
+  Country country = countryComboBox.getValue( );
+  Division division = divisionComboBox.getValue();
+  String divisionIdString = DBCustomerRecords.lookUpDivisionId(division);
+  System.out.println( division );
+  System.out.println("Division ID String: " +divisionIdString);
   
+  System.out.println(name + " "
+      + address + " "
+      + postalCode + " "
+      + phoneNumber + " "
+      +country + " "
+      + division);
+  
+  // Make the connection
+  JDBC.makeConnection();
+  // Converts the date and time
+  DBCountries.checkDateConversion();
+  
+  // Assign the connection to a variable
+  Connection connection = JDBC.getConnection();
+  
+  String insertStatement =
+      "INSERT INTO client_schedule.customers(Customer_Name, Address, Postal_Code," +
+          "Phone, Division_ID) VALUES (?,?,?,?,?)";
+  
+  DBQuery.setPreparedStatement(connection, insertStatement);
+  
+  PreparedStatement ps = DBQuery.getPreparedStatement();
+  
+  ps.setString(1, name);
+  ps.setString(2, address);
+  ps.setString(3, postalCode);
+  ps.setString(4, phoneNumber);
+  ps.setString(5, divisionIdString);
+  ps.execute();
+  
+  Stage stage = ( Stage ) cancelButton.getScene( ).getWindow( );
+  stage.close( );
 }
 
 /**
@@ -140,7 +182,7 @@ public void populateDivisionComboBox( int val )
 {
   ObservableList<Division> divisionsList = FXCollections.observableArrayList( );
   
-  // Based on val, obtain the required divisions from the  database
+  // Based on val, obtain the required divisions from the database
   switch ( val )
   {
     case 1:

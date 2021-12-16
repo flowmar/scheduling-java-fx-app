@@ -10,8 +10,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+
+/**
+ *
+ */
 public class DBCountries
 {
+
+/**
+ *
+ * @return
+ */
   public static ObservableList<Country> getAllCountries()
   {
     ObservableList<Country> countryList = FXCollections.observableArrayList();

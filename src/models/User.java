@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  *
  */
-public class Users {
+public class User {
 /**
  *
  */
@@ -27,8 +27,8 @@ private String lastUpdatedBy;
  * @param lastUpdate
  * @param lastUpdatedBy
  */
-public Users( int userId, String username, String password, LocalDateTime createDate, String createdBy,
-              LocalDateTime lastUpdate, String lastUpdatedBy ) {
+public User( int userId, String username, String password, LocalDateTime createDate, String createdBy,
+             LocalDateTime lastUpdate, String lastUpdatedBy ) {
   this.userId        = userId;
   this.username      = username;
   this.password      = password;

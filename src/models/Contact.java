@@ -3,7 +3,7 @@ package models;
 /**
  *
  */
-public class Contacts {
+public class Contact {
 /**
  *
  */
@@ -17,7 +17,7 @@ private String emailAddress;
  * @param contactName
  * @param emailAddress
  */
-public Contacts( int contactId, String contactName, String emailAddress ) {
+public Contact( int contactId, String contactName, String emailAddress ) {
   this.contactId    = contactId;
   this.contactName  = contactName;
   this.emailAddress = emailAddress;
