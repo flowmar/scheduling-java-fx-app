@@ -2,6 +2,7 @@ package controller;
 
 import databaseAccess.DBCountries;
 import databaseAccess.DBDivisions;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +20,7 @@ import java.util.ResourceBundle;
 
 import static scheduler.Main.currentId;
 
-public class AddNewCustomerController implements Initializable
-{
+public class AddNewCustomerController implements Initializable {
 
 /**
  * Fields
@@ -59,70 +59,29 @@ private ComboBox<Division> divisionComboBox;
 
 /**
  * Initializes the Add Customer Scene
+ *
  * @param url
  * @param resourceBundle
  */
 @Override
-public void initialize( URL url, ResourceBundle resourceBundle )
-{
-  autoGenerateId();
-  populateCountryComboBox();
-  
+public void initialize( URL url, ResourceBundle resourceBundle ) {
+  autoGenerateId( );
+  populateCountryComboBox( );
   
 }
 
 /**
  * Automatically generate the new user ID number
  */
-public void autoGenerateId()
-{
+public void autoGenerateId( ) {
   currentId += 1;
   customerIDTextField.setText( String.valueOf( currentId ) );
 }
 
 /**
- * Closes out the 'Add Customer' window
- * @param actionEvent User click on the 'Cancel' button
- */
-public void cancelButtonListener( ActionEvent actionEvent)
-{
-  Stage stage = (Stage) cancelButton.getScene().getWindow();
-  stage.close();
-}
-
-/**
- * Saves the information from the Text Fields into the database as a new customer.
- * @param actionEvent User click on the 'Save' button
- * @throws SQLException Throws an exception if SQL is malformed.
- */
-public void saveButtonListener( ActionEvent actionEvent) throws SQLException
-{
-  System.out.println("Save Button Clicked!");
-  // Get values within the text fields
-  String customerName = customerNameTextField.getText();
-  String address = addressTextField.getText();
-  String postalCode = postalCodeTextField.getText();
-  String phoneNumber = phoneNumberTextField.getText();
-  
-}
-
-public void countryComboBoxListener(ActionEvent actionEvent)
-{
-  // Get the selected value in the ComboBox
-  Country countryComboValue = countryComboBox.getValue();
-  // Get Id
-  int countryComboValueInt = countryComboValue.getId();
-  
-  // Populate the divisionComboBox with the corresponding territories
-  populateDivisionComboBox(countryComboValueInt);
-  }
-
-
-/**
  *
  */
-public void populateCountryComboBox()
-{
+public void populateCountryComboBox( ) {
   // Get the list of countries from the database
   ObservableList<Country> countryList = DBCountries.getAllCountries( );
   System.out.println( countryList.toString( ) );
@@ -133,21 +92,81 @@ public void populateCountryComboBox()
   countryComboBox.setPromptText( "Select a Country..." );
 }
 
+/**
+ * Closes out the 'Add Customer' window
+ *
+ * @param actionEvent User click on the 'Cancel' button
+ */
+public void cancelButtonListener( ActionEvent actionEvent ) {
+  Stage stage = ( Stage ) cancelButton.getScene( ).getWindow( );
+  stage.close( );
+}
 
-public void populateDivisionComboBox(int val)
+/**
+ * Saves the information from the Text Fields into the database as a new customer.
+ *
+ * @param actionEvent User click on the 'Save' button
+ * @throws SQLException Throws an exception if SQL is malformed.
+ */
+public void saveButtonListener( ActionEvent actionEvent ) throws SQLException {
+  System.out.println( "Save Button Clicked!" );
+  // Get values within the text fields
+  String customerName = customerNameTextField.getText( );
+  String address      = addressTextField.getText( );
+  String postalCode   = postalCodeTextField.getText( );
+  String phoneNumber  = phoneNumberTextField.getText( );
+  
+}
+
+/**
+ *
+ * @param actionEvent
+ */
+public void countryComboBoxListener( ActionEvent actionEvent ) {
+  // Get the selected value in the ComboBox
+  Country countryComboValue = countryComboBox.getValue( );
+  // Get Id
+  int countryComboValueInt = countryComboValue.getId( );
+  
+  // Populate the divisionComboBox with the corresponding territories
+  populateDivisionComboBox( countryComboValueInt );
+}
+
+/**
+ *
+ * @param val
+ */
+public void populateDivisionComboBox( int val )
 {
+  ObservableList<Division> divisionsList = FXCollections.observableArrayList( );
   
-  // Get the list of States and Provinces
-  ObservableList<Division> divisionsList = DBDivisions.getAllDivisions();
-  System.out.println(divisionsList);
+  // Based on val, obtain the required divisions from the  database
+  switch ( val )
+  {
+    case 1:
+      divisionsList = DBDivisions.getUSADivisions( );
+      System.out.println( divisionsList );
+      break;
+    case 2:
+      divisionsList = DBDivisions.getCanadaDivisions( );
+      System.out.println( divisionsList );
+      
+      break;
+    case 3:
+      divisionsList = DBDivisions.getUKDivisions( );
+      System.out.println( divisionsList );
+      
+      break;
+    default:
+      System.out.println( "(nothing)" );
+      break;
+  }
+  
   // Populate the ComboBox
-  // If the selected country has an id of 1
-  // Add the divisions between 1 and 54
+  System.out.println( divisionsList );
+  divisionComboBox.setItems( divisionsList );
   
-  System.out.println(divisionsList);
-  divisionComboBox.setItems(divisionsList);
-  
-  divisionComboBox.setPromptText( "Select a Division...");
+  divisionComboBox.setPromptText( "Select a Division..." );
   
   
 }
