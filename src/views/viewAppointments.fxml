@@ -135,7 +135,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <RadioButton fx:id="monthViewRadioButton" layoutX="216.0" layoutY="32.0" mnemonicParsing="false" onAction="#monthRadioButtonListener" selected="true" text="Month View" textFill="WHITE">
+            <RadioButton fx:id="monthViewRadioButton" layoutX="216.0" layoutY="32.0" mnemonicParsing="false" onAction="#monthViewRadioButtonListener" selected="true" text="Month View" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
@@ -143,7 +143,7 @@
                   <ToggleGroup fx:id="appointmentViewRadioButtonGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="weekViewRadioButton" layoutX="350.0" layoutY="32.0" mnemonicParsing="false" onAction="#weekRadioButtonListener" text="Week View" textFill="WHITE" toggleGroup="$appointmentViewRadioButtonGroup">
+            <RadioButton fx:id="weekViewRadioButton" layoutX="350.0" layoutY="32.0" mnemonicParsing="false" onAction="#weekViewRadioButtonListener" text="Week View" textFill="WHITE" toggleGroup="$appointmentViewRadioButtonGroup">
                <font>
                   <Font size="16.0" />
                </font>

@@ -16,7 +16,6 @@ import java.sql.SQLException;
 import java.util.Locale;
 
 
-
 /**
  * The Main method starts the program.
  */
@@ -97,7 +96,15 @@ public static void main(String[] args) throws SQLException
  * The running count of the ID numbers of each <code>Customer</code>
  */
 public static int currentId;
+
+/**
+ * The running count of the ID numbers of each <code>Appointment</code>
+ */
+public static int currentAppointmentId;
+
+/**
+ * The customer currently selected in the customerRecordsTableView
+ */
 public static Customer selectedCustomer = null;
-//public static ObservableList<Customer> customerRecords  =
-//    FXCollections.observableArrayList( DBCustomerRecords.getAllCustomerRecords( ) );
+
 }

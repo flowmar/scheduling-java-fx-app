@@ -29,10 +29,10 @@ import static scheduler.Main.selectedCustomer;
 
 public class ViewCustomerRecordsController implements Initializable {
 
-public static ObservableList<Customer> customerRecords;
 /**
  * Fields
  */
+public static ObservableList<Customer> customerRecords;
 
 @FXML
 public TableView<Customer> customerRecordsTableView;
@@ -73,7 +73,6 @@ private Label deleteConfirmationLabel;
  * @param url
  * @param resourceBundle
  */
-
 @Override
 public void initialize( URL url, ResourceBundle resourceBundle ) {
   System.out.println( "View Customer Records Initialize" );
@@ -84,11 +83,11 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
     e.printStackTrace( );
   }
 
-//  customerRecords.addListener(new ChangeListener());
 }
 
 /**
  * Obtains the stored customer records from the database and displays it within the <code>TableView</code>
+ * @throws SQLException Thrown if SQL is malformed
  */
 public void displayCustomerRecords( ) throws SQLException {
   System.out.println( "Display customer records." );
@@ -323,14 +322,7 @@ public void updateButtonListener( ActionEvent actionEvent ) {
 public void viewAppointmentsButtonListener( ActionEvent actionEvent ) throws IOException
 {
   // Load the View Appointments FXML
-  Parent viewAppointmentsFXML = null;
-  try {
-    viewAppointmentsFXML = FXMLLoader.load(getClass().getResource( "../views/viewAppointments.fxml"));
-  }
-  catch (IOException e) {
-    e.printStackTrace();
-  }
-  
+  Parent viewAppointmentsFXML = FXMLLoader.load(getClass().getResource( "../views/viewAppointments.fxml"));
   // Create the new stage and scene
   Scene viewAppointmentsScene = new Scene(viewAppointmentsFXML, 975, 400);
   Stage viewAppointmentsStage = new Stage();
