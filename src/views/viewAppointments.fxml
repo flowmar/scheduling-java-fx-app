@@ -44,7 +44,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewCustomerRecordsController">
+<VBox prefHeight="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewAppointmentsController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -87,8 +87,8 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="375.0" prefWidth="1025.0" style="-fx-background-color: navy;" VBox.vgrow="ALWAYS">
       <children>
-            <TableView fx:id="customerRecordsTableView" layoutX="22.0" layoutY="76.0" prefHeight="200.0" prefWidth="981.0" />
-            <Label fx:id="titleLabel" layoutX="22.0" layoutY="14.0" prefHeight="55.0" prefWidth="204.0" text="Customer Records" textFill="WHITE">
+            <TableView fx:id="viewAppointmentsTableView" layoutX="22.0" layoutY="76.0" prefHeight="200.0" prefWidth="981.0" />
+            <Label fx:id="titleLabel" layoutX="22.0" layoutY="14.0" prefHeight="55.0" prefWidth="204.0" text="Appointments" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>
@@ -109,7 +109,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="viewAppointmentsButton" alignment="CENTER" layoutX="22.0" layoutY="304.0" mnemonicParsing="false" onAction="#viewAppointmentsButtonListener" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: deepskyblue; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="View Appointments" textAlignment="CENTER">
+            <Button fx:id="viewAppointmentsButton" alignment="CENTER" layoutX="22.0" layoutY="304.0" mnemonicParsing="false" onAction="#viewAppointmentsButtonListener" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: deepskyblue; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="View Customers" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -133,6 +133,11 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
+            <Label fx:id="deleteConfirmationLabel" layoutX="261.0" layoutY="310.0" prefHeight="22.0" prefWidth="534.0" textFill="#ff1212">
+               <font>
+                  <Font name="Arial Bold Italic" size="19.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </children>

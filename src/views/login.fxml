@@ -140,8 +140,8 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="usernameTextField" prefHeight="23.0" prefWidth="236.0" promptText="username" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-            <TextField fx:id="passwordTextField" prefHeight="16.0" prefWidth="247.0" promptText="password" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+            <TextField fx:id="usernameTextField" prefHeight="23.0" prefWidth="236.0" promptText="username" text="admin" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+            <TextField fx:id="passwordTextField" prefHeight="16.0" prefWidth="247.0" promptText="password" text="admin" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
             <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#loginButtonListener" prefHeight="31.0" prefWidth="138.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7">
                <font>
                   <Font size="18.0" />

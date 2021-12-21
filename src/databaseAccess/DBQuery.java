@@ -1,4 +1,4 @@
-package tools;
+package databaseAccess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

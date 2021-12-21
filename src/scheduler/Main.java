@@ -1,13 +1,14 @@
 package scheduler;
 
 import databaseAccess.DBCountries;
+import databaseAccess.DBQuery;
+import databaseAccess.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tools.DBQuery;
-import tools.JDBC;
+import models.Customer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,13 +17,16 @@ import java.util.Locale;
 
 
 
+/**
+ * The Main method starts the program.
+ */
 public class Main extends Application
 {
 
 /**
- *
- * @param primaryStage
- * @throws Exception
+ * Start method that loads the initial Stage and Scene
+ * @param primaryStage The first stage of the program, the login form
+ * @throws Exception Thrown if there is an issue with loading a file
  */
 
     @Override
@@ -32,14 +36,14 @@ public class Main extends Application
         
         if (locale.toString().equals("en_US"))
         {
-            Parent root = FXMLLoader.load( getClass( ).getResource( "../view/login.fxml" ) );
+            Parent root = FXMLLoader.load( getClass( ).getResource( "../views/login.fxml" ) );
             primaryStage.setTitle( "Welcome" );
             primaryStage.setScene( new Scene( root, 640, 378 ) );
             primaryStage.show( );
         }
         else if (locale.toString().equals( "fr_US" ))
         {
-            Parent root = FXMLLoader.load(getClass().getResource( "../view/login.fxml" ));
+            Parent root = FXMLLoader.load(getClass().getResource( "../views/login.fxml" ));
             primaryStage.setTitle("Bienvenue");
             Scene scene = new Scene(root, 640, 380);
             primaryStage.setScene(scene);
@@ -51,12 +55,14 @@ public class Main extends Application
     }
 
 /**
- *
- * @param args
- * @throws SQLException
+ * Main method to start the program.
+ * @param args Command Line arguments passed into the program
+ * @throws SQLException thrown if the SQL is malformed
  */
 public static void main(String[] args) throws SQLException
     {
+    
+    
         // Make the connection
         JDBC.makeConnection();
         
@@ -113,11 +119,19 @@ public static void main(String[] args) throws SQLException
         else
             System.out.println("No rows changed.");
         
+        // Launch the program
         launch(args);
     
-        connection.close();
+        // Closes the database connection
+//        connection.close();
     
     }
 
-public static int currentId = 3;
+/**
+ * The running count of the ID numbers of each <code>Customer</code>
+ */
+public static int currentId;
+public static Customer selectedCustomer = null;
+//public static ObservableList<Customer> customerRecords  =
+//    FXCollections.observableArrayList( DBCustomerRecords.getAllCustomerRecords( ) );
 }

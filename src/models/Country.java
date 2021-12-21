@@ -41,13 +41,11 @@ public String getName()
     }
 
 /**
- *  Returns the <code>id</code> and the <code>name</code> of the <code>Country</code> as a String in the format "#
- *  (id) :
- *  (name)"
- * @return The <code>id</code> and the <code>name</code> as a String
+ *  Returns the <code>name</code> of the <code>Country</code>
+ * @return The <code>name</code> of the <code>Country</code> as a String
  */
 @Override
     public String toString() {
-        return ("#" + Integer.toString(id) + ": " + name);
+        return (name);
     }
 }

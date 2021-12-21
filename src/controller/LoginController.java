@@ -15,8 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.Country;
-import tools.DBQuery;
-import tools.JDBC;
+import databaseAccess.DBQuery;
+import databaseAccess.JDBC;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -191,7 +191,7 @@ public void loginButtonListener(ActionEvent actionEvent) throws SQLException {
     // Close out Login window and display Customer Records
     Parent secondRoot = null;
     try {
-      secondRoot = FXMLLoader.load(getClass().getResource("../view/viewCustomerRecords.fxml"));
+      secondRoot = FXMLLoader.load(getClass().getResource( "../views/viewCustomerRecords.fxml" ));
     }
     catch ( IOException e ) {
       e.printStackTrace( );

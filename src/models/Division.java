@@ -102,13 +102,11 @@ public int getCountryId()
    }
 
 /**
- * Returns the <code>divisionId</code> and the <code>division</code> name as a String in the format "(divisionId) :
- * division"
- * @return The <code>divisionId</code> and the <code>division</code> name as a String
+ * Returns <code>division</code> name as a String
+ * @return The <code>division</code> name as a String
  */
 @Override
-public String toString()
-{
-  return (divisionId + " : " + division);
+public String toString() {
+  return  divisionId + " " + division;
 }
 }

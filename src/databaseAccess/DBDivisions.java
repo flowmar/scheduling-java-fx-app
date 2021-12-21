@@ -3,7 +3,6 @@ package databaseAccess;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import models.Division;
-import tools.JDBC;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

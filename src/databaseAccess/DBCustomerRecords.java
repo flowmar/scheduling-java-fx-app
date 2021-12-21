@@ -4,16 +4,17 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import models.Customer;
-import models.Division;
-import tools.JDBC;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * Helper functions to access Customer Records
+ */
 public class DBCustomerRecords
 {
 
@@ -22,9 +23,10 @@ public class DBCustomerRecords
  * @return Returns an ArrayList containing all the customers from the database.
  * @throws SQLException Throws a SQLException if the SQL is malformed.
  */
-  public static List<Customer> getAllCustomerRecords() throws SQLException
+  public static ObservableList<Customer> getAllCustomerRecords() throws SQLException
   {
-    List<Customer> customers = new ArrayList<>();
+//    ObservableList<Customer> customers = new ArrayList<Customer>();
+    ObservableList<Customer> customers = FXCollections.observableArrayList();
     // Retrieve all stored customers from the database
     try
     {
@@ -67,7 +69,7 @@ public class DBCustomerRecords
         StringProperty customerDivisionNameProperty = new SimpleStringProperty(customerDivisionName);
   
         // Use the Division name to look up the Country ID
-        int customerCountryId = lookUpCountryId(customerDivisionId);
+        int customerCountryId = lookUpCountryId(customerDivisionIdProperty);
         
         IntegerProperty customerCountryIdProperty = new SimpleIntegerProperty(customerCountryId);
   
@@ -134,21 +136,24 @@ public static String lookUpDivisionName(int divisionId) throws SQLException
     return divisionName;
   }
   
-public static String lookUpDivisionId( Division division)
+public static String lookUpDivisionId(String division)
 {
+      System.out.println("Division: " + division );
     // Remove all characters past the ID number
     String divisionIdString = division.toString().substring(0,division.toString().indexOf(" ", 0));
+    System.out.println("divisionIdString: " + divisionIdString);
     return divisionIdString;
 }
 
 /**
  * Uses a Division ID to look up the ID number of the Country that it belongs to in the first_level_divisions table.
- * @param divisionId The ID number of the Division.
+ * @param divisionIdProperty The ID number of the Division as an IntegerProperty
  * @return Returns ID number of the Country that the Division belongs to.
  */
-public static int lookUpCountryId(int divisionId) throws SQLException
+public static int lookUpCountryId(IntegerProperty divisionIdProperty) throws SQLException
 {
   int countryId = 0;
+  int divisionId = divisionIdProperty.getValue();
   
   try {
     
@@ -158,12 +163,11 @@ public static int lookUpCountryId(int divisionId) throws SQLException
     
     ResultSet firstLevelDivisionsResultSet = preparedStatement.executeQuery();
     
-    
     while (firstLevelDivisionsResultSet.next())
     {
       countryId = firstLevelDivisionsResultSet.getInt("Country_ID");
       
-      System.out.println(countryId);
+      System.out.println("CountryID: " + countryId);
     }
     
   }
@@ -207,5 +211,8 @@ public static String lookUpCountryName(int countryId) throws SQLException
     return countryName;
   }
   
+  public static void deleteCustomer() {
+  
+  }
 
 }
