@@ -135,7 +135,13 @@ public static String lookUpDivisionName(int divisionId) throws SQLException
     
     return divisionName;
   }
-  
+
+/**
+ * Takes in the <code>division</code> from the <code>DivisionComboBox</code> and returns only the numerical value of
+ * the <code>Division_ID</code>
+ * @param division The <code>division</code> selected in the <code>DivisionComboBox</code>
+ * @return The <code>Division_ID</code> as a <code>String</code>
+ */
 public static String lookUpDivisionId(String division)
 {
       System.out.println("Division: " + division );
@@ -209,10 +215,6 @@ public static String lookUpCountryName(int countryId) throws SQLException
       e.printStackTrace();
     }
     return countryName;
-  }
-  
-  public static void deleteCustomer() {
-  
   }
 
 }

@@ -38,8 +38,10 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -109,7 +111,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="viewAppointmentsButton" alignment="CENTER" layoutX="22.0" layoutY="304.0" mnemonicParsing="false" onAction="#viewAppointmentsButtonListener" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: deepskyblue; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="View Customers" textAlignment="CENTER">
+            <Button fx:id="viewCustomersButton" alignment="CENTER" layoutX="22.0" layoutY="304.0" mnemonicParsing="false" onAction="#viewCustomersButtonListener" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: deepskyblue; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="View Customers" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -133,11 +135,19 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Label fx:id="deleteConfirmationLabel" layoutX="261.0" layoutY="310.0" prefHeight="22.0" prefWidth="534.0" textFill="#ff1212">
+            <RadioButton fx:id="monthViewRadioButton" layoutX="216.0" layoutY="32.0" mnemonicParsing="false" onAction="#monthRadioButtonListener" selected="true" text="Month View" textFill="WHITE">
                <font>
-                  <Font name="Arial Bold Italic" size="19.0" />
+                  <Font size="16.0" />
                </font>
-            </Label>
+               <toggleGroup>
+                  <ToggleGroup fx:id="appointmentViewRadioButtonGroup" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="weekViewRadioButton" layoutX="350.0" layoutY="32.0" mnemonicParsing="false" onAction="#weekRadioButtonListener" text="Week View" textFill="WHITE" toggleGroup="$appointmentViewRadioButtonGroup">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
       </children>
     </AnchorPane>
   </children>

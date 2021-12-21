@@ -145,7 +145,6 @@ public void countryComboBoxListener( ActionEvent actionEvent ) {
   Country countryComboValue = countryComboBox.getValue( );
   // Get Id
   int countryComboValueInt = countryComboValue.getId( );
-  
   // Populate the divisionComboBox with the corresponding territories
   populateDivisionComboBox( countryComboValueInt );
 }
@@ -200,7 +199,7 @@ public void saveButtonListener( ActionEvent actionEvent ) throws SQLException {
       + division);
   
   // Make the connection
-  JDBC.makeConnection();
+//  JDBC.makeConnection();
   // Converts the date and time
   DBCountries.checkDateConversion();
   
@@ -229,8 +228,9 @@ public void saveButtonListener( ActionEvent actionEvent ) throws SQLException {
       phoneNumber,
       divisionIdProperty, countryIdProperty ));
   
-  // Close out the connection and the window
-  connection.close();
+//  saveButton.getScene().getWindow().setWidth(saveButton.getScene().getWidth() + 0.001);
+  
+  // Close out the window
   Stage stage = ( Stage ) saveButton.getScene( ).getWindow( );
   stage.close( );
 }

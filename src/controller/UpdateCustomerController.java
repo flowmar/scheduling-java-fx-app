@@ -211,8 +211,8 @@ public void updateButtonListener(ActionEvent actionEvent) throws SQLException
   
   try {
     // Make the connection
-    JDBC.makeConnection( );
-    DBCountries.checkDateConversion( );
+//    JDBC.makeConnection( );
+//    DBCountries.checkDateConversion( );
     Connection connection = JDBC.getConnection( );
     // Update SQL statement
     String updateStatement = "UPDATE client_schedule.customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, " +
@@ -247,9 +247,9 @@ public void updateButtonListener(ActionEvent actionEvent) throws SQLException
     // Update the ObservableList to update the table
     customerRecords.setAll(newCustomerList);
     
-    // Close the connection and the window
+    // Close the window
     System.out.println( "Successfully updated!" );
-    connection.close();
+//    connection.close();
     Stage stage = (Stage) updateButton.getScene().getWindow( );
     stage.close();
   }

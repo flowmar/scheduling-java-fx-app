@@ -1,6 +1,5 @@
 package controller;
 
-import databaseAccess.DBCountries;
 import databaseAccess.DBCustomerRecords;
 import databaseAccess.DBQuery;
 import databaseAccess.JDBC;
@@ -156,8 +155,8 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws IOException, 
     
     System.out.println( "Ok clicked!" );
     // Connect to the database
-    JDBC.makeConnection( );
-    DBCountries.checkDateConversion( );
+//    JDBC.makeConnection( );
+//    DBCountries.checkDateConversion( );
     Connection connection = JDBC.getConnection( );
     
     // Use SQL query to delete the customer at that ID
@@ -325,7 +324,6 @@ public void viewAppointmentsButtonListener( ActionEvent actionEvent ) throws IOE
 {
   // Load the View Appointments FXML
   Parent viewAppointmentsFXML = null;
-  
   try {
     viewAppointmentsFXML = FXMLLoader.load(getClass().getResource( "../views/viewAppointments.fxml"));
   }
@@ -333,15 +331,17 @@ public void viewAppointmentsButtonListener( ActionEvent actionEvent ) throws IOE
     e.printStackTrace();
   }
   
+  // Create the new stage and scene
   Scene viewAppointmentsScene = new Scene(viewAppointmentsFXML, 975, 400);
   Stage viewAppointmentsStage = new Stage();
   viewAppointmentsStage.setTitle( "View Appointments");
   viewAppointmentsStage.setScene(viewAppointmentsScene);
   viewAppointmentsStage.show();
   
-  JDBC.closeConnection( );
-  System.out.println( "Exit Clicked!" );
-  Platform.exit( );
+  // Close out the ViewCustomerRecords stage
+  Stage customerStage = (Stage) viewAppointmentsButton.getScene().getWindow();
+  customerStage.close();
+  
 }
 
 }

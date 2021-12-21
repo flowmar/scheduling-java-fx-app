@@ -61,8 +61,6 @@ public class Main extends Application
  */
 public static void main(String[] args) throws SQLException
     {
-    
-    
         // Make the connection
         JDBC.makeConnection();
         
@@ -83,35 +81,6 @@ public static void main(String[] args) throws SQLException
         PreparedStatement ps = DBQuery.getPreparedStatement();
         
         String countryName, newCountry, createdBy;
-//        String countryName;
-//        String createDate = "2021-11-02 00:00:00";
-//        String createdBy = "admin";
-//        String lastUpdateBy = "admin";
-        
-        // Get user input
-//        Scanner keyboard = new Scanner(System.in);
-//
-//        System.out.print("Enter new country: ");
-//        newCountry = keyboard.nextLine();
-//
-//        System.out.print("Enter user: " );
-//        createdBy = keyboard.nextLine();
-//
-//        System.out.print("Enter old country: " );
-//        countryName = keyboard.nextLine();
-        
-        // Key-value mapping
-//        ps.setString(1, countryName);
-//        ps.setString(2, createDate);
-//        ps.setString(3, createdBy);
-//        ps.setString(4, lastUpdateBy);
-        
-//        ps.setString(1, countryName);
-//        ps.setString(2, createdBy);
-//        ps.setString(3, newCountry);
-       
-    
-//        ps.execute(); // Execute the PreparedStatement
         
         // Confirming rows affected
         if(ps.getUpdateCount() > 0)
@@ -121,9 +90,6 @@ public static void main(String[] args) throws SQLException
         
         // Launch the program
         launch(args);
-    
-        // Closes the database connection
-//        connection.close();
     
     }
 
