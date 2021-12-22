@@ -37,7 +37,7 @@ public class UpdateAppointmentController implements Initializable {
   private TextField appointmentLocationTextField;
   
   @FXML
-  private TextField appointmentTypeTextField;
+  private ComboBox<String> appointmentTypeComboBox;
   
   @FXML
   private ComboBox<Contact> contactComboBox;
@@ -84,4 +84,21 @@ public void cancelButtonListener(ActionEvent actionEvent)
   Stage stage = (Stage) cancelButton.getScene().getWindow();
   stage.close();
 }
+
+
+public void contactsComboBoxListener( ActionEvent actionEvent)
+{
+  System.out.println("ContactsComboBox");
+}
+
+public void customerIdComboBoxListener( ActionEvent actionEvent)
+{
+
+}
+
+public void userIdComboBoxListener( ActionEvent actionEvent)
+{
+
+}
+
 }

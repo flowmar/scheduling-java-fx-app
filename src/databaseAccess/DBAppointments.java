@@ -78,23 +78,25 @@ public static ObservableList<Appointment> getAllAppointments( ) throws SQLExcept
 
 /**
  * Retrieves an <code>ObservableList</code> of <code>Contact</code>s from the database
- *
- * @return
+ * @return The <code>ObservableList</code> of <code>Contact</code>s
  */
-public static ObservableList<String> getContacts( ) {
+public static ObservableList<String> getContacts( )
+{
   ObservableList<String> contacts = FXCollections.observableArrayList( );
-  try {
+  try
+  {
     String selectContacts = "Select * FROM client_schedule.contacts";
     
     PreparedStatement preparedStatement = JDBC.getConnection( ).prepareStatement( selectContacts );
   
-    ResultSet appointmentsResultSet = preparedStatement.executeQuery( );
+    ResultSet contactsResultSet = preparedStatement.executeQuery( );
     
-    while ( appointmentsResultSet.next( ) ) {
+    while ( contactsResultSet.next( ) )
+    {
       // Get the information from the database
-      int    contactId   = appointmentsResultSet.getInt( "Contact_ID" );
-      String contactName = appointmentsResultSet.getString( "Contact_Name" );
-      String email       = appointmentsResultSet.getString( "Email" );
+      int    contactId   = contactsResultSet.getInt( "Contact_ID" );
+      String contactName = contactsResultSet.getString( "Contact_Name" );
+      String email       = contactsResultSet.getString( "Email" );
       
       // Convert each column to a Property
       IntegerProperty contactIdProperty   = new SimpleIntegerProperty( contactId );
@@ -111,5 +113,62 @@ public static ObservableList<String> getContacts( ) {
   }
   
   return contacts;
+}
+
+
+public static ObservableList<String> getCustomers()
+{
+  
+  ObservableList<String> customers = FXCollections.observableArrayList( );
+  // Get the data from the database and add it to the customers list
+  try
+  {
+    // Make the SQL query
+    String selectCustomers = "SELECT * FROM client_schedule.customers";
+    PreparedStatement preparedStatement = JDBC.getConnection().prepareStatement( selectCustomers );
+    ResultSet customersResultSet = preparedStatement.executeQuery( );
+    
+    while(customersResultSet.next())
+    {
+      // Get the data from the database
+      int customerId = customersResultSet.getInt( "Customer_ID" );
+      String customerName = customersResultSet.getString( "Customer_Name" );
+  
+      String customer = customerId + " " + customerName;
+      
+      customers.add(customer);
+    }
+  }
+  catch ( SQLException e )
+  {
+    e.printStackTrace();
+  }
+  return customers;
+}
+  
+  public static ObservableList<String> getUsers()
+{
+  ObservableList<String> users       = FXCollections.observableArrayList( );
+  
+  try {
+      String                 selectUsers = "SELECT * FROM client_schedule.users";
+      PreparedStatement preparedStatement = JDBC.getConnection().prepareStatement( selectUsers );
+      ResultSet usersResultSet = preparedStatement.executeQuery();
+      
+      while(usersResultSet.next())
+      {
+        int userId = usersResultSet.getInt( "User_ID" );
+        String userName = usersResultSet.getString("User_Name");
+        
+        String user = userId + " " + userName;
+        
+        users.add(user);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  return users;
 }
 }

@@ -146,10 +146,8 @@
                </font>
             </Label>
             <TextField fx:id="appointmentIdTextField" disable="true" layoutX="191.0" layoutY="80.0" prefHeight="23.0" prefWidth="210.0" />
-            <TextField fx:id="customerIdTextField" layoutX="191.0" layoutY="118.0" prefHeight="23.0" prefWidth="210.0" />
-            <TextField fx:id="userIdTextField" layoutX="191.0" layoutY="157.0" prefHeight="23.0" prefWidth="210.0" />
             <TextField fx:id="appointmentTitleTextField" layoutX="191.0" layoutY="195.0" prefHeight="23.0" prefWidth="210.0" />
-            <ComboBox fx:id="contactComboBox" layoutX="679.0" layoutY="157.0" prefWidth="150.0" />
+            <ComboBox fx:id="contactComboBox" layoutX="679.0" layoutY="157.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a contact..." />
             <Label layoutX="526.0" layoutY="120.0" prefHeight="20.0" prefWidth="114.0" text="Type:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
@@ -167,9 +165,11 @@
                </font>
             </Label>
             <TextField fx:id="appointmentLocationTextField" layoutX="679.0" layoutY="81.0" prefHeight="23.0" prefWidth="210.0" />
-            <TextField fx:id="appointmentTypeTextField" layoutX="679.0" layoutY="118.0" prefHeight="23.0" prefWidth="210.0" />
             <DatePicker fx:id="startDatePicker" layoutX="679.0" layoutY="196.0" />
             <DatePicker fx:id="endDatePicker" layoutX="679.0" layoutY="236.0" />
+            <ComboBox fx:id="customerIdComboBox" layoutX="191.0" layoutY="118.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a customer..." />
+            <ComboBox fx:id="userIdComboBox" layoutX="191.0" layoutY="157.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a user ID..." />
+            <ComboBox fx:id="appointmentTypeComboBox" layoutX="679.0" layoutY="119.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a type..." />
       </children>
     </AnchorPane>
   </children>

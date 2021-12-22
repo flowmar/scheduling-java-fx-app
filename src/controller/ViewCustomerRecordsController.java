@@ -144,13 +144,13 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws IOException, 
   String   customerName    = deleteSelection.getCustomerName( );
   
   Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
-  alert.setTitle( "Title" );
-  String s = "Confirm to clear text in text field !";
-  alert.setContentText( s );
+  alert.setTitle( "Delete Confirmation" );
+  String deleteConfirmationText = "Are you sure you want to delete customer " + customerName + "?";
+  alert.setContentText( deleteConfirmationText );
   
-  Optional<ButtonType> result = alert.showAndWait( );
+  Optional<ButtonType> answer = alert.showAndWait( );
   
-  if ( ( result.isPresent( ) ) && ( result.get( ) == ButtonType.OK ) ) {
+  if ( ( answer.isPresent( ) ) && ( answer.get( ) == ButtonType.OK ) ) {
     
     System.out.println( "Ok clicked!" );
     // Connect to the database
@@ -176,7 +176,7 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws IOException, 
     deleteConfirmationLabel.setText( "Customer " + deleteSelection.getCustomerName( ) + " has been deleted!" );
   }
   
-  if ( ( result.isPresent( ) ) && ( result.get( ) == ButtonType.NO ) ) {
+  if ( ( answer.isPresent( ) ) && ( answer.get( ) == ButtonType.NO ) ) {
     System.out.println( "Cancel clicked!" );
   }
 

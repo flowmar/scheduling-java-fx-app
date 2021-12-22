@@ -46,7 +46,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.updateAppointmentController">
+<VBox prefHeight="400.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateAppointmentController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -145,11 +145,9 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="customerIDTextField" disable="true" layoutX="191.0" layoutY="80.0" prefHeight="23.0" prefWidth="210.0" />
-            <TextField fx:id="customerNameTextField" layoutX="191.0" layoutY="118.0" prefHeight="23.0" prefWidth="210.0" />
-            <TextField fx:id="addressTextField" layoutX="191.0" layoutY="157.0" prefHeight="23.0" prefWidth="210.0" />
-            <TextField fx:id="postalCodeTextField" layoutX="191.0" layoutY="195.0" prefHeight="23.0" prefWidth="210.0" />
-            <ComboBox fx:id="countryComboBox1" layoutX="679.0" layoutY="157.0" onAction="#countryComboBoxListener" prefWidth="150.0" />
+            <TextField fx:id="appointmentIDTextField" disable="true" layoutX="191.0" layoutY="80.0" prefHeight="23.0" prefWidth="210.0" />
+            <TextField fx:id="titleTextView" layoutX="191.0" layoutY="195.0" prefHeight="23.0" prefWidth="210.0" />
+            <ComboBox fx:id="contactsComboBox" layoutX="679.0" layoutY="157.0" onAction="#contactsComboBoxListener" prefHeight="23.0" prefWidth="210.0" promptText="Select a contact..." />
             <Label layoutX="526.0" layoutY="120.0" prefHeight="20.0" prefWidth="114.0" text="Type:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
@@ -160,16 +158,18 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="postalCodeTextField1" layoutX="191.0" layoutY="235.0" prefHeight="98.0" prefWidth="210.0" />
+            <TextField fx:id="appointmentDescriptionTextFieldupdateAppointmentDescriptionTextField" layoutX="191.0" layoutY="235.0" prefHeight="98.0" prefWidth="210.0" />
             <Label layoutX="526.0" layoutY="158.0" prefHeight="20.0" prefWidth="114.0" text="Contact:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="customerNameTextField1" layoutX="679.0" layoutY="81.0" prefHeight="23.0" prefWidth="210.0" />
-            <TextField fx:id="customerNameTextField11" layoutX="679.0" layoutY="118.0" prefHeight="23.0" prefWidth="210.0" />
-            <DatePicker layoutX="679.0" layoutY="196.0" />
-            <DatePicker layoutX="679.0" layoutY="236.0" />
+            <TextField fx:id="locationTextField" layoutX="679.0" layoutY="81.0" prefHeight="23.0" prefWidth="210.0" />
+            <DatePicker fx:id="startDatePicker" layoutX="679.0" layoutY="196.0" />
+            <DatePicker fx:id="endDatePicker" layoutX="679.0" layoutY="236.0" />
+            <ComboBox fx:id="customerIdComboBox" layoutX="191.0" layoutY="119.0" onAction="#customerIdComboBoxListener" prefHeight="23.0" prefWidth="210.0" promptText="Select a Customer..." />
+            <ComboBox fx:id="userIdComboBox" layoutX="191.0" layoutY="157.0" onAction="#userIdComboBoxListener" prefHeight="23.0" prefWidth="210.0" promptText="Select a User..." />
+            <ComboBox fx:id="appointmentTypeComboBox" layoutX="679.0" layoutY="119.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a type..." />
       </children>
     </AnchorPane>
   </children>
