@@ -15,6 +15,8 @@ import models.Appointment;
 import scheduler.Main;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UpdateAppointmentController implements Initializable {
@@ -106,6 +108,10 @@ public void populateContactComboBox()
 public void populateCustomerIdComboBox()
 {
   ObservableList<String> customersArrayList = DBAppointments.getCustomers();
+//  for (Customer c : customersArrayList)
+//  {
+//
+//  }
   customerIdComboBox.setItems( customersArrayList );
 }
 
@@ -127,8 +133,12 @@ public void populateUserIdComboBox()
   ObservableList<String> userIdList = DBAppointments.getUsers();
   userIdComboBox.setItems(userIdList);
 }
-  
-  public void retrieveAndPopulateAppointment(){
+
+/**
+ * Retrieve the Appointment information from the database and populate the form fields
+ */
+public void retrieveAndPopulateAppointment()
+{
   
   Appointment selectedAppointmentToUpdate = Main.selectedAppointment;
     
@@ -143,25 +153,103 @@ public void populateUserIdComboBox()
       int selectedAppointmentCustomerId = selectedAppointmentToUpdate.customerIdProperty().getValue();
       System.out.println( selectedAppointmentCustomerId );
       
+      // Loop through the customerIdComboBox options
       for ( String a : customerIdComboBox.getItems())
       {
         System.out.println(customerIdComboBox.getItems());
-        System.out.println("Appointment: " +  a );
-//        String customerIdFullString =
-        if( String.valueOf( selectedAppointmentToUpdate ).equals( a ))
+        System.out.println("Customer: " +  a );
+        // Extract only the number from the ComboBox option
+        int customerInt = Integer.parseInt( a.substring(0, a.indexOf(" ", 0)) );
+        // Check if the selected value matches the current value being checked
+        if( selectedAppointmentCustomerId == customerInt)
         {
-          customerIdComboBox.setValue( a );
+          // If so, set the ComboBox value to the current value
+          customerIdComboBox.setValue(a);
           break;
         }
       }
+      
       // Get the userID of the selected Appointment
-//      int selectedAppointmentUserId = selectedAppointmentToUpdate.getUserId();
+      int selectedAppointmentUserId = selectedAppointmentToUpdate.userIdProperty().getValue();
+      System.out.println(selectedAppointmentUserId);
+      // Loop through the userIdComboBox options
+      for (String u: userIdComboBox.getItems())
+      {
+        // Extract only the number from the ComboBox option
+        int userInt = Integer.parseInt(u.substring(0, u.indexOf(" ", 0)));
+        // Check if the selected value matches the current value being checked
+        if (selectedAppointmentUserId == userInt)
+        {
+          // If so, set the ComboBox value to the current value
+          userIdComboBox.setValue(u);
+          break;
+        }
+      }
+      
       // Get the appointmentType of the selected Appointment
-//      String selectedAppointmentType = selectedAppointmentToUpdate.getType();
+      String selectedAppointmentType = selectedAppointmentToUpdate.typeProperty().getValue();
+      System.out.println( "Selected Appointment Type: " + selectedAppointmentType );
+      // Loop through the appointmentTypeComboBox options
+      for (String t : appointmentTypeComboBox.getItems())
+      {
+        // If the selected type matches an option in the ComboBox
+        if(selectedAppointmentType.equals( t ))
+        {
+          // Set the value of the ComboBox to that value
+          appointmentTypeComboBox.setValue(t);
+          break;
+        }
+      }
+      
       // Get the contactID of the selected Appointment
-//      int selectedAppointmentContactId = selectedAppointmentToUpdate.getContactId();
-//    }
-  }
+      int selectedAppointmentContactId = selectedAppointmentToUpdate.contactIdProperty().getValue();
+      System.out.println("Selected Appointment Contact Id: " + selectedAppointmentContactId);
+      System.out.println( "Contact: " + selectedAppointmentContactId );
+      // Loop through the contactComboBox options
+      for (String c : contactComboBox.getItems())
+      {
+        // Extract only the number from the ComboBoxOption
+        int contactInt = Integer.parseInt( c.substring(0, c.indexOf(" ", 0)));
+        // If the selected contactId matches an option in the ComboBox
+        if (selectedAppointmentContactId == contactInt)
+        {
+          // Set the ComboBox value to that option
+          contactComboBox.setValue(c);
+          break;
+        }
+      }
+      
+      // Get the Start Timestamp from the database
+      Timestamp selectedAppointmentStartTimestamp = selectedAppointmentToUpdate.startProperty().getValue();
+      String timestampString = selectedAppointmentStartTimestamp.toString();
+      System.out.println("Timestamp String: " + timestampString );
+      // Separate the date from the time
+      String startDate = timestampString.substring(0, timestampString.indexOf(" ", 0));
+      String startTime = timestampString.substring(timestampString.indexOf(" ", 0), timestampString.length());
+      
+      System.out.println("Start Date: " + startDate);
+      System.out.println("Start Time: " + startTime );
+      // Set the Start Date and time from the database into the form fields
+      startDatePicker.setValue( LocalDate.parse( startDate ) );
+      startTimeTextField.setText( startTime );
+      
+      
+      // Get the End Timestamp from the database
+      Timestamp selectedAppointmentEndTimestamp = selectedAppointmentToUpdate.endProperty().getValue();
+      String endTimestampString = selectedAppointmentEndTimestamp.toString();
+      System.out.println("Timestamp String: " + endTimestampString );
+      
+      // Separate the date from the time
+      String endDate = endTimestampString.substring(0, endTimestampString.indexOf( " ", 0 ));
+      String endTime = endTimestampString.substring(endTimestampString.indexOf(" ", 0 ), endTimestampString.length());
+      
+      System.out.println("End Date: " + endDate);
+      System.out.println("End Time: " + endTime );
+      // Set the End Date and time from the database into the form fields
+      endDatePicker.setValue(LocalDate.parse(endDate));
+      endTimeTextField.setText(endTime);
+      
+    }
   
   
 public void updateAppointmentButtonListener( ActionEvent actionEvent)

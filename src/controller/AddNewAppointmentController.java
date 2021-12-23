@@ -157,9 +157,10 @@ public void addAppointmentButtonListener( ActionEvent actionEvent)
   System.out.println( "ContactIdComboBox: " + contactComboBox.getValue() );
   
   // Obtain the value from the customerIdComboBox
-  StringProperty customerIdProperty = new SimpleStringProperty(customerIdComboBox.getValue());
+  ObjectProperty<String> customerIdProperty = new SimpleObjectProperty<String>(customerIdComboBox.getValue());
   System.out.println("CustomerIdProperty: " + customerIdProperty );
-  String customerIdString = customerIdProperty.getValue().substring(0,customerIdProperty.getValue().indexOf(
+  String customerIdString = String.valueOf(customerIdProperty.getValue()).substring(0,
+      String.valueOf(customerIdProperty.getValue()).indexOf(
       " ",
       0));
   System.out.println("CustomerIdString: " + customerIdString);

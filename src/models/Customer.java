@@ -106,6 +106,13 @@ public Customer(int customerId, String customerName, String address, String post
   this.countryId = countryId;
 }
 
+public Customer( int customerId, String customerName ) {
+
+this.customerId = customerId;
+this.customerName = customerName;
+
+}
+
 /**
  * @return
  */

@@ -5,7 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import models.Appointment;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class DBAppointments {
 
@@ -113,10 +116,14 @@ public static ObservableList<String> getContacts( )
 }
 
 
+public DBAppointments( ) {
+}
+
 public static ObservableList<String> getCustomers()
 {
+  System.out.println( "Get Customers");
   
-  ObservableList<String> customers = FXCollections.observableArrayList( );
+  ObservableList<String> customerChoices = FXCollections.observableArrayList( );
   // Get the data from the database and add it to the customers list
   try
   {
@@ -131,16 +138,15 @@ public static ObservableList<String> getCustomers()
       int customerId = customersResultSet.getInt( "Customer_ID" );
       String customerName = customersResultSet.getString( "Customer_Name" );
   
-      String customer = customerId + " " + customerName;
-      
-      customers.add(customer);
+      String customerChoice = customerId + " " + customerName;
+      customerChoices.add(customerChoice);
     }
   }
   catch ( SQLException e )
   {
     e.printStackTrace();
   }
-  return customers;
+  return customerChoices;
 }
   
   public static ObservableList<String> getUsers()
@@ -167,5 +173,45 @@ public static ObservableList<String> getCustomers()
       e.printStackTrace();
     }
   return users;
+}
+
+/**
+ * Given a customer's ID number, return the ID number and the name of the customer
+ * @param customerIdNumber A customer's ID number
+ * @return The ID number and full name of the customer
+ */
+public static String getCustomerIdAndName(int customerIdNumber)
+{
+    String customerName = "";
+    
+    try
+    {
+      String sql = "SELECT * FROM client_schedule.customers WHERE Customer_ID= ?";
+      
+      PreparedStatement preparedStatement = JDBC.getConnection().prepareStatement( sql );
+      
+      preparedStatement.setString(1, String.valueOf( customerIdNumber ) );
+      ResultSet customerResultSet = preparedStatement.executeQuery(  );
+      
+      while (customerResultSet.next())
+      {
+        customerName = customerResultSet.getString("Customer_Name");
+      }
+      
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    
+    String customerIdAndName = customerIdNumber + " " + customerName;
+    
+    return customerIdAndName;
+}
+
+public static int getCustomerIdString(String customerOption)
+{
+  String customerIdString = customerOption.substring(0, customerOption.indexOf(" ", 0));
+  return Integer.parseInt( customerIdString );
 }
 }
