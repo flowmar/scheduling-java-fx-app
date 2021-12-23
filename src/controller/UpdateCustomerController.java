@@ -158,6 +158,7 @@ public void retrieveAndPopulateCustomer() {
       }
     }
     populateDivisionComboBox( countryComboInt );
+    
     // Get the divisionId of the selected Customer
     int selectedCustomerDivisionId = selectedCustomerToUpdate.getDivisionId( );
     System.out.println( "Division Id: " + selectedCustomerDivisionId );

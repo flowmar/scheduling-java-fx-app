@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import models.Appointment;
 import models.Customer;
 
 import java.sql.Connection;
@@ -107,4 +108,8 @@ public static int currentAppointmentId;
  */
 public static Customer selectedCustomer = null;
 
+/**
+ * The Appointment currently selected in the viewAppointmentsTableView
+ */
+public static Appointment selectedAppointment = null;
 }

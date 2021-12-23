@@ -251,6 +251,10 @@ public void addButtonListener( ActionEvent actionEvent){
 };
 
 public void updateButtonListener( ActionEvent actionEvent){
+  
+  Main.selectedAppointment = viewAppointmentsTableView.getSelectionModel( ).getSelectedItem( );
+  System.out.println("Selected Appointment: " + Main.selectedAppointment);
+  
   Parent updateAppointmentFXML = null;
   try {
     updateAppointmentFXML = FXMLLoader.load(getClass().getResource("../views/updateAppointment.fxml"));
@@ -260,13 +264,13 @@ public void updateButtonListener( ActionEvent actionEvent){
   }
   Stage updateAppointmentStage = new Stage();
   Scene updateAppointmentScene = new Scene(updateAppointmentFXML, 975, 400);
-  updateAppointmentStage.setTitle("Add Appointment");
+  updateAppointmentStage.setTitle("Update Appointment");
   updateAppointmentStage.setScene(updateAppointmentScene);
   updateAppointmentStage.show();
 };
 
 
-public void monthViewRadioButtonListener( ActionEvent actionEvent){};
+public void monthViewRadioButtonListener(ActionEvent actionEvent){};
 
 public void weekViewRadioButtonListener(ActionEvent actionEvent){};
 
