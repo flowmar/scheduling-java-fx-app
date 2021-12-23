@@ -21,8 +21,8 @@ import scheduler.Main;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class ViewAppointmentsController implements Initializable
@@ -53,10 +53,10 @@ private TableColumn<Appointment, String> colType;
 private TableColumn<Appointment, String> colLocation;
 
 @FXML
-private TableColumn<Appointment, Date> colStart;
+private TableColumn<Appointment, Timestamp> colStart;
 
 @FXML
-private TableColumn<Appointment, Date> colEnd;
+private TableColumn<Appointment, Timestamp> colEnd;
 
 @FXML
 private TableColumn<Appointment, Number> colContactId;
@@ -130,9 +130,9 @@ public void displayAppointments() throws SQLException
   TableColumn<Appointment, String>  colDescription      = new TableColumn<>( "Description" );
   TableColumn<Appointment, String>  colLocation   = new TableColumn<>( "Location" );
   TableColumn<Appointment, String>  colType     = new TableColumn<>( "Type" );
-  TableColumn<Appointment, Date>  colStart     = new TableColumn<>( "Start" );
-  TableColumn<Appointment, Date>  colEnd   = new TableColumn<>( "End" );
-  TableColumn<Appointment, Number>  colCustomerId     = new TableColumn<>( "Customer_ID" );
+  TableColumn<Appointment, Timestamp> colStart      = new TableColumn<>( "Start" );
+  TableColumn<Appointment, Timestamp> colEnd        = new TableColumn<>( "End" );
+  TableColumn<Appointment, Number>    colCustomerId = new TableColumn<>( "Customer_ID" );
   TableColumn<Appointment, Number>  colUserId        = new TableColumn<>( "User_ID" );
   TableColumn<Appointment, Number>  colContactId        = new TableColumn<>( "Contact_ID" );
   

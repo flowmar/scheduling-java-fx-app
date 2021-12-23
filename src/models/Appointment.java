@@ -2,7 +2,7 @@ package models;
 
 import javafx.beans.property.*;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -17,9 +17,9 @@ private StringProperty       titleProperty;
 private StringProperty       descriptionProperty;
 private StringProperty       locationProperty;
 private StringProperty       typeProperty;
-private ObjectProperty<Date> startProperty;
+private ObjectProperty<Timestamp> startProperty;
 private IntegerProperty      userIdProperty;
-private ObjectProperty<Date> endProperty;
+private ObjectProperty<Timestamp> endProperty;
 private IntegerProperty      customerIdProperty;
 private IntegerProperty      contactIdProperty;
 private int                  appointmentId;
@@ -27,8 +27,8 @@ private String               title;
 private String               description;
 private String               location;
 private String               type;
-private Date                 start;
-private Date          end;
+private Timestamp                 start;
+private Timestamp          end;
 private  LocalDateTime createDate;
 private  String        createdBy;
 private  LocalDateTime lastUpdate;
@@ -43,8 +43,8 @@ public Appointment( IntegerProperty appointmentIdProperty,
                     StringProperty descriptionProperty,
                     StringProperty locationProperty,
                     StringProperty typeProperty,
-                    ObjectProperty<Date> startProperty,
-                    ObjectProperty<Date> endProperty,
+                    ObjectProperty<Timestamp> startProperty,
+                    ObjectProperty<Timestamp> endProperty,
                     IntegerProperty userIdProperty,
                     IntegerProperty customerIdProperty,
                     IntegerProperty contactIdProperty ) {
@@ -61,7 +61,7 @@ public Appointment( IntegerProperty appointmentIdProperty,
 }
 
 public Appointment( int appointmentId, String title, String description, String location, String type,
-                    Date start, Date end, int customerId, int userId, int contactId ) {
+                    Timestamp start, Timestamp end, int customerId, int userId, int contactId ) {
   this.appointmentId = appointmentId;
   this.title         = title;
   this.description   = description;
@@ -177,7 +177,7 @@ public StringProperty typeProperty( ) {
  *
  * @return The <code>start</code> time of the <code>Appointment</code>
  */
-public Date getStart( ) {
+public Timestamp getStart( ) {
   return startProperty( ).get( );
 }
 
@@ -186,8 +186,8 @@ public Date getStart( ) {
  *
  * @return The <code>start</code> time of the <code>Appointment</code>
  */
-public ObjectProperty<Date> startProperty( ) {
-  if ( startProperty == null ) { startProperty = new SimpleObjectProperty<Date>( this, "start" ); }
+public ObjectProperty<Timestamp> startProperty( ) {
+  if ( startProperty == null ) { startProperty = new SimpleObjectProperty<Timestamp>( this, "start" ); }
   return startProperty;
 }
 
@@ -196,7 +196,7 @@ public ObjectProperty<Date> startProperty( ) {
  *
  * @return The <code>end</code> time of the <code>Appointment</code>
  */
-public Date getEnd( ) {
+public Timestamp getEnd( ) {
   return endProperty( ).get( );
 }
 
@@ -205,8 +205,8 @@ public Date getEnd( ) {
  *
  * @return The <code>end</code> of the <code>Appointment</code>
  */
-public ObjectProperty<Date> endProperty( ) {
-  if ( endProperty == null ) { endProperty = new SimpleObjectProperty<Date>( this, "end" ); }
+public ObjectProperty<Timestamp> endProperty( ) {
+  if ( endProperty == null ) { endProperty = new SimpleObjectProperty<Timestamp>( this, "end" ); }
   return endProperty;
 }
 

@@ -5,10 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import models.Appointment;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBAppointments {
 
@@ -40,8 +37,8 @@ public static ObservableList<Appointment> getAllAppointments( ) throws SQLExcept
       String description   = appointmentsResultSet.getString( "Description" );
       String location      = appointmentsResultSet.getString( "Location" );
       String type          = appointmentsResultSet.getString( "Type" );
-      Date   start         = appointmentsResultSet.getDate( "Start" );
-      Date   end           = appointmentsResultSet.getDate( "End" );
+      Timestamp   start         = appointmentsResultSet.getTimestamp( "Start" );
+      Timestamp   end           = appointmentsResultSet.getTimestamp( "End" );
       int    customerId    = appointmentsResultSet.getInt( "Customer_ID" );
       int    userId        = appointmentsResultSet.getInt( "User_ID" );
       int    contactId     = appointmentsResultSet.getInt( "Contact_ID" );
@@ -51,9 +48,9 @@ public static ObservableList<Appointment> getAllAppointments( ) throws SQLExcept
       StringProperty       titleProperty         = new SimpleStringProperty( title );
       StringProperty       descriptionProperty   = new SimpleStringProperty( description );
       StringProperty       locationProperty      = new SimpleStringProperty( location );
-      StringProperty       typeProperty          = new SimpleStringProperty( type );
-      ObjectProperty<Date> startProperty         = new SimpleObjectProperty<>( start );
-      ObjectProperty<Date> endProperty           = new SimpleObjectProperty<>( end );
+      StringProperty            typeProperty  = new SimpleStringProperty( type );
+      ObjectProperty<Timestamp> startProperty = new SimpleObjectProperty<>( start );
+      ObjectProperty<Timestamp>      endProperty   = new SimpleObjectProperty<>( end );
       IntegerProperty      customerIdProperty    = new SimpleIntegerProperty( customerId );
       IntegerProperty      userIdProperty        = new SimpleIntegerProperty( userId );
       IntegerProperty      contactIdProperty     = new SimpleIntegerProperty( contactId );

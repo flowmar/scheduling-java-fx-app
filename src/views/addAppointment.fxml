@@ -130,12 +130,12 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="526.0" layoutY="236.0" text="End Date &amp; Time:" textFill="WHITE">
+            <Label layoutX="465.0" layoutY="236.0" text="End Date &amp; Time:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="527.0" layoutY="197.0" text="Start Date &amp; Time:" textFill="WHITE">
+            <Label layoutX="465.0" layoutY="198.0" text="Start Date &amp; Time:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
@@ -146,30 +146,32 @@
                </font>
             </Label>
             <TextField fx:id="appointmentIdTextField" disable="true" layoutX="191.0" layoutY="80.0" prefHeight="23.0" prefWidth="210.0" />
-            <TextField fx:id="appointmentTitleTextField" layoutX="191.0" layoutY="195.0" prefHeight="23.0" prefWidth="210.0" />
-            <ComboBox fx:id="contactComboBox" layoutX="679.0" layoutY="157.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a contact..." />
-            <Label layoutX="526.0" layoutY="120.0" prefHeight="20.0" prefWidth="114.0" text="Type:" textFill="WHITE">
+            <TextField fx:id="appointmentTitleTextField" layoutX="191.0" layoutY="195.0" prefHeight="23.0" prefWidth="210.0" text="Wonderful Meeting" />
+            <ComboBox fx:id="contactComboBox" layoutX="602.0" layoutY="157.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a contact..." />
+            <Label layoutX="465.0" layoutY="121.0" prefHeight="20.0" prefWidth="114.0" text="Type:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="526.0" layoutY="82.0" prefHeight="20.0" prefWidth="114.0" text="Location:" textFill="WHITE">
+            <Label layoutX="465.0" layoutY="83.0" prefHeight="20.0" prefWidth="114.0" text="Location:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="appointmentDescriptionTextField" layoutX="191.0" layoutY="235.0" prefHeight="98.0" prefWidth="210.0" />
-            <Label layoutX="526.0" layoutY="158.0" prefHeight="20.0" prefWidth="114.0" text="Contact:" textFill="WHITE">
+            <TextField fx:id="appointmentDescriptionTextField" layoutX="191.0" layoutY="235.0" prefHeight="98.0" prefWidth="210.0" text="Cool meeting with cool people" />
+            <Label layoutX="465.0" layoutY="158.0" prefHeight="20.0" prefWidth="114.0" text="Contact:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="appointmentLocationTextField" layoutX="679.0" layoutY="81.0" prefHeight="23.0" prefWidth="210.0" />
-            <DatePicker fx:id="startDatePicker" layoutX="679.0" layoutY="196.0" />
-            <DatePicker fx:id="endDatePicker" layoutX="679.0" layoutY="236.0" />
+            <TextField fx:id="appointmentLocationTextField" layoutX="602.0" layoutY="80.0" prefHeight="23.0" prefWidth="210.0" text="Conference Room 5" />
+            <DatePicker fx:id="startDatePicker" layoutX="602.0" layoutY="198.0" />
+            <DatePicker fx:id="endDatePicker" layoutX="602.0" layoutY="236.0" />
             <ComboBox fx:id="customerIdComboBox" layoutX="191.0" layoutY="118.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a customer..." />
             <ComboBox fx:id="userIdComboBox" layoutX="191.0" layoutY="157.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a user ID..." />
-            <ComboBox fx:id="appointmentTypeComboBox" layoutX="679.0" layoutY="119.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a type..." />
+            <ComboBox fx:id="appointmentTypeComboBox" layoutX="602.0" layoutY="118.0" prefHeight="23.0" prefWidth="210.0" promptText="Select a type..." />
+            <TextField fx:id="startTimeTextField" alignment="CENTER" layoutX="795.0" layoutY="197.0" prefHeight="23.0" prefWidth="100.0" promptText="HH:mm" text="14:30" />
+            <TextField fx:id="endTimeTextField" alignment="CENTER" layoutX="795.0" layoutY="235.0" prefHeight="23.0" prefWidth="100.0" promptText="HH:mm" text="15:30" />
       </children>
     </AnchorPane>
   </children>
