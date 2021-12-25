@@ -12,30 +12,30 @@ public class Appointment {
 /**
  *
  */
-private IntegerProperty      appointmentIdProperty;
-private StringProperty       titleProperty;
-private StringProperty       descriptionProperty;
-private StringProperty       locationProperty;
-private StringProperty       typeProperty;
+private IntegerProperty           appointmentIdProperty;
+private StringProperty            titleProperty;
+private StringProperty            descriptionProperty;
+private StringProperty            locationProperty;
+private StringProperty            typeProperty;
 private ObjectProperty<Timestamp> startProperty;
-private IntegerProperty      userIdProperty;
+private IntegerProperty           userIdProperty;
 private ObjectProperty<Timestamp> endProperty;
-private IntegerProperty      customerIdProperty;
-private IntegerProperty      contactIdProperty;
-private int                  appointmentId;
-private String               title;
-private String               description;
-private String               location;
-private String               type;
+private IntegerProperty           customerIdProperty;
+private IntegerProperty           contactIdProperty;
+private int                       appointmentId;
+private String                    title;
+private String                    description;
+private String                    location;
+private String                    type;
 private Timestamp                 start;
-private Timestamp          end;
-private  LocalDateTime createDate;
-private  String        createdBy;
-private  LocalDateTime lastUpdate;
-private  String        lastUpdatedBy;
-private       int           customerId;
-private int                  userId;
-private int                  contactId;
+private Timestamp                 end;
+private LocalDateTime             createDate;
+private String                    createdBy;
+private LocalDateTime             lastUpdate;
+private String                    lastUpdatedBy;
+private int                       customerId;
+private int                       userId;
+private int                       contactId;
 
 
 public Appointment( IntegerProperty appointmentIdProperty,
@@ -73,7 +73,6 @@ public Appointment( int appointmentId, String title, String description, String 
   this.userId        = userId;
   this.contactId     = contactId;
 }
-
 
 
 /**

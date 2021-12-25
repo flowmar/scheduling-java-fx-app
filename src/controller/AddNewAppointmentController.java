@@ -14,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import models.Appointment;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -157,33 +158,26 @@ public void addAppointmentButtonListener( ActionEvent actionEvent)
   System.out.println( "ContactIdComboBox: " + contactComboBox.getValue() );
   
   // Obtain the value from the customerIdComboBox
-  ObjectProperty<String> customerIdProperty = new SimpleObjectProperty<String>(customerIdComboBox.getValue());
-  System.out.println("CustomerIdProperty: " + customerIdProperty );
-  String customerIdString = String.valueOf(customerIdProperty.getValue()).substring(0,
-      String.valueOf(customerIdProperty.getValue()).indexOf(
-      " ",
-      0));
-  System.out.println("CustomerIdString: " + customerIdString);
-  int customerIdInt = Integer.parseInt( customerIdString );
+  String customerIdString = customerIdComboBox.getValue();
+  int customerIdInt = Integer.parseInt(customerIdString.substring( 0, customerIdString.indexOf(" ", 0 ) ));
+  IntegerProperty customerIdIntProperty = new SimpleIntegerProperty( customerIdInt );
+  
   
   // Obtain the value from the userIdComboBox
-  StringProperty userIdProperty = new SimpleStringProperty(userIdComboBox.getValue());
-  System.out.println(userIdProperty);
-  String userIdString = userIdProperty.getValue().substring(0,userIdProperty.getValue().indexOf(" ", 0));
-  System.out.println("User ID String: " + userIdString);
-  int userIdInt = Integer.parseInt(userIdString);
-  // 1 test
-//  String userIdString = userIdProperty.getValue().substring(0,userIdProperty.toString().indexOf( " ", 0 ));
+  String userIdString = userIdComboBox.getValue();
+  int userIdInt = Integer.parseInt(userIdString.substring( 0, userIdString.indexOf(" ", 0 )));
+  IntegerProperty userIdIntProperty = new SimpleIntegerProperty( userIdInt );
+  
+  //  String userIdString = userIdProperty.getValue().substring(0,userIdProperty.toString().indexOf( " ", 0 ));
   StringProperty titleProperty = new SimpleStringProperty(appointmentTitleTextField.getText());
   StringProperty descriptionProperty = new SimpleStringProperty(appointmentDescriptionTextField.getText());
   StringProperty locationProperty = new SimpleStringProperty(appointmentLocationTextField.getText());
   StringProperty appointmentTypeProperty = new SimpleStringProperty(appointmentTypeComboBox.getValue());
   
   // Obtain the value from the contactComboBox
-  StringProperty contactProperty = new SimpleStringProperty(contactComboBox.getValue());
-  System.out.println("Contact Property: " + contactProperty);
-  String contactIdString = contactProperty.getValue().substring(0,contactProperty.getValue().indexOf(" ", 0));
-  int contactIdInt = Integer.parseInt( contactIdString );
+  String contactIdString = contactComboBox.getValue();
+  int contactIdInt = Integer.parseInt(contactIdString.substring( 0, contactIdString.indexOf( " ", 0 ) ));
+  IntegerProperty contactIdProperty = new SimpleIntegerProperty(contactIdInt);
   
   // Get the LocalDate from the startDatePicker
   LocalDate startDate = startDatePicker.getValue();
@@ -246,11 +240,12 @@ public void addAppointmentButtonListener( ActionEvent actionEvent)
 }
   
   // Create a new Appointment Object and add it to the ObservableList
-//  clientAppointments.add(new Appointment(currentAppointmentIdProperty, titleProperty, descriptionProperty,
-//      locationProperty, appointmentTypeProperty, startProperty, endProperty, userIdProperty, customerIdProperty,
-//      contactProperty) );
+  clientAppointments.add(new Appointment(currentAppointmentIdProperty, titleProperty, descriptionProperty,
+      locationProperty, appointmentTypeProperty, startProperty, endProperty, userIdIntProperty, customerIdIntProperty,
+      contactIdProperty));
   
-//  Stage stage = (Stage) addAppointmentButton.getScene().getWindow();
+  Stage stage = (Stage) addAppointmentButton.getScene().getWindow();
+  stage.close();
 
 }
 

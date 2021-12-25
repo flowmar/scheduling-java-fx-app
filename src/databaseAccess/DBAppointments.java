@@ -19,7 +19,7 @@ public class DBAppointments {
  *
  * @throws SQLException Throws a SQLException if the SQL is malformed.
  */
-public static ObservableList<Appointment> getAllAppointments( ) throws SQLException {
+public static ObservableList<Appointment> getAllAppointments( ) {
 //    ObservableList<Customer> customers = new ArrayList<Customer>();
   ObservableList<Appointment> appointments = FXCollections.observableArrayList( );
   // Retrieve all stored customers from the database
