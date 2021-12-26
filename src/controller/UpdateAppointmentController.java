@@ -116,10 +116,6 @@ public void populateContactComboBox()
 public void populateCustomerIdComboBox()
 {
   ObservableList<String> customersArrayList = DBAppointments.getCustomers();
-//  for (Customer c : customersArrayList)
-//  {
-//
-//  }
   customerIdComboBox.setItems( customersArrayList );
 }
 
@@ -261,8 +257,11 @@ public void retrieveAndPopulateAppointment()
       endTimeTextField.setText(endTime);
       
     }
-  
-  
+
+/**
+ * Uses the information in the form fields to update the selected <code>Appointment</code>
+  * @param actionEvent User click on the 'Update' <code>Button</code>
+ */
 public void updateAppointmentButtonListener( ActionEvent actionEvent)
 {
   System.out.println( "Update appointment!" );
@@ -344,6 +343,10 @@ public void updateAppointmentButtonListener( ActionEvent actionEvent)
 
 }
 
+/**
+ * Cancels the Update Appointment action and closes the window
+ * @param actionEvent User click on the 'Cancel' <code>Button</code>
+ */
 public void cancelButtonListener(ActionEvent actionEvent)
 {
   System.out.println( "Cancel add appointment!" );

@@ -29,6 +29,7 @@ import static scheduler.Main.selectedCustomer;
  * Controller for the Update Customer <code>Scene</code>
  */
 public class UpdateCustomerController implements Initializable {
+
 /**
  * Fields
  */

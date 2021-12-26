@@ -144,7 +144,7 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws IOException, 
   String   customerName    = deleteSelection.getCustomerName( );
   
   Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
-  alert.setTitle( "Delete Confirmation" );
+  alert.setTitle( "Delete Customer Confirmation" );
   String deleteConfirmationText = "Are you sure you want to delete customer " + customerName + "?";
   alert.setContentText( deleteConfirmationText );
   
@@ -322,7 +322,7 @@ public void updateButtonListener( ActionEvent actionEvent ) {
 public void viewAppointmentsButtonListener( ActionEvent actionEvent ) throws IOException
 {
   // Load the View Appointments FXML
-  Parent viewAppointmentsFXML = FXMLLoader.load(getClass().getResource( "../views/viewAppointments.fxml"));
+  Parent viewAppointmentsFXML = FXMLLoader.load(getClass().getResource( "../views/viewAppointmentsAll.fxml" ));
   // Create the new stage and scene
   Scene viewAppointmentsScene = new Scene(viewAppointmentsFXML, 975, 400);
   Stage viewAppointmentsStage = new Stage();

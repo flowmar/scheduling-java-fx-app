@@ -103,6 +103,10 @@ public void autogenerateAppointmentId()
   int appointmentsSize = clientAppointments.size();
   int lastAppointmentInt = appointmentsSize - 1;
   currentAppointmentId = clientAppointments.get(lastAppointmentInt).getAppointmentId();
+  if (currentAppointmentId == lastAppointmentInt) {
+    int r = ( int ) (Math.random() * (1000 - 1) + 1);
+    currentAppointmentId += r;
+  }
   appointmentIdTextField.setText( String.valueOf( currentAppointmentId ) );
 }
 

@@ -1,6 +1,7 @@
 package controller;
 
 import databaseAccess.DBAppointments;
+import databaseAccess.DBQuery;
 import databaseAccess.JDBC;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -11,18 +12,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import models.Appointment;
 import scheduler.Main;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ViewAppointmentsController implements Initializable
@@ -88,6 +89,12 @@ private RadioButton monthViewRadioButton;
 
 @FXML
 private RadioButton weekViewRadioButton;
+
+@FXML
+private RadioButton allViewRadioButton;
+
+@FXML
+private Label deleteAppointmentConfirmationLabel;
 
 /**
  * Methods
@@ -190,48 +197,52 @@ public void exitButtonListener( ActionEvent actionEvent)
 };
 
 
-public void deleteButtonListener( ActionEvent actionEvent){
-//  // Get the customerId from the selected customer
-//  Customer deleteSelection = viewAppointmentsTableView.getSelectionModel( ).getSelectedItem( );
-//  int      appointmentId    = deleteSelection.getAppointmentId();
+public void deleteButtonListener( ActionEvent actionEvent) throws SQLException
+{
+//  // Get the appointmentId from the selected Appointment
+  Appointment deleteSelection = viewAppointmentsTableView.getSelectionModel( ).getSelectedItem( );
+  int      appointmentId    = deleteSelection.getAppointmentId();
+  String appointmentType = deleteSelection.getType();
 //  String   customerName    = deleteSelection.getCustomerName( );
 //
-//  Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
-//  alert.setTitle( "Title" );
-//  String s = "Confirm to clear text in text field !";
-//  alert.setContentText( s );
-//
-//  Optional<ButtonType> result = alert.showAndWait( );
-//
-//  if ( ( result.isPresent( ) ) && ( result.get( ) == ButtonType.OK ) ) {
-//
-//    System.out.println( "Ok clicked!" );
-//    // Connect to the database
-////    JDBC.makeConnection( );
-////    DBCountries.checkDateConversion( );
-//    Connection connection = JDBC.getConnection( );
-//
+  Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
+  alert.setTitle( "Delete Appointment" );
+  String s = "Are you sure you want to delete " + appointmentType + " meeting with ID " + appointmentId;
+  alert.setContentText( s );
+
+  Optional<ButtonType> result = alert.showAndWait( );
+
+  if ( ( result.isPresent( ) ) && ( result.get( ) == ButtonType.OK ) ) {
+
+    System.out.println( "Ok clicked!" );
+    // Connect to the database
+//    JDBC.makeConnection( );
+//    DBCountries.checkDateConversion( );
+    Connection connection = JDBC.getConnection( );
+
 //    // Use SQL query to delete the customer at that ID
-//    String deleteStatement = "DELETE FROM client_schedule.customers WHERE Customer_ID = ?";
-//
+    String deleteStatement = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
+
 //    // Prepare the statement
-//    DBQuery.setPreparedStatement( connection, deleteStatement );
-//    PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
-//
-//    // Execute the statement
-//    preparedStatement.setString( 1, String.valueOf( customerId ) );
-//    preparedStatement.execute( );
-//
-//    // Remove from ObservableList to update TableView
-//    customerRecords.remove( deleteSelection );
-//
-////     Display Delete Confirmation
-//    deleteConfirmationLabel.setText( "Customer " + deleteSelection.getCustomerName( ) + " has been deleted!" );
-//  }
-//
-//  if ( ( result.isPresent( ) ) && ( result.get( ) == ButtonType.NO ) ) {
-//    System.out.println( "Cancel clicked!" );
-//  }
+      DBQuery.setPreparedStatement( connection, deleteStatement );
+   
+    PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
+
+    // Execute the statement
+    preparedStatement.setString( 1, String.valueOf( appointmentId ) );
+    preparedStatement.execute( );
+
+    // Remove from ObservableList to update TableView
+    clientAppointments.remove( deleteSelection );
+
+    //     Display Delete Confirmation
+    deleteAppointmentConfirmationLabel.setText( appointmentType + " with ID " + appointmentId + " has been " +
+                                                    "cancelled!" );
+  }
+
+  if ( ( result.isPresent( ) ) && ( result.get( ) == ButtonType.NO ) ) {
+    System.out.println( "Cancel clicked!" );
+  }
 };
 
 public void addButtonListener( ActionEvent actionEvent){
@@ -269,6 +280,7 @@ public void updateButtonListener( ActionEvent actionEvent){
   updateAppointmentStage.show();
 };
 
+public void allViewRadioButtonListener(ActionEvent actionEvent){};
 
 public void monthViewRadioButtonListener(ActionEvent actionEvent){};
 

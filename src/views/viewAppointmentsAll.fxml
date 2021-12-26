@@ -135,7 +135,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <RadioButton fx:id="monthViewRadioButton" layoutX="216.0" layoutY="32.0" mnemonicParsing="false" onAction="#monthViewRadioButtonListener" selected="true" text="Month View" textFill="WHITE">
+            <RadioButton fx:id="monthViewRadioButton" layoutX="322.0" layoutY="32.0" mnemonicParsing="false" onAction="#monthViewRadioButtonListener" text="Month" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
@@ -143,11 +143,24 @@
                   <ToggleGroup fx:id="appointmentViewRadioButtonGroup" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="weekViewRadioButton" layoutX="350.0" layoutY="32.0" mnemonicParsing="false" onAction="#weekViewRadioButtonListener" text="Week View" textFill="WHITE" toggleGroup="$appointmentViewRadioButtonGroup">
+            <RadioButton fx:id="weekViewRadioButton" layoutX="403.0" layoutY="32.0" mnemonicParsing="false" onAction="#weekViewRadioButtonListener" text="Week" textFill="WHITE" toggleGroup="$appointmentViewRadioButtonGroup">
                <font>
                   <Font size="16.0" />
                </font>
             </RadioButton>
+            <RadioButton fx:id="allViewRadioButton" layoutX="264.0" layoutY="32.0" mnemonicParsing="false" onAction="#allViewRadioButtonListener" selected="true" text="All" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="appointmentViewRadioButtonGroup1" />
+               </toggleGroup>
+            </RadioButton>
+            <Label fx:id="deleteAppointmentConfirmationLabel" layoutX="307.0" layoutY="309.0" textFill="#ee0d0d">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </children>

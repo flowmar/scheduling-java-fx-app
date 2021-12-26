@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.TimeZone;
 
 public class DBAppointments {
 
@@ -19,7 +23,8 @@ public class DBAppointments {
  *
  * @throws SQLException Throws a SQLException if the SQL is malformed.
  */
-public static ObservableList<Appointment> getAllAppointments( ) {
+public static ObservableList<Appointment> getAllAppointments( )
+{
 //    ObservableList<Customer> customers = new ArrayList<Customer>();
   ObservableList<Appointment> appointments = FXCollections.observableArrayList( );
   // Retrieve all stored customers from the database
@@ -45,6 +50,14 @@ public static ObservableList<Appointment> getAllAppointments( ) {
       int    customerId    = appointmentsResultSet.getInt( "Customer_ID" );
       int    userId        = appointmentsResultSet.getInt( "User_ID" );
       int    contactId     = appointmentsResultSet.getInt( "Contact_ID" );
+      
+      // Convert the Timestamps from UTC to the Local timezone
+      TimeZone userTimeZone = TimeZone.getDefault();
+  
+      DateFormat localFormat = new SimpleDateFormat("yyy-MM-dd 'T' HH:mm");
+  
+      LocalDateTime localTime = start.toLocalDateTime();
+      System.out.println( "Local Time: " + localTime );
       
       // Convert all to Properties to display in the TableView
       IntegerProperty      appointmentIdProperty = new SimpleIntegerProperty( appointmentId );
