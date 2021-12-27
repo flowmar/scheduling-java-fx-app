@@ -10,15 +10,13 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 
-/**
- *
- */
+
 public class DBCountries
 {
 
 /**
- *
- * @return
+ * Returns an <code>ObservableList</code> containing each <code>Country</code>
+ * @return An <code>ObservableList</code> containing each <code>Country</code>
  */
   public static ObservableList<Country> getAllCountries()
   {
@@ -63,9 +61,9 @@ public class DBCountries
         System.out.println("CD: " + ts.toLocalDateTime().toString());
       }
     }
-    catch ( SQLException throwables)
+    catch ( SQLException err)
     {
-      throwables.printStackTrace();
+      err.printStackTrace();
     }
   }
 }

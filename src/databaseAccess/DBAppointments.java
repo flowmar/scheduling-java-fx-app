@@ -17,6 +17,9 @@ import java.util.TimeZone;
 
 public class DBAppointments {
 
+public DBAppointments( ) {
+}
+
 /**
  * Retrieves all <code>Appointment</code> records from the appointment table.
  *
@@ -150,10 +153,10 @@ public static ObservableList<String> getContacts( )
   return contacts;
 }
 
-
-public DBAppointments( ) {
-}
-
+/**
+ * Retrieves all customers and returns them in an <code>ObservableList</code>
+ * @return An <code>ObservableList</code> of all Customers
+ */
 public static ObservableList<String> getCustomers()
 {
   System.out.println( "Get Customers");
@@ -183,8 +186,12 @@ public static ObservableList<String> getCustomers()
   }
   return customerChoices;
 }
-  
-  public static ObservableList<String> getUsers()
+
+/**
+ * Retrieves a list of all users from the database
+ * @return An <code>ObservableList</code> containing each <code>User</code>
+ */
+public static ObservableList<String> getUsers()
 {
   ObservableList<String> users       = FXCollections.observableArrayList( );
   
@@ -244,6 +251,11 @@ public static String getCustomerIdAndName(int customerIdNumber)
     return customerIdAndName;
 }
 
+/**
+ * Returns the Customer_ID in the form of a <code>String</code>
+ * @param customerOption The customer
+ * @return The Customer_ID as a <code>String</code>
+ */
 public static int getCustomerIdString(String customerOption)
 {
   String customerIdString = customerOption.substring(0, customerOption.indexOf(" ", 0));

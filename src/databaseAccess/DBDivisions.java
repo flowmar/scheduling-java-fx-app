@@ -11,8 +11,8 @@ import java.sql.SQLException;
 public class DBDivisions {
 
 /**
- *
- * @return
+ * Retrieves an <code>ObservableList</code> containing each US <code>Division</code>
+ * @return An <code>ObservableList</code> containing each US <code>Division</code>
  */
 public static ObservableList<Division> getUSADivisions( ) {
   ObservableList<Division> divisionList = FXCollections.observableArrayList( );
@@ -47,8 +47,8 @@ public static ObservableList<Division> getUSADivisions( ) {
 }
 
 /**
- *
- * @return
+ *Retrieves an <code>ObservableList</code> containing each Canadian <code>Division</code>
+ * @return An <code>ObservableList</code> containing each Canadian <code>Division</code>
  */
 public static ObservableList<Division> getCanadaDivisions( ) {
   ObservableList<Division> divisionList = FXCollections.observableArrayList( );
@@ -82,8 +82,8 @@ public static ObservableList<Division> getCanadaDivisions( ) {
 }
 
 /**
- *
- * @return
+ *Retrieves an <code>ObservableList</code> containing each UK <code>Division</code>
+ * @return An <code>ObservableList</code> containing each UK <code>Division</code>
  */
 public static ObservableList<Division> getUKDivisions( ) {
 
@@ -114,8 +114,7 @@ public static ObservableList<Division> getUKDivisions( ) {
   catch ( SQLException e ) {
     e.printStackTrace( );
   }
-
-
+  
   return divisionList;
 
 }

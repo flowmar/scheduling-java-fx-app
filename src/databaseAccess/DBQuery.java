@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
+/**
+ * Helper function for querying the database
+ */
 public class DBQuery
 {
 
