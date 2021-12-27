@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -114,7 +115,7 @@ public void initialize( URL url, ResourceBundle resourceBundle )
   {
     displayAppointments();
   }
-  catch (SQLException e)
+  catch (SQLException | ParseException e)
   {
     e.printStackTrace();
   }
@@ -124,7 +125,7 @@ public void initialize( URL url, ResourceBundle resourceBundle )
  * Obtains the stored <code>Appointment</code> records and displays them within a <code>TableView</code>
  * @throws SQLException Thrown if the SQL is malformed
  */
-public void displayAppointments() throws SQLException
+public void displayAppointments() throws SQLException, ParseException
 {
   System.out.println("Display appointment records.");
   // Obtain all Appointments from the database
@@ -137,8 +138,8 @@ public void displayAppointments() throws SQLException
   TableColumn<Appointment, String>  colDescription      = new TableColumn<>( "Description" );
   TableColumn<Appointment, String>  colLocation   = new TableColumn<>( "Location" );
   TableColumn<Appointment, String>  colType     = new TableColumn<>( "Type" );
-  TableColumn<Appointment, Timestamp> colStart      = new TableColumn<>( "Start" );
-  TableColumn<Appointment, Timestamp> colEnd        = new TableColumn<>( "End" );
+  TableColumn<Appointment, String> colStart      = new TableColumn<>( "Start" );
+  TableColumn<Appointment, String> colEnd        = new TableColumn<>( "End" );
   TableColumn<Appointment, Number>    colCustomerId = new TableColumn<>( "Customer_ID" );
   TableColumn<Appointment, Number>  colUserId        = new TableColumn<>( "User_ID" );
   TableColumn<Appointment, Number>  colContactId        = new TableColumn<>( "Contact_ID" );

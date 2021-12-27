@@ -195,8 +195,8 @@ public void addAppointmentButtonListener( ActionEvent actionEvent)
   ZonedDateTime startTimeInUTC = ZonedDateTime.of(ldt, ZoneId.of( "UTC" ) );
    System.out.println("UTC: " + startTimeInUTC);
    // Convert the ZonedDateTime into a Timestamp so that it can be used in the database
-  Timestamp startTimestamp = Timestamp.valueOf(startTimeInUTC.toLocalDateTime());
-  ObjectProperty<Timestamp> startProperty = new SimpleObjectProperty<Timestamp>( startTimestamp );
+  Timestamp      startTimestamp = Timestamp.valueOf(startTimeInUTC.toLocalDateTime());
+  StringProperty startProperty  = new SimpleStringProperty( startTimestamp.toString() );
   
    
    // Get the LocalDate from the endDatePicker
@@ -208,8 +208,8 @@ public void addAppointmentButtonListener( ActionEvent actionEvent)
   // Create a ZonedDateTime from the LocalDateTime
   ZonedDateTime endTimeInUTC = ZonedDateTime.of(eldt, ZoneId.of("UTC"));
   // Convert the ZonedDateTime into a Timestamp so it can be used in the database
-  Timestamp endTimestamp = Timestamp.valueOf(endTimeInUTC.toLocalDateTime());
-  ObjectProperty<Timestamp> endProperty = new SimpleObjectProperty<Timestamp>( endTimestamp );
+  Timestamp      endTimestamp = Timestamp.valueOf(endTimeInUTC.toLocalDateTime());
+  StringProperty endProperty  = new SimpleStringProperty( endTimestamp.toString() );
   
   // Create an IntegerProperty from the currentAppointmentId
   IntegerProperty currentAppointmentIdProperty = new SimpleIntegerProperty(currentAppointmentId);

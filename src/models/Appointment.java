@@ -16,11 +16,11 @@ private IntegerProperty           appointmentIdProperty;
 private StringProperty            titleProperty;
 private StringProperty            descriptionProperty;
 private StringProperty            locationProperty;
-private StringProperty            typeProperty;
-private ObjectProperty<Timestamp> startProperty;
-private IntegerProperty           userIdProperty;
-private ObjectProperty<Timestamp> endProperty;
-private IntegerProperty           customerIdProperty;
+private StringProperty  typeProperty;
+private StringProperty  startProperty;
+private IntegerProperty userIdProperty;
+private StringProperty  endProperty;
+private IntegerProperty customerIdProperty;
 private IntegerProperty           contactIdProperty;
 private int                       appointmentId;
 private String                    title;
@@ -43,8 +43,8 @@ public Appointment( IntegerProperty appointmentIdProperty,
                     StringProperty descriptionProperty,
                     StringProperty locationProperty,
                     StringProperty typeProperty,
-                    ObjectProperty<Timestamp> startProperty,
-                    ObjectProperty<Timestamp> endProperty,
+                    StringProperty startProperty,
+                    StringProperty endProperty,
                     IntegerProperty userIdProperty,
                     IntegerProperty customerIdProperty,
                     IntegerProperty contactIdProperty ) {
@@ -176,7 +176,7 @@ public StringProperty typeProperty( ) {
  *
  * @return The <code>start</code> time of the <code>Appointment</code>
  */
-public Timestamp getStart( ) {
+public String getStart( ) {
   return startProperty( ).get( );
 }
 
@@ -185,8 +185,8 @@ public Timestamp getStart( ) {
  *
  * @return The <code>start</code> time of the <code>Appointment</code>
  */
-public ObjectProperty<Timestamp> startProperty( ) {
-  if ( startProperty == null ) { startProperty = new SimpleObjectProperty<Timestamp>( this, "start" ); }
+public StringProperty startProperty( ) {
+  if ( startProperty == null ) { startProperty = new SimpleStringProperty( this, "start" ); }
   return startProperty;
 }
 
@@ -195,7 +195,7 @@ public ObjectProperty<Timestamp> startProperty( ) {
  *
  * @return The <code>end</code> time of the <code>Appointment</code>
  */
-public Timestamp getEnd( ) {
+public String getEnd( ) {
   return endProperty( ).get( );
 }
 
@@ -204,8 +204,8 @@ public Timestamp getEnd( ) {
  *
  * @return The <code>end</code> of the <code>Appointment</code>
  */
-public ObjectProperty<Timestamp> endProperty( ) {
-  if ( endProperty == null ) { endProperty = new SimpleObjectProperty<Timestamp>( this, "end" ); }
+public StringProperty endProperty( ) {
+  if ( endProperty == null ) { endProperty = new SimpleStringProperty( this, "end" ); }
   return endProperty;
 }
 

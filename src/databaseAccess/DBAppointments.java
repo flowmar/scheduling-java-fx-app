@@ -9,9 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.text.ParseException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.TimeZone;
 
 public class DBAppointments {
@@ -23,8 +24,7 @@ public class DBAppointments {
  *
  * @throws SQLException Throws a SQLException if the SQL is malformed.
  */
-public static ObservableList<Appointment> getAllAppointments( )
-{
+public static ObservableList<Appointment> getAllAppointments( ) throws ParseException {
 //    ObservableList<Customer> customers = new ArrayList<Customer>();
   ObservableList<Appointment> appointments = FXCollections.observableArrayList( );
   // Retrieve all stored customers from the database
@@ -53,11 +53,33 @@ public static ObservableList<Appointment> getAllAppointments( )
       
       // Convert the Timestamps from UTC to the Local timezone
       TimeZone userTimeZone = TimeZone.getDefault();
-  
-      DateFormat localFormat = new SimpleDateFormat("yyy-MM-dd 'T' HH:mm");
-  
-      LocalDateTime localTime = start.toLocalDateTime();
-      System.out.println( "Local Time: " + localTime );
+      System.out.println("User Time Zone: " + userTimeZone);
+      
+      // Create an Instant from the Timestamp in the database (UTC)
+      Instant       utcStartTime = start.toInstant();
+      Instant       utcEndTime = end.toInstant();
+      
+      // Convert the UTC time to the user's system timezone
+      ZonedDateTime userLocalStartTime = utcStartTime.atZone( ZoneId.of(userTimeZone.getID()) );
+      ZonedDateTime userLocalEndTime = utcEndTime.atZone( ZoneId.of(userTimeZone.getID()));
+      
+      System.out.println("UTC Start: " + utcStartTime);
+      System.out.println("UTC End: " + utcEndTime);
+      System.out.println("User localStartTime: " + userLocalStartTime);
+      System.out.println("User localEndTime: " + userLocalEndTime);
+      
+      // Extract the date and time and format them for the TableView
+      String userLocalStartTimeString = userLocalStartTime.toString();
+      String startDate = userLocalStartTimeString.substring(0, userLocalStartTimeString.indexOf("T"));
+      String startTime = userLocalStartTimeString.substring(userLocalStartTimeString.indexOf( "T", 0 ) + 1,
+          userLocalStartTimeString.indexOf( "T", 0 ) + 6);
+      String formattedStartDateTime = startDate + " at " + startTime;
+      
+      String userLocalEndTimeString = userLocalEndTime.toString();
+      String endDate = userLocalEndTimeString.substring(0, userLocalEndTimeString.indexOf("T") );
+      String endTime = userLocalEndTimeString.substring(userLocalEndTimeString.indexOf( "T", 0 ) + 1,
+          userLocalEndTimeString.indexOf("T", 0) + 6);
+      String formattedEndDateTime = endDate + " at " + endTime;
       
       // Convert all to Properties to display in the TableView
       IntegerProperty      appointmentIdProperty = new SimpleIntegerProperty( appointmentId );
@@ -65,9 +87,9 @@ public static ObservableList<Appointment> getAllAppointments( )
       StringProperty       descriptionProperty   = new SimpleStringProperty( description );
       StringProperty       locationProperty      = new SimpleStringProperty( location );
       StringProperty            typeProperty  = new SimpleStringProperty( type );
-      ObjectProperty<Timestamp> startProperty = new SimpleObjectProperty<>( start );
-      ObjectProperty<Timestamp>      endProperty   = new SimpleObjectProperty<>( end );
-      IntegerProperty      customerIdProperty    = new SimpleIntegerProperty( customerId );
+      StringProperty  startProperty      = new SimpleStringProperty( formattedStartDateTime );
+      StringProperty  endProperty        = new SimpleStringProperty( formattedEndDateTime );
+      IntegerProperty customerIdProperty = new SimpleIntegerProperty( customerId );
       IntegerProperty      userIdProperty        = new SimpleIntegerProperty( userId );
       IntegerProperty      contactIdProperty     = new SimpleIntegerProperty( contactId );
       
