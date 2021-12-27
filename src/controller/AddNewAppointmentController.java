@@ -80,31 +80,30 @@ private Button addAppointmentButton;
 
 /**
  * Initializes the Add Appointment Form
+ *
  * @param url
  * @param resourceBundle
  */
 @Override
-public void initialize( URL url, ResourceBundle resourceBundle )
-{
+public void initialize( URL url, ResourceBundle resourceBundle ) {
   // Create appointmentId for new appointment and
-  autogenerateAppointmentId();
-  populateContactComboBox();
-  populateCustomerIdComboBox();
-  populateAppointmentTypeComboBox();
-  populateUserIdComboBox();
+  autogenerateAppointmentId( );
+  populateContactComboBox( );
+  populateCustomerIdComboBox( );
+  populateAppointmentTypeComboBox( );
+  populateUserIdComboBox( );
   
 }
 
 /**
  * Auto generates a new <code>appointmentId</code>
  */
-public void autogenerateAppointmentId()
-{
-  int appointmentsSize = clientAppointments.size();
+public void autogenerateAppointmentId( ) {
+  int appointmentsSize   = clientAppointments.size( );
   int lastAppointmentInt = appointmentsSize - 1;
-  currentAppointmentId = clientAppointments.get(lastAppointmentInt).getAppointmentId();
-  if (currentAppointmentId == lastAppointmentInt) {
-    int r = ( int ) (Math.random() * (1000 - 1) + 1);
+  currentAppointmentId = clientAppointments.get( lastAppointmentInt ).getAppointmentId( );
+  if ( currentAppointmentId == lastAppointmentInt ) {
+    int r = ( int ) ( Math.random( ) * ( 1000 - 1 ) + 1 );
     currentAppointmentId += r;
   }
   appointmentIdTextField.setText( String.valueOf( currentAppointmentId ) );
@@ -113,119 +112,117 @@ public void autogenerateAppointmentId()
 /**
  * Populates the <code>contactComboBox</code> with data from the database
  */
-public void populateContactComboBox()
-{
+public void populateContactComboBox( ) {
   // Get all contacts from the database
-  ObservableList<String> contactsList = DBAppointments.getContacts();
+  ObservableList<String> contactsList = DBAppointments.getContacts( );
   // Populate the contactComboBox
-  contactComboBox.setItems(contactsList);
+  contactComboBox.setItems( contactsList );
 }
 
 /**
  * Populates the <code>CustomerIdComboBox</code> with data from the database
  */
-public void populateCustomerIdComboBox()
-{
-  ObservableList<String> customersArrayList = DBAppointments.getCustomers();
+public void populateCustomerIdComboBox( ) {
+  ObservableList<String> customersArrayList = DBAppointments.getCustomers( );
   customerIdComboBox.setItems( customersArrayList );
 }
 
 /**
  * Populates the <code>appointmentTypeComboBox</code> with the various meeting types
  */
-public void populateAppointmentTypeComboBox()
-{
-  ObservableList<String> appointmentTypesList =  FXCollections.observableArrayList( "Consultation", "Planning " + "Session",
+public void populateAppointmentTypeComboBox( ) {
+  ObservableList<String> appointmentTypesList = FXCollections.observableArrayList( "Consultation", "Planning " +
+                                                                                                       "Session",
       "De-Briefing", "Closing", "Evaluation" );
-  appointmentTypeComboBox.setItems(appointmentTypesList);
+  appointmentTypeComboBox.setItems( appointmentTypesList );
 }
 
 /**
  * Populates the <code>userIdComboBox</code> with the <code>User</code>s from the database
  */
-public void populateUserIdComboBox()
-{
-  ObservableList<String> userIdList = DBAppointments.getUsers();
-  userIdComboBox.setItems(userIdList);
+public void populateUserIdComboBox( ) {
+  ObservableList<String> userIdList = DBAppointments.getUsers( );
+  userIdComboBox.setItems( userIdList );
 }
 
 
 /**
  * Adds the new <code>Appointment</code> to the <code>ObservableList<Appointment></code>
+ *
  * @param actionEvent User click on the <code>Button</code>
  */
-public void addAppointmentButtonListener( ActionEvent actionEvent)
-{
+public void addAppointmentButtonListener( ActionEvent actionEvent ) {
   System.out.println( "Add appointment clicked!" );
-  System.out.println( "CustomerIdComboBox: " + customerIdComboBox.getValue() );
-  System.out.println( "UserIdComboBox: " + userIdComboBox.getValue() );
-  System.out.println( "ContactIdComboBox: " + contactComboBox.getValue() );
+  System.out.println( "CustomerIdComboBox: " + customerIdComboBox.getValue( ) );
+  System.out.println( "UserIdComboBox: " + userIdComboBox.getValue( ) );
+  System.out.println( "ContactIdComboBox: " + contactComboBox.getValue( ) );
   
   // Obtain the value from the customerIdComboBox
-  String customerIdString = customerIdComboBox.getValue();
-  int customerIdInt = Integer.parseInt(customerIdString.substring( 0, customerIdString.indexOf(" ", 0 ) ));
+  String          customerIdString      = customerIdComboBox.getValue( );
+  int             customerIdInt         = Integer.parseInt( customerIdString.substring( 0, customerIdString.indexOf(
+      " ", 0 ) ) );
   IntegerProperty customerIdIntProperty = new SimpleIntegerProperty( customerIdInt );
   
   
   // Obtain the value from the userIdComboBox
-  String userIdString = userIdComboBox.getValue();
-  int userIdInt = Integer.parseInt(userIdString.substring( 0, userIdString.indexOf(" ", 0 )));
+  String          userIdString      = userIdComboBox.getValue( );
+  int             userIdInt         = Integer.parseInt( userIdString.substring( 0, userIdString.indexOf( " ", 0 ) ) );
   IntegerProperty userIdIntProperty = new SimpleIntegerProperty( userIdInt );
   
   //  String userIdString = userIdProperty.getValue().substring(0,userIdProperty.toString().indexOf( " ", 0 ));
-  StringProperty titleProperty = new SimpleStringProperty(appointmentTitleTextField.getText());
-  StringProperty descriptionProperty = new SimpleStringProperty(appointmentDescriptionTextField.getText());
-  StringProperty locationProperty = new SimpleStringProperty(appointmentLocationTextField.getText());
-  StringProperty appointmentTypeProperty = new SimpleStringProperty(appointmentTypeComboBox.getValue());
+  StringProperty titleProperty           = new SimpleStringProperty( appointmentTitleTextField.getText( ) );
+  StringProperty descriptionProperty     = new SimpleStringProperty( appointmentDescriptionTextField.getText( ) );
+  StringProperty locationProperty        = new SimpleStringProperty( appointmentLocationTextField.getText( ) );
+  StringProperty appointmentTypeProperty = new SimpleStringProperty( appointmentTypeComboBox.getValue( ) );
   
   // Obtain the value from the contactComboBox
-  String contactIdString = contactComboBox.getValue();
-  int contactIdInt = Integer.parseInt(contactIdString.substring( 0, contactIdString.indexOf( " ", 0 ) ));
-  IntegerProperty contactIdProperty = new SimpleIntegerProperty(contactIdInt);
+  String          contactIdString   = contactComboBox.getValue( );
+  int             contactIdInt      = Integer.parseInt( contactIdString.substring( 0, contactIdString.indexOf( " ",
+      0 ) ) );
+  IntegerProperty contactIdProperty = new SimpleIntegerProperty( contactIdInt );
   
   // Get the LocalDate from the startDatePicker
-  LocalDate startDate = startDatePicker.getValue();
+  LocalDate startDate = startDatePicker.getValue( );
   // Get the value in the startTimeTextField and convert to a LocalTime
-  LocalTime startTime = LocalTime.parse(startTimeTextField.getText());
-  System.out.println(startTime);
+  LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
+  System.out.println( startTime );
   // Create a LocalDateTime from the LocalDate and LocalTime values
-  LocalDateTime ldt = startDate.atTime(startTime);
-  System.out.println("LDT: " + ldt);
+  LocalDateTime ldt = startDate.atTime( startTime );
+  System.out.println( "LDT: " + ldt );
   // Create a ZonedDateTime from the LocalDateTime
-  ZonedDateTime startTimeInUTC = ZonedDateTime.of(ldt, ZoneId.of( "UTC" ) );
-   System.out.println("UTC: " + startTimeInUTC);
-   // Convert the ZonedDateTime into a Timestamp so that it can be used in the database
-  Timestamp      startTimestamp = Timestamp.valueOf(startTimeInUTC.toLocalDateTime());
-  StringProperty startProperty  = new SimpleStringProperty( startTimestamp.toString() );
+  ZonedDateTime startTimeInUTC = ZonedDateTime.of( ldt, ZoneId.of( "UTC" ) );
+  System.out.println( "UTC: " + startTimeInUTC );
+  // Convert the ZonedDateTime into a Timestamp so that it can be used in the database
+  Timestamp      startTimestamp = Timestamp.valueOf( startTimeInUTC.toLocalDateTime( ) );
+  StringProperty startProperty  = new SimpleStringProperty( startTimestamp.toString( ) );
   
-   
-   // Get the LocalDate from the endDatePicker
-  LocalDate endDate = endDatePicker.getValue();
+  
+  // Get the LocalDate from the endDatePicker
+  LocalDate endDate = endDatePicker.getValue( );
   // Get the value in the endTimeTextField and convert it to a LocalTime
-  LocalTime endTime = LocalTime.parse(endTimeTextField.getText());
+  LocalTime endTime = LocalTime.parse( endTimeTextField.getText( ) );
   // Create a LocalDateTime from the LocalDate and LocalTime values
-  LocalDateTime eldt = endDate.atTime(endTime);
+  LocalDateTime eldt = endDate.atTime( endTime );
   // Create a ZonedDateTime from the LocalDateTime
-  ZonedDateTime endTimeInUTC = ZonedDateTime.of(eldt, ZoneId.of("UTC"));
+  ZonedDateTime endTimeInUTC = ZonedDateTime.of( eldt, ZoneId.of( "UTC" ) );
   // Convert the ZonedDateTime into a Timestamp so it can be used in the database
-  Timestamp      endTimestamp = Timestamp.valueOf(endTimeInUTC.toLocalDateTime());
-  StringProperty endProperty  = new SimpleStringProperty( endTimestamp.toString() );
+  Timestamp      endTimestamp = Timestamp.valueOf( endTimeInUTC.toLocalDateTime( ) );
+  StringProperty endProperty  = new SimpleStringProperty( endTimestamp.toString( ) );
   
   // Create an IntegerProperty from the currentAppointmentId
-  IntegerProperty currentAppointmentIdProperty = new SimpleIntegerProperty(currentAppointmentId);
+  IntegerProperty currentAppointmentIdProperty = new SimpleIntegerProperty( currentAppointmentId );
   
   // Prepare the SQL statement and connection
-  Connection connection = JDBC.getConnection();
+  Connection connection = JDBC.getConnection( );
   String insertStatement = "INSERT INTO client_schedule.appointments(Title, Description, Location, " +
-                                "Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?,?,  " +
-                                "? ,?)";
+                               "Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?,?,  " +
+                               "? ,?)";
   
-  try
-  {
+  try {
     DBQuery.setPreparedStatement( connection, insertStatement );
-  
+    
     PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
-  
+    
     // Add the new appointment to the database
     preparedStatement.setString( 1, titleProperty.getValue( ) );
     preparedStatement.setString( 2, descriptionProperty.getValue( ) );
@@ -238,31 +235,30 @@ public void addAppointmentButtonListener( ActionEvent actionEvent)
     preparedStatement.setString( 9, String.valueOf( contactIdInt ) );
     preparedStatement.execute( );
   }
-  catch ( SQLException e )
-  {
-  e.printStackTrace( );
-}
+  catch ( SQLException e ) {
+    e.printStackTrace( );
+  }
   
   // Create a new Appointment Object and add it to the ObservableList
-  clientAppointments.add(new Appointment(currentAppointmentIdProperty, titleProperty, descriptionProperty,
+  clientAppointments.add( new Appointment( currentAppointmentIdProperty, titleProperty, descriptionProperty,
       locationProperty, appointmentTypeProperty, startProperty, endProperty, userIdIntProperty, customerIdIntProperty,
-      contactIdProperty));
+      contactIdProperty ) );
   
-  Stage stage = (Stage) addAppointmentButton.getScene().getWindow();
-  stage.close();
-
+  Stage stage = ( Stage ) addAppointmentButton.getScene( ).getWindow( );
+  stage.close( );
+  
 }
 
 /**
  * Cancels the operation and closes the window
+ *
  * @param actionEvent User click on the <code>Button</code>
  */
-public void cancelButtonListener(ActionEvent actionEvent)
-{
+public void cancelButtonListener( ActionEvent actionEvent ) {
   System.out.println( "Cancel add appointment!" );
   
-  Stage stage = (Stage) cancelButton.getScene().getWindow();
-  stage.close();
+  Stage stage = ( Stage ) cancelButton.getScene( ).getWindow( );
+  stage.close( );
 }
 
 }

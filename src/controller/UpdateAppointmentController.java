@@ -81,6 +81,7 @@ private Button updateAppointmentButton;
 
 /**
  * Initializes the Update Appointment Form
+ *
  * @param url
  * @param resourceBundle
  */
@@ -140,7 +141,7 @@ public void populateUserIdComboBox( ) {
 public void retrieveAndPopulateAppointment( ) {
   
   Appointment selectedAppointmentToUpdate = Main.selectedAppointment;
-
+  
   // Fill in TextFields with data from database
   appointmentIdTextField.setText( String.valueOf( selectedAppointmentToUpdate.appointmentIdProperty( ).getValue( ) ) );
   appointmentTitleTextField.setText( String.valueOf( selectedAppointmentToUpdate.titleProperty( ).getValue( ) ) );
@@ -211,12 +212,12 @@ public void retrieveAndPopulateAppointment( ) {
   
   // Get the Start Timestamp from the database
   String selectedAppointmentStartTimestamp = selectedAppointmentToUpdate.startProperty( ).getValue( );
-  String    timestampString                   = selectedAppointmentStartTimestamp.toString( );
+  String timestampString                   = selectedAppointmentStartTimestamp.toString( );
   System.out.println( "Timestamp String: " + timestampString );
   // Separate the date from the time
-  String startDate             = timestampString.substring( 0, timestampString.indexOf( " ", 0 ) );
-  int indexOfT = timestampString.indexOf("t");
-  String startTime             = timestampString.substring(indexOfT + 2);
+  String startDate = timestampString.substring( 0, timestampString.indexOf( " ", 0 ) );
+  int    indexOfT  = timestampString.indexOf( "t" );
+  String startTime = timestampString.substring( indexOfT + 2 );
   
   System.out.println( "Start Date: " + startDate );
   System.out.println( "Start Time: " + startTime );
@@ -227,13 +228,13 @@ public void retrieveAndPopulateAppointment( ) {
   
   // Get the End Timestamp from the database
   String selectedAppointmentEndTimestamp = selectedAppointmentToUpdate.endProperty( ).getValue( );
-  String    endTimestampString              = selectedAppointmentEndTimestamp.toString( );
+  String endTimestampString              = selectedAppointmentEndTimestamp.toString( );
   System.out.println( "Timestamp String: " + endTimestampString );
   
   // Separate the date from the time
-  String endDate                  = endTimestampString.substring( 0, endTimestampString.indexOf( " ", 0 ) );
-  int indexOfTEnd = timestampString.indexOf("t");
-  String endTime = endTimestampString.substring( indexOfTEnd + 2);
+  String endDate     = endTimestampString.substring( 0, endTimestampString.indexOf( " ", 0 ) );
+  int    indexOfTEnd = timestampString.indexOf( "t" );
+  String endTime     = endTimestampString.substring( indexOfTEnd + 2 );
   
   System.out.println( "End Date: " + endDate );
   System.out.println( "End Time: " + endTime );
@@ -248,8 +249,7 @@ public void retrieveAndPopulateAppointment( ) {
  *
  * @param actionEvent User click on the 'Update' <code>Button</code>
  */
-public void updateAppointmentButtonListener( ActionEvent actionEvent ) throws ParseException
-{
+public void updateAppointmentButtonListener( ActionEvent actionEvent ) throws ParseException {
   System.out.println( "Update appointment!" );
   
   try {

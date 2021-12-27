@@ -35,33 +35,33 @@ public class ViewCustomerRecordsController implements Initializable {
 public static ObservableList<Customer> customerRecords;
 
 @FXML
-public TableView<Customer> customerRecordsTableView;
+public  TableView<Customer>            customerRecordsTableView;
 @FXML
 private TableColumn<Customer, Integer> colCustomerID;
 @FXML
-private TableColumn<Customer, String> colCustomerName;
+private TableColumn<Customer, String>  colCustomerName;
 @FXML
-private TableColumn<Customer, String> colAddress;
+private TableColumn<Customer, String>  colAddress;
 @FXML
-private TableColumn<Customer, String> colPostalCode;
+private TableColumn<Customer, String>  colPostalCode;
 @FXML
-private TableColumn<Customer, String> colDivision;
+private TableColumn<Customer, String>  colDivision;
 @FXML
-private TableColumn<Customer, String> colCountry;
+private TableColumn<Customer, String>  colCountry;
 @FXML
-private TableColumn<Customer, String> colPhone;
+private TableColumn<Customer, String>  colPhone;
 @FXML
-private Button exitButton;
+private Button                         exitButton;
 @FXML
-private Button deleteButton;
+private Button                         deleteButton;
 @FXML
-private Button viewAppointmentsButton;
+private Button                         viewAppointmentsButton;
 @FXML
-private Button updateButton;
+private Button                         updateButton;
 @FXML
-private Button addButton;
+private Button                         addButton;
 @FXML
-private Label deleteConfirmationLabel;
+private Label                          deleteConfirmationLabel;
 
 /**
  * Methods
@@ -82,11 +82,12 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
   catch ( SQLException e ) {
     e.printStackTrace( );
   }
-
+  
 }
 
 /**
  * Obtains the stored customer records from the database and displays it within the <code>TableView</code>
+ *
  * @throws SQLException Thrown if SQL is malformed
  */
 public void displayCustomerRecords( ) throws SQLException {
@@ -154,7 +155,7 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws IOException, 
   if ( ( answer.isPresent( ) ) && ( answer.get( ) == ButtonType.OK ) ) {
     
     System.out.println( "Ok clicked!" );
-
+    
     Connection connection = JDBC.getConnection( );
     
     // Use SQL query to delete the customer at that ID
@@ -170,7 +171,7 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws IOException, 
     
     // Remove from ObservableList to update TableView
     customerRecords.remove( deleteSelection );
-
+    
     // Display Delete Confirmation
     deleteConfirmationLabel.setText( "Customer " + deleteSelection.getCustomerName( ) + " has been deleted!" );
   }
@@ -241,22 +242,22 @@ public void updateButtonListener( ActionEvent actionEvent ) {
 
 /**
  * Handles click of 'View Appointments' button. Opens the 'View Appointments' window
+ *
  * @param actionEvent A user click on the button
  */
-public void viewAppointmentsButtonListener( ActionEvent actionEvent ) throws IOException
-{
+public void viewAppointmentsButtonListener( ActionEvent actionEvent ) throws IOException {
   // Load the View Appointments FXML
-  Parent viewAppointmentsFXML = FXMLLoader.load(getClass().getResource( "../views/viewAppointmentsAll.fxml" ));
+  Parent viewAppointmentsFXML = FXMLLoader.load( getClass( ).getResource( "../views/viewAppointmentsAll.fxml" ) );
   // Create the new stage and scene
-  Scene viewAppointmentsScene = new Scene(viewAppointmentsFXML, 975, 400);
-  Stage viewAppointmentsStage = new Stage();
-  viewAppointmentsStage.setTitle( "View Appointments");
-  viewAppointmentsStage.setScene(viewAppointmentsScene);
-  viewAppointmentsStage.show();
+  Scene viewAppointmentsScene = new Scene( viewAppointmentsFXML, 975, 400 );
+  Stage viewAppointmentsStage = new Stage( );
+  viewAppointmentsStage.setTitle( "View Appointments" );
+  viewAppointmentsStage.setScene( viewAppointmentsScene );
+  viewAppointmentsStage.show( );
   
   // Close out the ViewCustomerRecords stage
-  Stage customerStage = (Stage) viewAppointmentsButton.getScene().getWindow();
-  customerStage.close();
+  Stage customerStage = ( Stage ) viewAppointmentsButton.getScene( ).getWindow( );
+  customerStage.close( );
   
 }
 

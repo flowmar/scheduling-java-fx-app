@@ -66,6 +66,7 @@ private ComboBox<Division> divisionComboBox;
 
 /**
  * Initializes the Add Customer Scene
+ *
  * @param url
  * @param resourceBundle
  */
@@ -98,16 +99,29 @@ public void populateCountryComboBox( ) {
 }
 
 /**
+ * Gets the value from the countryComboBox and populates the DivisionComboBox accordingly.
+ *
+ * @param actionEvent User selects a choice from the countryComboBox
+ */
+public void countryComboBoxListener( ActionEvent actionEvent ) {
+  // Get the selected value in the ComboBox
+  Country countryComboValue = countryComboBox.getValue( );
+  // Get Id
+  int countryComboValueInt = countryComboValue.getId( );
+  // Populate the divisionComboBox with the corresponding territories
+  populateDivisionComboBox( countryComboValueInt );
+}
+
+/**
  * Populates the divisionComboBox based on the Country ID number of the selected choice in the countryComboBox
+ *
  * @param val The value of the Country ID
  */
-public void populateDivisionComboBox( int val )
-{
-  ObservableList<Division> divisionsList = FXCollections.observableArrayList();
+public void populateDivisionComboBox( int val ) {
+  ObservableList<Division> divisionsList = FXCollections.observableArrayList( );
   
   // Based on val, the ID number of the Country, obtain the required divisions from the database
-  switch ( val )
-  {
+  switch ( val ) {
     case 1:
       divisionsList = DBDivisions.getUSADivisions( );
       System.out.println( divisionsList );
@@ -137,20 +151,8 @@ public void populateDivisionComboBox( int val )
 }
 
 /**
- * Gets the value from the countryComboBox and populates the DivisionComboBox accordingly.
- * @param actionEvent User selects a choice from the countryComboBox
- */
-public void countryComboBoxListener( ActionEvent actionEvent ) {
-  // Get the selected value in the ComboBox
-  Country countryComboValue = countryComboBox.getValue( );
-  // Get Id
-  int countryComboValueInt = countryComboValue.getId( );
-  // Populate the divisionComboBox with the corresponding territories
-  populateDivisionComboBox( countryComboValueInt );
-}
-
-/**
  * Closes out the 'Add Customer' window
+ *
  * @param actionEvent User click on the 'Cancel' button
  */
 public void cancelButtonListener( ActionEvent actionEvent ) {
@@ -169,38 +171,38 @@ public void saveButtonListener( ActionEvent actionEvent ) throws SQLException {
   System.out.println( "Save Button Clicked!" );
   
   // Get values within the text fields
-  StringProperty name    = new SimpleStringProperty(customerNameTextField.getText( ));
-  StringProperty address = new SimpleStringProperty(addressTextField.getText( ));
-  StringProperty postalCode = new SimpleStringProperty(postalCodeTextField.getText( ));
-  StringProperty phoneNumber  = new SimpleStringProperty(phoneNumberTextField.getText( ));
-  StringProperty country = new SimpleStringProperty(countryComboBox.getValue( ).toString());
-  StringProperty  division         = new SimpleStringProperty(divisionComboBox.getValue().toString());
+  StringProperty name        = new SimpleStringProperty( customerNameTextField.getText( ) );
+  StringProperty address     = new SimpleStringProperty( addressTextField.getText( ) );
+  StringProperty postalCode  = new SimpleStringProperty( postalCodeTextField.getText( ) );
+  StringProperty phoneNumber = new SimpleStringProperty( phoneNumberTextField.getText( ) );
+  StringProperty country     = new SimpleStringProperty( countryComboBox.getValue( ).toString( ) );
+  StringProperty division    = new SimpleStringProperty( divisionComboBox.getValue( ).toString( ) );
   
   // Create IntegerProperties using the rest of the values
   IntegerProperty divisionIdProperty =
-      new SimpleIntegerProperty(Integer.parseInt(DBCustomerRecords.lookUpDivisionId(division.getValue())));
+      new SimpleIntegerProperty( Integer.parseInt( DBCustomerRecords.lookUpDivisionId( division.getValue( ) ) ) );
   
-  int         divisionId       = divisionIdProperty.getValue();
+  int divisionId = divisionIdProperty.getValue( );
   
   IntegerProperty countryIdProperty =
-      new SimpleIntegerProperty(DBCustomerRecords.lookUpCountryId(divisionIdProperty));
+      new SimpleIntegerProperty( DBCustomerRecords.lookUpCountryId( divisionIdProperty ) );
   
-  System.out.println("Division: " + division);
+  System.out.println( "Division: " + division );
   
-  System.out.println("Division ID String: " + divisionIdProperty.getValue());
+  System.out.println( "Division ID String: " + divisionIdProperty.getValue( ) );
   
-  IntegerProperty currentIdProperty = new SimpleIntegerProperty(currentId);
+  IntegerProperty currentIdProperty = new SimpleIntegerProperty( currentId );
   
-  System.out.println(name + " "
-      + address + " "
-      + postalCode + " "
-      + phoneNumber + " "
-      +country + " "
-      + division);
+  System.out.println( name + " "
+                          + address + " "
+                          + postalCode + " "
+                          + phoneNumber + " "
+                          + country + " "
+                          + division );
   
   
   // Assign the connection to a variable
-  Connection connection = JDBC.getConnection();
+  Connection connection = JDBC.getConnection( );
   
   // SQL statement for inserting a new Customer into the database
   String insertStatement =
@@ -208,21 +210,21 @@ public void saveButtonListener( ActionEvent actionEvent ) throws SQLException {
           "Phone, Division_ID) VALUES (?,?,?,?,?)";
   
   // Prepare the SQL statement and inserts the parameters into their respective indexes
-  DBQuery.setPreparedStatement(connection, insertStatement);
-  PreparedStatement preparedStatement = DBQuery.getPreparedStatement();
+  DBQuery.setPreparedStatement( connection, insertStatement );
+  PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
   
   // Set the Strings of the Insert Statement
-  preparedStatement.setString(1, name.getValue());
-  preparedStatement.setString(2, address.getValue());
-  preparedStatement.setString(3, postalCode.getValue());
-  preparedStatement.setString(4, phoneNumber.getValue());
-  preparedStatement.setString(5, String.valueOf( divisionIdProperty.getValue() ) );
-  preparedStatement.execute();
+  preparedStatement.setString( 1, name.getValue( ) );
+  preparedStatement.setString( 2, address.getValue( ) );
+  preparedStatement.setString( 3, postalCode.getValue( ) );
+  preparedStatement.setString( 4, phoneNumber.getValue( ) );
+  preparedStatement.setString( 5, String.valueOf( divisionIdProperty.getValue( ) ) );
+  preparedStatement.execute( );
   
   // Add the new customer to the ObservableList
   customerRecords.add( new Customer( currentIdProperty, name, address, postalCode, division, country,
       phoneNumber,
-      divisionIdProperty, countryIdProperty ));
+      divisionIdProperty, countryIdProperty ) );
   
   // Close out the window
   Stage stage = ( Stage ) saveButton.getScene( ).getWindow( );

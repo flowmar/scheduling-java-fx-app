@@ -8,36 +8,38 @@ import javafx.beans.property.*;
 public class Customer {
 
 /**
- *
+ * Fields
  */
 private IntegerProperty customerIdProperty;
 private StringProperty  customerNameProperty;
 private StringProperty  addressProperty;
-private StringProperty postalCodeProperty;
-private StringProperty phoneNumberProperty;
-private StringProperty createDateProperty;
-private StringProperty createdByProperty;
-private StringProperty lastUpdateProperty;
-private StringProperty lastUpdatedByProperty;
+private StringProperty  postalCodeProperty;
+private StringProperty  phoneNumberProperty;
+private StringProperty  createDateProperty;
+private StringProperty  createdByProperty;
+private StringProperty  lastUpdateProperty;
+private StringProperty  lastUpdatedByProperty;
 private IntegerProperty divisionIdProperty;
-private StringProperty divisionProperty;
+private StringProperty  divisionProperty;
 private IntegerProperty countryIdProperty;
-private StringProperty countryProperty;
-private int customerId;
-private String  customerName;
-private String  address;
-private String postalCode;
-private String phoneNumber;
-private String createDate;
-private String createdBy;
-private String lastUpdate;
-private String lastUpdatedBy;
-private int divisionId;
-private String division;
-private int countryId;
-private String country;
+private StringProperty  countryProperty;
+private int             customerId;
+private String          customerName;
+private String          address;
+private String          postalCode;
+private String          phoneNumber;
+private String          createDate;
+private String          createdBy;
+private String          lastUpdate;
+private String          lastUpdatedBy;
+private int             divisionId;
+private String          division;
+private int             countryId;
+private String          country;
 
 /**
+ * Constructor that takes in properties to be shown in a TableView
+ *
  * @param customerIdProperty
  * @param customerNameProperty
  * @param addressProperty
@@ -59,8 +61,7 @@ public Customer( IntegerProperty customerIdProperty, StringProperty customerName
                  StringProperty createdByProperty, StringProperty lastUpdateProperty,
                  StringProperty lastUpdatedByProperty,
                  IntegerProperty divisionIdProperty, StringProperty divisionProperty, IntegerProperty countryIdProperty,
-                 StringProperty countryProperty )
-{
+                 StringProperty countryProperty ) {
   this.customerIdProperty    = customerIdProperty;
   this.customerNameProperty  = customerNameProperty;
   this.addressProperty       = addressProperty;
@@ -76,177 +77,189 @@ public Customer( IntegerProperty customerIdProperty, StringProperty customerName
   this.countryProperty       = countryProperty;
 }
 
-public Customer(IntegerProperty customerIdProperty, StringProperty customerNameProperty, StringProperty addressProperty,
-                StringProperty postalCodeProperty, StringProperty divisionProperty, StringProperty countryProperty,
-                StringProperty phoneNumberProperty, IntegerProperty divisionIdProperty,
-                IntegerProperty countryIdProperty)
-{
-  this.customerIdProperty = customerIdProperty;
+public Customer( IntegerProperty customerIdProperty, StringProperty customerNameProperty,
+                 StringProperty addressProperty,
+                 StringProperty postalCodeProperty, StringProperty divisionProperty, StringProperty countryProperty,
+                 StringProperty phoneNumberProperty, IntegerProperty divisionIdProperty,
+                 IntegerProperty countryIdProperty ) {
+  this.customerIdProperty   = customerIdProperty;
   this.customerNameProperty = customerNameProperty;
-  this.addressProperty = addressProperty;
-  this.postalCodeProperty = postalCodeProperty;
-  this.phoneNumberProperty = phoneNumberProperty;
-  this.divisionProperty = divisionProperty;
-  this.countryProperty = countryProperty;
-  this.divisionIdProperty = divisionIdProperty;
-  this.countryIdProperty = countryIdProperty;
+  this.addressProperty      = addressProperty;
+  this.postalCodeProperty   = postalCodeProperty;
+  this.phoneNumberProperty  = phoneNumberProperty;
+  this.divisionProperty     = divisionProperty;
+  this.countryProperty      = countryProperty;
+  this.divisionIdProperty   = divisionIdProperty;
+  this.countryIdProperty    = countryIdProperty;
 }
 
-public Customer(int customerId, String customerName, String address, String postalCode, String division,
-                String country, String phoneNumber, int divisionId, int countryId)
-{
-  this.customerId = customerId;
+public Customer( int customerId, String customerName, String address, String postalCode, String division,
+                 String country, String phoneNumber, int divisionId, int countryId ) {
+  this.customerId   = customerId;
   this.customerName = customerName;
-  this.address = address;
-  this.postalCode = postalCode;
-  this.division = division;
-  this.country = country;
-  this.phoneNumber = phoneNumber;
-  this.divisionId = divisionId;
-  this.countryId = countryId;
+  this.address      = address;
+  this.postalCode   = postalCode;
+  this.division     = division;
+  this.country      = country;
+  this.phoneNumber  = phoneNumber;
+  this.divisionId   = divisionId;
+  this.countryId    = countryId;
 }
 
 public Customer( int customerId, String customerName ) {
-
-this.customerId = customerId;
-this.customerName = customerName;
-
+  
+  this.customerId   = customerId;
+  this.customerName = customerName;
+  
 }
 
 /**
- * @return
+ * Methods
+ */
+
+
+/**
+ * Retrieves the <code>customerId</code>
+ * @return The <code>customerId</code>
  */
 public int getCustomerId( ) {
-  return customerIdProperty().get();
+  return customerIdProperty( ).get( );
 }
 
-public IntegerProperty customerIdProperty()
-{
-  if (customerIdProperty == null) customerIdProperty = new SimpleIntegerProperty(this, "customerId");
+/**
+ * Retrieves the <code>customerId</code> as a property
+ * @return The <code>customerId</code> as a property
+ */
+public IntegerProperty customerIdProperty( ) {
+  if ( customerIdProperty == null ) { customerIdProperty = new SimpleIntegerProperty( this, "customerId" ); }
   return customerIdProperty;
 }
 
 /**
- * @return
+ * Retrieves the <code>customerName</code>
+ * @return The <code>customerName</code>
  */
 public String getCustomerName( ) {
-  return customerNameProperty().get();
+  return customerNameProperty( ).get( );
 }
 
-public StringProperty customerNameProperty()
-{
-  if (customerNameProperty == null) customerNameProperty = new SimpleStringProperty(this, "customerName");
+/**
+ * Retrieves the <code>customerName</code> as a property
+ * @return The <code>customerName</code> as a property
+ */
+public StringProperty customerNameProperty( ) {
+  if ( customerNameProperty == null ) { customerNameProperty = new SimpleStringProperty( this, "customerName" ); }
   return customerNameProperty;
 }
 
 /**
- * @return
+ * Retrieves the <code>address</code>
+ * @return The <code>address</code>
  */
 public String getAddress( ) {
-  return addressProperty().get();
+  return addressProperty( ).get( );
 }
 
-public StringProperty addressProperty()
-{
-  if (addressProperty == null) addressProperty = new SimpleStringProperty(this, "address");
+/**
+ * Retrieves the <code>address</code> as a property
+ * @return The <code>address</code> as a property
+ */
+public StringProperty addressProperty( ) {
+  if ( addressProperty == null ) { addressProperty = new SimpleStringProperty( this, "address" ); }
   return addressProperty;
 }
 
 /**
- * @return
+ * Retrieves the <code>postalCode</code>
+ * @return The <code>postalCode</code>
  */
 public String getPostalCode( ) {
-  return postalCodeProperty().get();
+  return postalCodeProperty( ).get( );
 }
 
-public StringProperty postalCodeProperty()
-{
-  if (postalCodeProperty == null) postalCodeProperty = new SimpleStringProperty(this, "postalCode");
+/**
+ * Retrieves the <code>postalCode</code> as a property
+ * @return The <code>postalCode</code> as a property
+ */
+public StringProperty postalCodeProperty( ) {
+  if ( postalCodeProperty == null ) { postalCodeProperty = new SimpleStringProperty( this, "postalCode" ); }
   return postalCodeProperty;
 }
 
 /**
- * @return
+ * Retrieves the <code>phoneNumber</code>
+ * @return The <code>phoneNumber</code>
  */
 public String getPhoneNumber( ) {
-  return phoneNumberProperty().get();
+  return phoneNumberProperty( ).get( );
 }
 
-public StringProperty phoneNumberProperty()
-{
-  if (phoneNumberProperty == null) phoneNumberProperty = new SimpleStringProperty( this, "phoneNumber" );
+/**
+ * Retrieves the <code>phoneNumber</code> as a property
+ * @return The <code>phoneNumber</code> as a property
+ */
+public StringProperty phoneNumberProperty( ) {
+  if ( phoneNumberProperty == null ) { phoneNumberProperty = new SimpleStringProperty( this, "phoneNumber" ); }
   return phoneNumberProperty;
 }
 
-///**
-// * @return
-// */
-//public StringProperty getCreateDate( ) {return createDate.get();}
-//
-///**
-// * @return
-// */
-//public StringProperty getCreatedBy( ) {
-//  return createdBy;
-//}
-//
-///**
-// * @return
-// */
-//public StringProperty getLastUpdate( ) {
-//  return lastUpdate;
-//}
-//
-///**
-// * @return
-// */
-//public StringProperty getLastUpdatedBy( ) {
-//  return lastUpdatedBy;
-//}
+/**
+ * Retrieves the <code>divisionId</code>
+ * @return The <code>divisionId</code>
+ */
+public int getDivisionId( ) { return divisionIdProperty( ).get( ); }
 
 /**
- * @return
+ * Retrieves the <code>divisionId</code> as a property
+ * @return The <code>divisionId</code> as a property
  */
-public int getDivisionId() { return divisionIdProperty().get(); }
-
-public IntegerProperty divisionIdProperty( )
-{
-  if (divisionIdProperty == null) divisionIdProperty = new SimpleIntegerProperty( this, "divisionId" );
+public IntegerProperty divisionIdProperty( ) {
+  if ( divisionIdProperty == null ) { divisionIdProperty = new SimpleIntegerProperty( this, "divisionId" ); }
   return divisionIdProperty;
 }
 
 /**
- *
- * @return
+ * Retrieves the <code>division</code>
+ * @return The <code>division</code>
  */
-public String getDivision( ) { return divisionProperty().get(); }
+public String getDivision( ) { return divisionProperty( ).get( ); }
 
-public StringProperty divisionProperty()
-{
-  if (divisionProperty == null) divisionProperty = new SimpleStringProperty( this, "division" );
+/**
+ * Retrieves the <code>division</code> as a property
+ * @return The <code>division</code> as a property
+ */
+public StringProperty divisionProperty( ) {
+  if ( divisionProperty == null ) { divisionProperty = new SimpleStringProperty( this, "division" ); }
   return divisionProperty;
 }
 
 /**
- *
- * @return
+ * Retrieves the <code>countryId</code>
+ * @return The <code>countryId</code>
  */
-public int getCountryId() { return countryIdProperty().get();}
-
-public IntegerProperty countryIdProperty()
-{
-  if (countryIdProperty == null) countryIdProperty = new SimpleIntegerProperty( this, "countryId" );
-  return countryIdProperty; }
+public int getCountryId( ) { return countryIdProperty( ).get( ); }
 
 /**
- *
- * @return
+ * Retrieves the <code>countryId</code> as a property
+ * @return The <code>countryId</code> as a property
  */
-public String getCountry() { return countryProperty().get(); }
+public IntegerProperty countryIdProperty( ) {
+  if ( countryIdProperty == null ) { countryIdProperty = new SimpleIntegerProperty( this, "countryId" ); }
+  return countryIdProperty;
+}
 
-public StringProperty countryProperty()
-{
-  if (countryProperty == null) countryProperty = new SimpleStringProperty( this, "country" );
+/**
+ * Retrieves the <code>country</code>
+ * @return The <code>country</code>
+ */
+public String getCountry( ) { return countryProperty( ).get( ); }
+
+/**
+ * Retrieves the <code>country</code> as a property
+ * @return The <code>country</code> as a property
+ */
+public StringProperty countryProperty( ) {
+  if ( countryProperty == null ) { countryProperty = new SimpleStringProperty( this, "country" ); }
   return countryProperty;
 }
 

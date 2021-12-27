@@ -69,15 +69,15 @@ private int countryComboInt = 0;
 
 /**
  * Initializes the <code>Update Customer Scene</code>
+ *
  * @param url
  * @param resourceBundle
  */
 @Override
-public void initialize( URL url, ResourceBundle resourceBundle )
-{
-  System.out.println("Initialize Update Customer");
-  populateCountryComboBox();
-  if (selectedCustomer != null) {
+public void initialize( URL url, ResourceBundle resourceBundle ) {
+  System.out.println( "Initialize Update Customer" );
+  populateCountryComboBox( );
+  if ( selectedCustomer != null ) {
     System.out.println( selectedCustomer );
     retrieveAndPopulateCustomer( );
   }
@@ -100,43 +100,9 @@ public void populateCountryComboBox( ) {
 }
 
 /**
- * Populates the divisionComboBox based on the Country ID number of the selected choice in the countryComboBox
- * @param countryComboInt The integer that is associated with the <code>Country</code> selected in the Country ComboBox
- */
-public void populateDivisionComboBox(int countryComboInt)
-{
-  ObservableList<Division> divisionsList = FXCollections.observableArrayList( );
-  
-  // Based the ID number of the Country selected in the first ComboBox, obtain the required divisions from the database
-  switch ( countryComboInt )
-  {
-    case 1:
-      divisionsList = DBDivisions.getUSADivisions( );
-      System.out.println( divisionsList );
-      break;
-    case 2:
-      divisionsList = DBDivisions.getCanadaDivisions( );
-      System.out.println( divisionsList );
-      
-      break;
-    case 3:
-      divisionsList = DBDivisions.getUKDivisions( );
-      System.out.println( divisionsList );
-      break;
-    default:
-      System.out.println( "(nothing)" );
-      break;
-  }
-  
-  // Populate the ComboBox
-  System.out.println( divisionsList );
-  divisionComboBox.setItems( divisionsList );
-}
-
-/**
  * Retrieves the selected <code>Customer</code>'s data from the database and populates the Update Customer Form
  */
-public void retrieveAndPopulateCustomer() {
+public void retrieveAndPopulateCustomer( ) {
   Customer selectedCustomerToUpdate = Main.selectedCustomer;
   if ( selectedCustomerToUpdate != null ) {
     customerIDTextField.setText( String.valueOf( selectedCustomerToUpdate.getCustomerId( ) ) );
@@ -177,7 +143,41 @@ public void retrieveAndPopulateCustomer() {
 }
 
 /**
+ * Populates the divisionComboBox based on the Country ID number of the selected choice in the countryComboBox
+ *
+ * @param countryComboInt The integer that is associated with the <code>Country</code> selected in the Country ComboBox
+ */
+public void populateDivisionComboBox( int countryComboInt ) {
+  ObservableList<Division> divisionsList = FXCollections.observableArrayList( );
+  
+  // Based the ID number of the Country selected in the first ComboBox, obtain the required divisions from the database
+  switch ( countryComboInt ) {
+    case 1:
+      divisionsList = DBDivisions.getUSADivisions( );
+      System.out.println( divisionsList );
+      break;
+    case 2:
+      divisionsList = DBDivisions.getCanadaDivisions( );
+      System.out.println( divisionsList );
+      
+      break;
+    case 3:
+      divisionsList = DBDivisions.getUKDivisions( );
+      System.out.println( divisionsList );
+      break;
+    default:
+      System.out.println( "(nothing)" );
+      break;
+  }
+  
+  // Populate the ComboBox
+  System.out.println( divisionsList );
+  divisionComboBox.setItems( divisionsList );
+}
+
+/**
  * Gets the value from the countryComboBox and populates the DivisionComboBox accordingly.
+ *
  * @param actionEvent User selects a choice from the countryComboBox
  */
 public void countryComboBoxListener( ActionEvent actionEvent ) {
@@ -187,29 +187,29 @@ public void countryComboBoxListener( ActionEvent actionEvent ) {
   int countryComboValueInt = countryComboValue.getId( );
   
   // Populate the divisionComboBox with the corresponding territories
-  populateDivisionComboBox(countryComboValueInt);
+  populateDivisionComboBox( countryComboValueInt );
 }
 
 
 /**
  * Closes out the 'Update Customer' window
+ *
  * @param actionEvent User click on the 'Cancel' button
  */
-public void cancelButtonListener(ActionEvent actionEvent)
-{
-  Stage stage = (Stage) cancelButton.getScene().getWindow();
-  stage.close();
+public void cancelButtonListener( ActionEvent actionEvent ) {
+  Stage stage = ( Stage ) cancelButton.getScene( ).getWindow( );
+  stage.close( );
 }
 
 /**
  * Saves the information from the Text Fields into the database as a new customer.
+ *
  * @param actionEvent <code>User</code> clicks on the 'Save' button
  * @throws SQLException Throws an exception if SQL is malformed.
  */
-public void updateButtonListener(ActionEvent actionEvent) throws SQLException
-{
+public void updateButtonListener( ActionEvent actionEvent ) throws SQLException {
   
-  System.out.println("Update Button Clicked!");
+  System.out.println( "Update Button Clicked!" );
   
   try {
     // Make the connection
@@ -235,28 +235,29 @@ public void updateButtonListener(ActionEvent actionEvent) throws SQLException
     String divisionIdString      = divisionComboBoxValue.substring( 0, divisionComboBoxValue.indexOf( " ", 0 ) );
     preparedStatement.setString( 5, divisionIdString );
     preparedStatement.setString( 6, customerIDTextField.getText( ) );
-    preparedStatement.execute();
+    preparedStatement.execute( );
     
-    System.out.println("Customer Name: " + customerNameTextField.getText());
-    System.out.println("address: " + addressTextField.getText());
-    System.out.println("Postal Code" + postalCodeTextField.getText() );
-    System.out.println(customerRecords.indexOf(customerIDTextField.getText()));;
-    System.out.println("DivisionIdString" + divisionIdString);
+    System.out.println( "Customer Name: " + customerNameTextField.getText( ) );
+    System.out.println( "address: " + addressTextField.getText( ) );
+    System.out.println( "Postal Code" + postalCodeTextField.getText( ) );
+    System.out.println( customerRecords.indexOf( customerIDTextField.getText( ) ) );
+    ;
+    System.out.println( "DivisionIdString" + divisionIdString );
     
     // Create a new ObservableList containing the updated record
-    ObservableList<Customer> newCustomerList = FXCollections.observableArrayList(getAllCustomerRecords()) ;
+    ObservableList<Customer> newCustomerList = FXCollections.observableArrayList( getAllCustomerRecords( ) );
     
     // Update the ObservableList to update the table
-    customerRecords.setAll(newCustomerList);
+    customerRecords.setAll( newCustomerList );
     
     // Close the window
     System.out.println( "Successfully updated!" );
 //    connection.close();
-    Stage stage = (Stage) updateButton.getScene().getWindow( );
-    stage.close();
+    Stage stage = ( Stage ) updateButton.getScene( ).getWindow( );
+    stage.close( );
   }
-  catch(SQLException e) {
-    e.printStackTrace();
+  catch ( SQLException e ) {
+    e.printStackTrace( );
   }
 }
 }

@@ -43,58 +43,59 @@ public static ObservableList<Appointment> getAllAppointments( ) throws ParseExce
       System.out.println( appointmentsResultSet );
       
       // Get the information from the database
-      int    appointmentId = appointmentsResultSet.getInt( "Appointment_ID" );
-      String title         = appointmentsResultSet.getString( "Title" );
-      String description   = appointmentsResultSet.getString( "Description" );
-      String location      = appointmentsResultSet.getString( "Location" );
-      String type          = appointmentsResultSet.getString( "Type" );
-      Timestamp   start         = appointmentsResultSet.getTimestamp( "Start" );
-      Timestamp   end           = appointmentsResultSet.getTimestamp( "End" );
-      int    customerId    = appointmentsResultSet.getInt( "Customer_ID" );
-      int    userId        = appointmentsResultSet.getInt( "User_ID" );
-      int    contactId     = appointmentsResultSet.getInt( "Contact_ID" );
+      int       appointmentId = appointmentsResultSet.getInt( "Appointment_ID" );
+      String    title         = appointmentsResultSet.getString( "Title" );
+      String    description   = appointmentsResultSet.getString( "Description" );
+      String    location      = appointmentsResultSet.getString( "Location" );
+      String    type          = appointmentsResultSet.getString( "Type" );
+      Timestamp start         = appointmentsResultSet.getTimestamp( "Start" );
+      Timestamp end           = appointmentsResultSet.getTimestamp( "End" );
+      int       customerId    = appointmentsResultSet.getInt( "Customer_ID" );
+      int       userId        = appointmentsResultSet.getInt( "User_ID" );
+      int       contactId     = appointmentsResultSet.getInt( "Contact_ID" );
       
       // Convert the Timestamps from UTC to the Local timezone
-      TimeZone userTimeZone = TimeZone.getDefault();
-      System.out.println("User Time Zone: " + userTimeZone);
+      TimeZone userTimeZone = TimeZone.getDefault( );
+      System.out.println( "User Time Zone: " + userTimeZone );
       
       // Create an Instant from the Timestamp in the database (UTC)
-      Instant       utcStartTime = start.toInstant();
-      Instant       utcEndTime = end.toInstant();
+      Instant utcStartTime = start.toInstant( );
+      Instant utcEndTime   = end.toInstant( );
       
       // Convert the UTC time to the user's system timezone
-      ZonedDateTime userLocalStartTime = utcStartTime.atZone( ZoneId.of(userTimeZone.getID()) );
-      ZonedDateTime userLocalEndTime = utcEndTime.atZone( ZoneId.of(userTimeZone.getID()));
+      ZonedDateTime userLocalStartTime = utcStartTime.atZone( ZoneId.of( userTimeZone.getID( ) ) );
+      ZonedDateTime userLocalEndTime   = utcEndTime.atZone( ZoneId.of( userTimeZone.getID( ) ) );
       
-      System.out.println("UTC Start: " + utcStartTime);
-      System.out.println("UTC End: " + utcEndTime);
-      System.out.println("User localStartTime: " + userLocalStartTime);
-      System.out.println("User localEndTime: " + userLocalEndTime);
+      System.out.println( "UTC Start: " + utcStartTime );
+      System.out.println( "UTC End: " + utcEndTime );
+      System.out.println( "User localStartTime: " + userLocalStartTime );
+      System.out.println( "User localEndTime: " + userLocalEndTime );
       
       // Extract the date and time and format them for the TableView
-      String userLocalStartTimeString = userLocalStartTime.toString();
-      String startDate = userLocalStartTimeString.substring(0, userLocalStartTimeString.indexOf("T"));
-      String startTime = userLocalStartTimeString.substring(userLocalStartTimeString.indexOf( "T", 0 ) + 1,
-          userLocalStartTimeString.indexOf( "T", 0 ) + 6);
+      String userLocalStartTimeString = userLocalStartTime.toString( );
+      String startDate                = userLocalStartTimeString.substring( 0,
+          userLocalStartTimeString.indexOf( "T" ) );
+      String startTime = userLocalStartTimeString.substring( userLocalStartTimeString.indexOf( "T", 0 ) + 1,
+          userLocalStartTimeString.indexOf( "T", 0 ) + 6 );
       String formattedStartDateTime = startDate + " at " + startTime;
       
-      String userLocalEndTimeString = userLocalEndTime.toString();
-      String endDate = userLocalEndTimeString.substring(0, userLocalEndTimeString.indexOf("T") );
-      String endTime = userLocalEndTimeString.substring(userLocalEndTimeString.indexOf( "T", 0 ) + 1,
-          userLocalEndTimeString.indexOf("T", 0) + 6);
+      String userLocalEndTimeString = userLocalEndTime.toString( );
+      String endDate                = userLocalEndTimeString.substring( 0, userLocalEndTimeString.indexOf( "T" ) );
+      String endTime = userLocalEndTimeString.substring( userLocalEndTimeString.indexOf( "T", 0 ) + 1,
+          userLocalEndTimeString.indexOf( "T", 0 ) + 6 );
       String formattedEndDateTime = endDate + " at " + endTime;
       
       // Convert all to Properties to display in the TableView
-      IntegerProperty      appointmentIdProperty = new SimpleIntegerProperty( appointmentId );
-      StringProperty       titleProperty         = new SimpleStringProperty( title );
-      StringProperty       descriptionProperty   = new SimpleStringProperty( description );
-      StringProperty       locationProperty      = new SimpleStringProperty( location );
-      StringProperty            typeProperty  = new SimpleStringProperty( type );
-      StringProperty  startProperty      = new SimpleStringProperty( formattedStartDateTime );
-      StringProperty  endProperty        = new SimpleStringProperty( formattedEndDateTime );
-      IntegerProperty customerIdProperty = new SimpleIntegerProperty( customerId );
-      IntegerProperty      userIdProperty        = new SimpleIntegerProperty( userId );
-      IntegerProperty      contactIdProperty     = new SimpleIntegerProperty( contactId );
+      IntegerProperty appointmentIdProperty = new SimpleIntegerProperty( appointmentId );
+      StringProperty  titleProperty         = new SimpleStringProperty( title );
+      StringProperty  descriptionProperty   = new SimpleStringProperty( description );
+      StringProperty  locationProperty      = new SimpleStringProperty( location );
+      StringProperty  typeProperty          = new SimpleStringProperty( type );
+      StringProperty  startProperty         = new SimpleStringProperty( formattedStartDateTime );
+      StringProperty  endProperty           = new SimpleStringProperty( formattedEndDateTime );
+      IntegerProperty customerIdProperty    = new SimpleIntegerProperty( customerId );
+      IntegerProperty userIdProperty        = new SimpleIntegerProperty( userId );
+      IntegerProperty contactIdProperty     = new SimpleIntegerProperty( contactId );
       
       // Create a new Appointment using the data obtained from the database
       Appointment currentAppointment = new Appointment( appointmentIdProperty, titleProperty, descriptionProperty,
@@ -116,21 +117,19 @@ public static ObservableList<Appointment> getAllAppointments( ) throws ParseExce
 
 /**
  * Retrieves an <code>ObservableList</code> of <code>Contact</code>s from the database
+ *
  * @return The <code>ObservableList</code> of <code>Contact</code>s
  */
-public static ObservableList<String> getContacts( )
-{
+public static ObservableList<String> getContacts( ) {
   ObservableList<String> contacts = FXCollections.observableArrayList( );
-  try
-  {
+  try {
     String selectContacts = "Select * FROM client_schedule.contacts";
     
     PreparedStatement preparedStatement = JDBC.getConnection( ).prepareStatement( selectContacts );
-  
+    
     ResultSet contactsResultSet = preparedStatement.executeQuery( );
     
-    while ( contactsResultSet.next( ) )
-    {
+    while ( contactsResultSet.next( ) ) {
       // Get the information from the database
       int    contactId   = contactsResultSet.getInt( "Contact_ID" );
       String contactName = contactsResultSet.getString( "Contact_Name" );
@@ -155,110 +154,102 @@ public static ObservableList<String> getContacts( )
 
 /**
  * Retrieves all customers and returns them in an <code>ObservableList</code>
+ *
  * @return An <code>ObservableList</code> of all Customers
  */
-public static ObservableList<String> getCustomers()
-{
-  System.out.println( "Get Customers");
+public static ObservableList<String> getCustomers( ) {
+  System.out.println( "Get Customers" );
   
   ObservableList<String> customerChoices = FXCollections.observableArrayList( );
   // Get the data from the database and add it to the customers list
-  try
-  {
+  try {
     // Make the SQL query
-    String selectCustomers = "SELECT * FROM client_schedule.customers";
-    PreparedStatement preparedStatement = JDBC.getConnection().prepareStatement( selectCustomers );
-    ResultSet customersResultSet = preparedStatement.executeQuery( );
+    String            selectCustomers    = "SELECT * FROM client_schedule.customers";
+    PreparedStatement preparedStatement  = JDBC.getConnection( ).prepareStatement( selectCustomers );
+    ResultSet         customersResultSet = preparedStatement.executeQuery( );
     
-    while(customersResultSet.next())
-    {
+    while ( customersResultSet.next( ) ) {
       // Get the data from the database
-      int customerId = customersResultSet.getInt( "Customer_ID" );
+      int    customerId   = customersResultSet.getInt( "Customer_ID" );
       String customerName = customersResultSet.getString( "Customer_Name" );
-  
+      
       String customerChoice = customerId + " " + customerName;
-      customerChoices.add(customerChoice);
+      customerChoices.add( customerChoice );
     }
   }
-  catch ( SQLException e )
-  {
-    e.printStackTrace();
+  catch ( SQLException e ) {
+    e.printStackTrace( );
   }
   return customerChoices;
 }
 
 /**
  * Retrieves a list of all users from the database
+ *
  * @return An <code>ObservableList</code> containing each <code>User</code>
  */
-public static ObservableList<String> getUsers()
-{
-  ObservableList<String> users       = FXCollections.observableArrayList( );
+public static ObservableList<String> getUsers( ) {
+  ObservableList<String> users = FXCollections.observableArrayList( );
   
   try {
-      String                 selectUsers = "SELECT * FROM client_schedule.users";
-      PreparedStatement preparedStatement = JDBC.getConnection().prepareStatement( selectUsers );
-      ResultSet usersResultSet = preparedStatement.executeQuery();
+    String            selectUsers       = "SELECT * FROM client_schedule.users";
+    PreparedStatement preparedStatement = JDBC.getConnection( ).prepareStatement( selectUsers );
+    ResultSet         usersResultSet    = preparedStatement.executeQuery( );
+    
+    while ( usersResultSet.next( ) ) {
+      int    userId   = usersResultSet.getInt( "User_ID" );
+      String userName = usersResultSet.getString( "User_Name" );
       
-      while(usersResultSet.next())
-      {
-        int userId = usersResultSet.getInt( "User_ID" );
-        String userName = usersResultSet.getString("User_Name");
-        
-        String user = userId + " " + userName;
-        
-        users.add(user);
-      }
+      String user = userId + " " + userName;
+      
+      users.add( user );
     }
-    catch (SQLException e)
-    {
-      e.printStackTrace();
-    }
+  }
+  catch ( SQLException e ) {
+    e.printStackTrace( );
+  }
   return users;
 }
 
 /**
  * Given a customer's ID number, return the ID number and the name of the customer
+ *
  * @param customerIdNumber A customer's ID number
  * @return The ID number and full name of the customer
  */
-public static String getCustomerIdAndName(int customerIdNumber)
-{
-    String customerName = "";
+public static String getCustomerIdAndName( int customerIdNumber ) {
+  String customerName = "";
+  
+  try {
+    String sql = "SELECT * FROM client_schedule.customers WHERE Customer_ID= ?";
     
-    try
-    {
-      String sql = "SELECT * FROM client_schedule.customers WHERE Customer_ID= ?";
-      
-      PreparedStatement preparedStatement = JDBC.getConnection().prepareStatement( sql );
-      
-      preparedStatement.setString(1, String.valueOf( customerIdNumber ) );
-      ResultSet customerResultSet = preparedStatement.executeQuery(  );
-      
-      while (customerResultSet.next())
-      {
-        customerName = customerResultSet.getString("Customer_Name");
-      }
-      
-    }
-    catch (SQLException e)
-    {
-      e.printStackTrace();
+    PreparedStatement preparedStatement = JDBC.getConnection( ).prepareStatement( sql );
+    
+    preparedStatement.setString( 1, String.valueOf( customerIdNumber ) );
+    ResultSet customerResultSet = preparedStatement.executeQuery( );
+    
+    while ( customerResultSet.next( ) ) {
+      customerName = customerResultSet.getString( "Customer_Name" );
     }
     
-    String customerIdAndName = customerIdNumber + " " + customerName;
-    
-    return customerIdAndName;
+  }
+  catch ( SQLException e ) {
+    e.printStackTrace( );
+  }
+  
+  String customerIdAndName = customerIdNumber + " " + customerName;
+  
+  return customerIdAndName;
 }
 
 /**
  * Returns the Customer_ID in the form of a <code>String</code>
+ *
  * @param customerOption The customer
  * @return The Customer_ID as a <code>String</code>
  */
-public static int getCustomerIdString(String customerOption)
-{
-  String customerIdString = customerOption.substring(0, customerOption.indexOf(" ", 0));
+public static int getCustomerIdString( String customerOption ) {
+  String customerIdString = customerOption.substring( 0, customerOption.indexOf( " ", 0 ) );
   return Integer.parseInt( customerIdString );
 }
 }

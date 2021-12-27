@@ -73,8 +73,7 @@ private Label loginTitleLabel;
  * @param resourceBundle
  */
 @Override
-public void initialize( URL url, ResourceBundle resourceBundle )
-{
+public void initialize( URL url, ResourceBundle resourceBundle ) {
   System.out.println( "Initialize" );
   // Obtain the user's system locale and translate if necessary
   findUserLocation( );
@@ -85,8 +84,7 @@ public void initialize( URL url, ResourceBundle resourceBundle )
 /**
  * Obtains the user's system locale and displays it on the Login form.
  */
-public void findUserLocation( )
-{
+public void findUserLocation( ) {
   Locale locale = Locale.getDefault( );
   System.out.println( locale );
   localeLabel.setText( "Locale: " + locale.getDefault( ).toString( ) );
@@ -101,8 +99,7 @@ public void findUserLocation( )
 /**
  * Translates the Login Form if the user's set language is French.
  */
-public void translateLabels( )
-{
+public void translateLabels( ) {
   Locale locale = Locale.getDefault( );
   
   if ( locale.toString( ).equals( "fr_US" ) ) {
@@ -147,8 +144,7 @@ public void translateLabels( )
  *
  * @param actionEvent A user click on the button
  */
-public void loginButtonListener( ActionEvent actionEvent ) throws SQLException
-{
+public void loginButtonListener( ActionEvent actionEvent ) throws SQLException {
   // Get the text from the Username and Password TextFields
   System.out.println( "Login Clicked!" );
   String usernameText = usernameTextField.getText( );
@@ -170,7 +166,7 @@ public void loginButtonListener( ActionEvent actionEvent ) throws SQLException
       e.printStackTrace( );
       e.getMessage( );
     }
-  
+    
     // Close out Login window and display Customer Records
     Parent secondRoot = null;
     try {
@@ -179,19 +175,19 @@ public void loginButtonListener( ActionEvent actionEvent ) throws SQLException
     catch ( IOException e ) {
       e.printStackTrace( );
     }
-  
+    
     // New Scene
     Scene secondScene = new Scene( secondRoot, 1200, 400 );
-  
+    
     // New Stage
     Stage secondStage = new Stage( );
     secondStage.setTitle( "Customer Records" );
     secondStage.setScene( secondScene );
-  
+    
     // Close the 'Login' window
     Stage stage = ( Stage ) loginButton.getScene( ).getWindow( );
     stage.close( );
-  
+    
     // Open the new window
     secondStage.show( );
   }
@@ -205,18 +201,6 @@ public void loginButtonListener( ActionEvent actionEvent ) throws SQLException
 }
 
 /**
- * Handles click of 'Exit' button. Closes the database connection and exits the application.
- *
- * @param actionEvent A user click on the button.
- */
-public void exitButtonListener( ActionEvent actionEvent )
-{
-  JDBC.closeConnection( );
-  System.out.println( "Exit Clicked!" );
-  Platform.exit( );
-}
-
-/**
  * Checks the user input for username and password against the stored credentials in the database.
  *
  * @param username The user input from the Username Text Field.
@@ -225,13 +209,11 @@ public void exitButtonListener( ActionEvent actionEvent )
  *
  * @throws SQLException Throws a SQLException if the SQL is malformed.
  */
-public boolean checkCredentials( String username, String password ) throws SQLException
-{
+public boolean checkCredentials( String username, String password ) throws SQLException {
   String  storedPassword = "";
   boolean passwordMatch  = false;
   
-  try
-  {
+  try {
     // Check the database for the username from user input
     Connection connection = JDBC.getConnection( );
     String     sql        = "SELECT * FROM users WHERE User_Name = ?";
@@ -246,8 +228,7 @@ public boolean checkCredentials( String username, String password ) throws SQLEx
     while ( userResultSet.next( ) ) {
       storedPassword = userResultSet.getString( "Password" );
       
-      if ( storedPassword.equals( password ) )
-      {
+      if ( storedPassword.equals( password ) ) {
         passwordMatch = true;
       }
       else {
@@ -256,8 +237,7 @@ public boolean checkCredentials( String username, String password ) throws SQLEx
     }
     
   }
-  catch ( SQLException e )
-  {
+  catch ( SQLException e ) {
     e.printStackTrace( );
   }
   return passwordMatch;
@@ -265,23 +245,23 @@ public boolean checkCredentials( String username, String password ) throws SQLEx
 
 /**
  * Creates a login attempt string
+ *
  * @param pass Whether the login attempt succeeds or fails
  * @return The <code>String</code> login attempt to be written to the log
  */
-public String createLoginAttempt( boolean pass )
-{
+public String createLoginAttempt( boolean pass ) {
   String        attempt         = "";
   String        attemptUser     = usernameTextField.getText( );
   String        attemptSuccess;
   LocalDateTime currentDateTime = LocalDateTime.now( );
   
   // Extract the date from the LocalDateTime
-  String date = currentDateTime.toString().substring(0, currentDateTime.toString().indexOf("T", 0));
+  String date = currentDateTime.toString( ).substring( 0, currentDateTime.toString( ).indexOf( "T", 0 ) );
   System.out.println( "Date: " + date );
   
   // Extract the time from the LocalDateTime
-  String time = currentDateTime.toString().substring(currentDateTime.toString().indexOf("T", 0) + 1);
-  time = time.substring(0, 8);
+  String time = currentDateTime.toString( ).substring( currentDateTime.toString( ).indexOf( "T", 0 ) + 1 );
+  time = time.substring( 0, 8 );
   System.out.println( "Time: " + time );
   
   // Set the result of the login attempt
@@ -295,37 +275,35 @@ public String createLoginAttempt( boolean pass )
   }
   
   // Create the String that is to be logged
-  attempt = date + " | " + time + " | " + attemptUser + " | " + attemptSuccess + System.lineSeparator();
+  attempt = date + " | " + time + " | " + attemptUser + " | " + attemptSuccess + System.lineSeparator( );
   
   return attempt;
 }
 
 /**
  * Writes information about the login attempt to the log
+ *
  * @param attempt The <code>String</code> that is to be written to the log
  */
-public void logLoginAttempt( String attempt )
-{
+public void logLoginAttempt( String attempt ) {
   // Create a new file object for the activity log
-  File log = new File("login_activity.txt");
+  File log = new File( "login_activity.txt" );
   
   // If the file exists...
-  if (log.exists())
-  {
-  try {
-    // Create a FileWriter object
-    FileWriter logger = new FileWriter( "login_activity.txt", true );
-    // Write the login attempt to the log and close the file
-    logger.write( attempt );
-    logger.close( );
-  }
-  catch ( IOException e ) {
-    e.printStackTrace( );
-  }
+  if ( log.exists( ) ) {
+    try {
+      // Create a FileWriter object
+      FileWriter logger = new FileWriter( "login_activity.txt", true );
+      // Write the login attempt to the log and close the file
+      logger.write( attempt );
+      logger.close( );
+    }
+    catch ( IOException e ) {
+      e.printStackTrace( );
+    }
   }
   // Otherwise, if the file doesn't exist...
-  else
-  {
+  else {
     // Create the file
     try {
       log.createNewFile( );
@@ -338,19 +316,29 @@ public void logLoginAttempt( String attempt )
       // Create a FileWriter object
       FileWriter logger = new FileWriter( "login_activity.txt", true );
       // Write the header to the file
-      String fileHeader = "Date | Time | Username | Login Success " + System.lineSeparator() +
-                              "-----------------------------------------------" + System.lineSeparator();
-      logger.write(fileHeader);
+      String fileHeader = "Date | Time | Username | Login Success " + System.lineSeparator( ) +
+                              "-----------------------------------------------" + System.lineSeparator( );
+      logger.write( fileHeader );
       // Write the login attempt to the log and close the file
       logger.write( attempt );
       logger.close( );
     }
-    catch (IOException e)
-    {
-      e.printStackTrace();
+    catch ( IOException e ) {
+      e.printStackTrace( );
     }
     
     
   }
+}
+
+/**
+ * Handles click of 'Exit' button. Closes the database connection and exits the application.
+ *
+ * @param actionEvent A user click on the button.
+ */
+public void exitButtonListener( ActionEvent actionEvent ) {
+  JDBC.closeConnection( );
+  System.out.println( "Exit Clicked!" );
+  Platform.exit( );
 }
 }

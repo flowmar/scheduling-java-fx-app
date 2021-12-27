@@ -7,18 +7,17 @@ import java.time.LocalDateTime;
  */
 public class User {
 /**
- *
+ * Fields
  */
-private int userId;
-private String username;
-private String password;
+private int           userId;
+private String        username;
+private String        password;
 private LocalDateTime createDate;
-private String createdBy;
+private String        createdBy;
 private LocalDateTime lastUpdate;
-private String lastUpdatedBy;
+private String        lastUpdatedBy;
 
 /**
- *
  * @param userId
  * @param username
  * @param password
@@ -38,59 +37,36 @@ public User( int userId, String username, String password, LocalDateTime createD
   this.lastUpdatedBy = lastUpdatedBy;
 }
 
+
 /**
+ * Methods
+ */
+
+/**
+ * Returns the identification number of the <code>User</code>
  *
- * @return
+ * @return The identification number of the <code>User</code>
  */
 public int getUserId( ) {
   return userId;
 }
 
 /**
+ * Returns the <code>username</code> of the <code>User</code>
  *
- * @return
+ * @return The <code>username</code> of the <code>User</code>
  */
 public String getUsername( ) {
   return username;
 }
 
 /**
+ * Returns the <code>password</code> of the <code>User</code>
  *
- * @return
+ * @return The <code>password</code> of the <code>User</code>
  */
 public String getPassword( ) {
   return password;
 }
 
-/**
- *
- * @return
- */
-public LocalDateTime getCreateDate( ) {
-  return createDate;
-}
-
-/**
- *
- * @return
- */
-public String getCreatedBy( ) {
-  return createdBy;
-}
-
-/**
- *
- * @return
- */
-public LocalDateTime getLastUpdate( ) {
-  return lastUpdate;
-}
-
-/**
- *
- * @return
- */
-public String getLastUpdatedBy( ) {
-  return lastUpdatedBy;
-}
 }

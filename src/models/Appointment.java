@@ -12,30 +12,30 @@ public class Appointment {
 /**
  *
  */
-private IntegerProperty           appointmentIdProperty;
-private StringProperty            titleProperty;
-private StringProperty            descriptionProperty;
-private StringProperty            locationProperty;
+private IntegerProperty appointmentIdProperty;
+private StringProperty  titleProperty;
+private StringProperty  descriptionProperty;
+private StringProperty  locationProperty;
 private StringProperty  typeProperty;
 private StringProperty  startProperty;
 private IntegerProperty userIdProperty;
 private StringProperty  endProperty;
 private IntegerProperty customerIdProperty;
-private IntegerProperty           contactIdProperty;
-private int                       appointmentId;
-private String                    title;
-private String                    description;
-private String                    location;
-private String                    type;
-private Timestamp                 start;
-private Timestamp                 end;
-private LocalDateTime             createDate;
-private String                    createdBy;
-private LocalDateTime             lastUpdate;
-private String                    lastUpdatedBy;
-private int                       customerId;
-private int                       userId;
-private int                       contactId;
+private IntegerProperty contactIdProperty;
+private int             appointmentId;
+private String          title;
+private String          description;
+private String          location;
+private String          type;
+private Timestamp       start;
+private Timestamp       end;
+private LocalDateTime   createDate;
+private String          createdBy;
+private LocalDateTime   lastUpdate;
+private String          lastUpdatedBy;
+private int             customerId;
+private int             userId;
+private int             contactId;
 
 
 public Appointment( IntegerProperty appointmentIdProperty,
@@ -208,35 +208,6 @@ public StringProperty endProperty( ) {
   if ( endProperty == null ) { endProperty = new SimpleStringProperty( this, "end" ); }
   return endProperty;
 }
-
-///**
-// * Returns the <code></code>
-// * @return
-// */
-//public LocalDateTime getCreateDate( ) {
-//  return createDate;
-//}
-//
-///**
-// * @return
-// */
-//public String getCreatedBy( ) {
-//  return createdBy;
-//}
-//
-///**
-// * @return
-// */
-//public LocalDateTime getLastUpdate( ) {
-//  return lastUpdate;
-//}
-//
-///**
-// * @return
-// */
-//public String getLastUpdatedBy( ) {
-//  return lastUpdatedBy;
-//}
 
 /**
  * Returns the <code>customerId</code> of the <code>Appointment</code>
