@@ -79,7 +79,7 @@ private Button addAppointmentButton;
  */
 
 /**
- *
+ * Initializes the Add Appointment Form
  * @param url
  * @param resourceBundle
  */

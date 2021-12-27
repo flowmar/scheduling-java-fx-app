@@ -99,7 +99,7 @@ public void populateCountryComboBox( ) {
 
 /**
  * Populates the divisionComboBox based on the Country ID number of the selected choice in the countryComboBox
- * @param val
+ * @param val The value of the Country ID
  */
 public void populateDivisionComboBox( int val )
 {
@@ -198,10 +198,6 @@ public void saveButtonListener( ActionEvent actionEvent ) throws SQLException {
       +country + " "
       + division);
   
-  // Make the connection
-//  JDBC.makeConnection();
-  // Converts the date and time
-  DBCountries.checkDateConversion();
   
   // Assign the connection to a variable
   Connection connection = JDBC.getConnection();
@@ -228,12 +224,9 @@ public void saveButtonListener( ActionEvent actionEvent ) throws SQLException {
       phoneNumber,
       divisionIdProperty, countryIdProperty ));
   
-//  saveButton.getScene().getWindow().setWidth(saveButton.getScene().getWidth() + 0.001);
-  
   // Close out the window
   Stage stage = ( Stage ) saveButton.getScene( ).getWindow( );
   stage.close( );
 }
-
 
 }

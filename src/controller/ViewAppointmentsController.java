@@ -197,34 +197,36 @@ public void exitButtonListener( ActionEvent actionEvent)
   Platform.exit();
 };
 
-
+/**
+ * Handles click of 'Delete' Button. Deletes the selected <code>Appointment</code>
+ * @param actionEvent User click on 'Delete' button
+ * @throws SQLException Thrown if SQL is malformed
+ */
 public void deleteButtonListener( ActionEvent actionEvent) throws SQLException
 {
-//  // Get the appointmentId from the selected Appointment
+  // Get the appointmentId from the selected Appointment
   Appointment deleteSelection = viewAppointmentsTableView.getSelectionModel( ).getSelectedItem( );
   int      appointmentId    = deleteSelection.getAppointmentId();
   String appointmentType = deleteSelection.getType();
-//  String   customerName    = deleteSelection.getCustomerName( );
-//
+  
+  // Create a delete confirmation alert
   Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
   alert.setTitle( "Delete Appointment" );
   String s = "Are you sure you want to delete " + appointmentType + " meeting with ID " + appointmentId;
   alert.setContentText( s );
-
   Optional<ButtonType> result = alert.showAndWait( );
-
+  
+  // Handle click of 'Ok' Button
   if ( ( result.isPresent( ) ) && ( result.get( ) == ButtonType.OK ) ) {
 
     System.out.println( "Ok clicked!" );
-    // Connect to the database
-//    JDBC.makeConnection( );
-//    DBCountries.checkDateConversion( );
+    
     Connection connection = JDBC.getConnection( );
 
-//    // Use SQL query to delete the customer at that ID
+    // Use SQL query to delete the customer at that ID
     String deleteStatement = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
 
-//    // Prepare the statement
+    // Prepare the statement
       DBQuery.setPreparedStatement( connection, deleteStatement );
    
     PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
@@ -236,16 +238,21 @@ public void deleteButtonListener( ActionEvent actionEvent) throws SQLException
     // Remove from ObservableList to update TableView
     clientAppointments.remove( deleteSelection );
 
-    //     Display Delete Confirmation
+    // Display Delete Confirmation
     deleteAppointmentConfirmationLabel.setText( appointmentType + " with ID " + appointmentId + " has been " +
                                                     "cancelled!" );
   }
-
+ 
+  // Handle click of 'Cancel' button
   if ( ( result.isPresent( ) ) && ( result.get( ) == ButtonType.NO ) ) {
     System.out.println( "Cancel clicked!" );
   }
 };
 
+/**
+ * Handles click of 'Add' <code>Button</code>, opens the Add Appointment form.
+ * @param actionEvent User click on 'Add' <code>Button</code>
+ */
 public void addButtonListener( ActionEvent actionEvent){
   
   try {
@@ -262,6 +269,10 @@ public void addButtonListener( ActionEvent actionEvent){
   
 };
 
+/**
+ * Handles click of 'Update' <code>Button</code>, opens the Update Appointment form.
+ * @param actionEvent User click on 'Update' <code>Button</code>
+ */
 public void updateButtonListener( ActionEvent actionEvent){
   
   Main.selectedAppointment = viewAppointmentsTableView.getSelectionModel( ).getSelectedItem( );

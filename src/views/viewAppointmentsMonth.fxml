@@ -38,12 +38,15 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DeleteConfirmationController">
+<VBox prefHeight="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewAppointmentsController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -84,14 +87,15 @@
         </Menu>
       </menus>
     </MenuBar>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="300.0" prefWidth="700.0" style="-fx-background-color: navy;" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="375.0" prefWidth="1025.0" style="-fx-background-color: navy;" VBox.vgrow="ALWAYS">
       <children>
-            <Label fx:id="titleLabel" layoutX="37.0" layoutY="14.0" prefHeight="55.0" prefWidth="204.0" text="Delete" textFill="WHITE">
+            <TableView fx:id="viewAppointmentsTableView" layoutX="22.0" layoutY="76.0" prefHeight="200.0" prefWidth="981.0" />
+            <Label fx:id="titleLabel" layoutX="22.0" layoutY="14.0" prefHeight="55.0" prefWidth="204.0" text="Appointments" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <Button fx:id="cancelDeleteButton" alignment="CENTER" layoutX="215.0" layoutY="155.0" mnemonicParsing="false" onAction="#cancelDeleteButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: firebrick; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Cancel" textAlignment="CENTER">
+            <Button fx:id="exitButton" alignment="CENTER" layoutX="853.0" layoutY="304.0" mnemonicParsing="false" onAction="#exitButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: firebrick; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Exit" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -99,7 +103,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="deleteCustomerButton" alignment="CENTER" layoutX="37.0" layoutY="155.0" mnemonicParsing="false" onAction="#deleteCustomerButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: ORANGERED; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Delete" textAlignment="CENTER">
+            <Button fx:id="deleteButton" alignment="CENTER" layoutX="853.0" layoutY="25.0" mnemonicParsing="false" onAction="#deleteButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: crimson; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Delete" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -107,11 +111,51 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Label fx:id="deleteConfirmationLabel" layoutX="37.0" layoutY="84.0" textFill="WHITE">
+            <Button fx:id="viewCustomersButton" alignment="CENTER" layoutX="22.0" layoutY="304.0" mnemonicParsing="false" onAction="#viewCustomersButtonListener" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: deepskyblue; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="View Customers" textAlignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="updateButton" alignment="CENTER" layoutX="695.0" layoutY="25.0" mnemonicParsing="false" onAction="#updateButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: goldenrod; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Update" textAlignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="addButton" alignment="CENTER" layoutX="538.0" layoutY="25.0" mnemonicParsing="false" onAction="#addButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: seagreen; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Add" textAlignment="CENTER">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <RadioButton fx:id="monthViewRadioButton" layoutX="322.0" layoutY="32.0" mnemonicParsing="false" onAction="#monthViewRadioButtonListener" text="Month" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
-            </Label>
+               <toggleGroup>
+                  <ToggleGroup fx:id="appointmentViewRadioButtonGroup" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="weekViewRadioButton" layoutX="403.0" layoutY="32.0" mnemonicParsing="false" onAction="#weekViewRadioButtonListener" text="Week" textFill="WHITE" toggleGroup="$appointmentViewRadioButtonGroup">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="allViewRadioButton" layoutX="264.0" layoutY="32.0" mnemonicParsing="false" onAction="#allViewRadioButtonListener" selected="true" text="All" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="appointmentViewRadioButtonGroup1" />
+               </toggleGroup>
+            </RadioButton>
       </children>
     </AnchorPane>
   </children>

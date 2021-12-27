@@ -80,6 +80,7 @@ private Button updateAppointmentButton;
  */
 
 /**
+ * Initializes the Update Appointment Form
  * @param url
  * @param resourceBundle
  */
@@ -140,7 +141,6 @@ public void retrieveAndPopulateAppointment( ) {
   
   Appointment selectedAppointmentToUpdate = Main.selectedAppointment;
 
-//    if (selectedAppointmentToUpdate != null) {
   // Fill in TextFields with data from database
   appointmentIdTextField.setText( String.valueOf( selectedAppointmentToUpdate.appointmentIdProperty( ).getValue( ) ) );
   appointmentTitleTextField.setText( String.valueOf( selectedAppointmentToUpdate.titleProperty( ).getValue( ) ) );
@@ -215,7 +215,6 @@ public void retrieveAndPopulateAppointment( ) {
   System.out.println( "Timestamp String: " + timestampString );
   // Separate the date from the time
   String startDate             = timestampString.substring( 0, timestampString.indexOf( " ", 0 ) );
-  int    timestampStringLength = timestampString.length( );
   int indexOfT = timestampString.indexOf("t");
   String startTime             = timestampString.substring(indexOfT + 2);
   
@@ -233,9 +232,8 @@ public void retrieveAndPopulateAppointment( ) {
   
   // Separate the date from the time
   String endDate                  = endTimestampString.substring( 0, endTimestampString.indexOf( " ", 0 ) );
-  int    endTimestampStringLength = endTimestampString.length( );
-  int indexofTEnd = timestampString.indexOf("t");
-  String endTime = endTimestampString.substring( indexofTEnd + 2);
+  int indexOfTEnd = timestampString.indexOf("t");
+  String endTime = endTimestampString.substring( indexOfTEnd + 2);
   
   System.out.println( "End Date: " + endDate );
   System.out.println( "End Time: " + endTime );
@@ -300,6 +298,7 @@ public void updateAppointmentButtonListener( ActionEvent actionEvent ) throws Pa
     String contactIdString = contactComboBox.getValue( );
     int    contactIdInt    = Integer.parseInt( contactIdString.substring( 0, contactIdString.indexOf( " ", 0 ) ) );
     
+    // Set the values into the SQL statement
     preparedStatement.setString( 1, appointmentTitleTextField.getText( ) );
     preparedStatement.setString( 2, appointmentDescriptionTextField.getText( ) );
     preparedStatement.setString( 3, appointmentLocationTextField.getText( ) );

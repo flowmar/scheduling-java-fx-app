@@ -150,12 +150,11 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws IOException, 
   
   Optional<ButtonType> answer = alert.showAndWait( );
   
+  // Handle click of 'Ok'
   if ( ( answer.isPresent( ) ) && ( answer.get( ) == ButtonType.OK ) ) {
     
     System.out.println( "Ok clicked!" );
-    // Connect to the database
-//    JDBC.makeConnection( );
-//    DBCountries.checkDateConversion( );
+
     Connection connection = JDBC.getConnection( );
     
     // Use SQL query to delete the customer at that ID
@@ -172,90 +171,15 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws IOException, 
     // Remove from ObservableList to update TableView
     customerRecords.remove( deleteSelection );
 
-//     Display Delete Confirmation
+    // Display Delete Confirmation
     deleteConfirmationLabel.setText( "Customer " + deleteSelection.getCustomerName( ) + " has been deleted!" );
   }
   
+  // Handle click of 'No'
   if ( ( answer.isPresent( ) ) && ( answer.get( ) == ButtonType.NO ) ) {
     System.out.println( "Cancel clicked!" );
   }
-
-//  Dialog<String> dialog = new Dialog<String>();
-//
-//  dialog.setTitle("Delete Customer?");
-//
-//  ButtonType okType = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
-//
-//  ButtonType cancelType = new ButtonType( "Cancel", ButtonBar.ButtonData.NO );
-//
-//  dialog.getDialogPane().getButtonTypes().add(okType);
-//  dialog.getDialogPane().getButtonTypes().add(cancelType);
-//
-//  deleteButton.setOnAction( e -> {
-//    dialog.showAndWait();
-//  } );
-//
-//  Text text = new Text("Click the button to show the dialog.");
-//
-//  Button button = new Button("Show Dialog");
-//  button.se
-//
-//  HBox pane = new HBox(15);
-//
-//  //Setting the space between the nodes of a HBox pane
-//  pane.setPadding(new Insets(50, 150, 50, 60));
-//  pane.getChildren().addAll(text, button);
-//
-//  Stage stage = new Stage();
-//  //Creating a scene object
-//  Scene scene = new Scene(new Group(pane), 595, 250, Color.BEIGE);
-//  stage.setTitle("Dialog");
-//  stage.setScene(scene);
-//  stage.show();
-//  try {
-//    // Load the deleteCustomerConfirmation FXML
-//    Parent deleteCustomerFXML = FXMLLoader.load(getClass( ).getResource( "../views/deleteCustomerConfirmation.fxml"
-//    ) );
-//    // Create the new Stage and Scene and display them
-//    Scene deleteConfirmationScene = new Scene( deleteCustomerFXML, 700, 300 );
-//    Stage deleteConfirmationStage = new Stage( );
-//    deleteConfirmationStage.setTitle( "Delete Confirmation" );
-//    deleteConfirmationStage.setScene( deleteConfirmationScene );
-//    deleteConfirmationStage.show( );
-//  }
-//  catch (Exception e) {
-//    e.printStackTrace();
-//  }
-//  Dialog<String> dialog = new Dialog<String>();
-//
-//  dialog.setTitle("Delete Confirmation");
-//
-//  ButtonType type = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE  );
-//
-//  dialog.setContentText("Ok to delete?");
-//
-//  dialog.getDialogPane().getButtonTypes().add(type);
-//
-//  Text text = new Text("Click the button to show the dialog.");
-//
-//  Button button = new Button("Show Dialog");
-//
-//  button.setOnAction( e -> {
-//    dialog.showAndWait();
-//  } );
-//
-//  HBox pane = new HBox(15);
-//
-//  //Setting the space between the nodes of a HBox pane
-//  pane.setPadding(new Insets(50, 150, 50, 60));
-//  pane.getChildren().addAll(text, button);
-//
-//  Stage stage = new Stage();
-//  //Creating a scene object
-//  Scene scene = new Scene(new Group(pane), 595, 250, Color.BEIGE);
-//  stage.setTitle("Dialog");
-//  stage.setScene(scene);
-//  stage.show();
+  
 }
 
 /**

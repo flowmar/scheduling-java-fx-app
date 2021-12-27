@@ -1,10 +1,8 @@
 package controller;
 
-import databaseAccess.DBCountries;
 import databaseAccess.DBQuery;
 import databaseAccess.JDBC;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import models.Country;
 
 import java.io.*;
 import java.net.URL;
@@ -143,19 +140,6 @@ public void translateLabels( )
   }
 }
 
-/**
- * Displays a list of countries
- *
- * @param actionEvent
- */
-public void displayCountries( ActionEvent actionEvent )
-{
-  
-  ObservableList<Country> countryList = DBCountries.getAllCountries( );
-  for ( Country c : countryList ) {
-    System.out.println( "Country Id: " + c.getId( ) + "Name: " + c.getName( ) );
-  }
-}
 
 /**
  * Handles click of 'Login' Button. Checks to see if the username and password are correct. Opens the Customer Records
@@ -368,7 +352,5 @@ public void logLoginAttempt( String attempt )
     
     
   }
-
-
 }
 }
