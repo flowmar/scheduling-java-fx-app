@@ -101,7 +101,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="usersReportButton" alignment="CENTER" layoutX="853.0" layoutY="25.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: crimson; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Users" textAlignment="CENTER">
+            <Button fx:id="usersReportButton" alignment="CENTER" layoutX="853.0" layoutY="25.0" mnemonicParsing="false" onAction="#usersReportButtonListener" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: crimson; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Users" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -141,13 +141,18 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <ListView fx:id="appoitnmentsListView" layoutX="502.0" layoutY="88.0" prefHeight="200.0" prefWidth="204.0" />
-            <ComboBox fx:id="monthComboBox" layoutX="29.0" layoutY="121.0" prefWidth="150.0" promptText="Select Month..." />
-            <ComboBox fx:id="appointmentTypeComboBox" layoutX="198.0" layoutY="122.0" prefHeight="23.0" prefWidth="194.0" promptText="Select Appointment Type..." />
-            <ListView fx:id="scheduleeListView" layoutX="502.0" layoutY="88.0" prefHeight="200.0" prefWidth="501.0" visible="false" />
-            <ComboBox fx:id="contactComboBox" disable="true" layoutX="29.0" layoutY="200.0" prefWidth="150.0" promptText="Select Contact..." visible="false" />
+            <ListView fx:id="appointmentsListView" layoutX="502.0" layoutY="88.0" prefHeight="200.0" prefWidth="204.0" />
+            <ComboBox fx:id="monthComboBox" layoutX="29.0" layoutY="121.0" onAction="#monthComboBoxListener" prefWidth="150.0" promptText="Select Month..." />
+            <ComboBox fx:id="appointmentTypeComboBox" layoutX="198.0" layoutY="122.0" onAction="#appointmentTypeComboBoxListener" prefHeight="23.0" prefWidth="194.0" promptText="Select Appointment Type..." />
+            <ListView fx:id="schedulesListView" layoutX="502.0" layoutY="88.0" prefHeight="200.0" prefWidth="501.0" visible="false" />
+            <ComboBox fx:id="contactComboBox" disable="true" layoutX="29.0" layoutY="200.0" onAction="#contactComboBoxListener" prefWidth="150.0" promptText="Select Contact..." visible="false" />
             <ListView fx:id="usersListView" disable="true" layoutX="751.0" layoutY="88.0" prefHeight="200.0" prefWidth="204.0" visible="false" />
-            <ComboBox fx:id="usersComboBox" disable="true" layoutX="198.0" layoutY="212.0" prefHeight="23.0" prefWidth="194.0" promptText="Select Location..." visible="false" />
+            <ComboBox fx:id="usersComboBox" disable="true" layoutX="198.0" layoutY="212.0" onAction="#usersComboBoxListener" prefHeight="23.0" prefWidth="194.0" promptText="Select User..." visible="false" />
+            <Label fx:id="totalsLabel" layoutX="498.0" layoutY="312.0" textFill="#3fff14">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
       </children>
     </AnchorPane>
   </children>
