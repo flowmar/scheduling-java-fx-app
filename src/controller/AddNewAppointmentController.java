@@ -24,6 +24,7 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import static controller.ViewAppointmentsController.clientAppointments;
 import static scheduler.Main.currentAppointmentId;
@@ -161,114 +162,226 @@ public void addAppointmentButtonListener( ActionEvent actionEvent ) {
   System.out.println( "ContactIdComboBox: " + contactComboBox.getValue( ) );
   
   // Check if the appointment time is within office hours
-  boolean timeCheck = checkIfWithinHours();
+  boolean timeCheck = checkIfWithinHours( );
   
-  if (timeCheck) {
-    // Obtain the value from the customerIdComboBox
-    String customerIdString = customerIdComboBox.getValue( );
-    int customerIdInt = Integer.parseInt( customerIdString.substring( 0, customerIdString.indexOf(
-        " ", 0 ) ) );
-    IntegerProperty customerIdIntProperty = new SimpleIntegerProperty( customerIdInt );
+  // Check if the appointment overlaps with a previously scheduled appointment
+  boolean overlapCheck = customerAppointmentOverlap( );
   
-  
-    // Obtain the value from the userIdComboBox
-    String          userIdString      = userIdComboBox.getValue( );
-    int             userIdInt         = Integer.parseInt( userIdString.substring( 0, userIdString.indexOf( " ", 0 ) ) );
-    IntegerProperty userIdIntProperty = new SimpleIntegerProperty( userIdInt );
-  
-    //  String userIdString = userIdProperty.getValue().substring(0,userIdProperty.toString().indexOf( " ", 0 ));
-    StringProperty titleProperty           = new SimpleStringProperty( appointmentTitleTextField.getText( ) );
-    StringProperty descriptionProperty     = new SimpleStringProperty( appointmentDescriptionTextField.getText( ) );
-    StringProperty locationProperty        = new SimpleStringProperty( appointmentLocationTextField.getText( ) );
-    StringProperty appointmentTypeProperty = new SimpleStringProperty( appointmentTypeComboBox.getValue( ) );
-  
-    // Obtain the value from the contactComboBox
-    String contactIdString = contactComboBox.getValue( );
-    int contactIdInt = Integer.parseInt( contactIdString.substring( 0, contactIdString.indexOf( " ",
-        0 ) ) );
-    IntegerProperty contactIdProperty = new SimpleIntegerProperty( contactIdInt );
-  
-    // Get the LocalDate from the startDatePicker
-    LocalDate startDate = startDatePicker.getValue( );
-    // Get the value in the startTimeTextField and convert to a LocalTime
-    LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
-    System.out.println( startTime );
-    // Create a LocalDateTime from the LocalDate and LocalTime values
-    LocalDateTime ldt = startDate.atTime( startTime );
-    System.out.println( "LDT: " + ldt );
-    // Create a ZonedDateTime from the LocalDateTime
-    ZonedDateTime startTimeInUTC = ZonedDateTime.of( ldt, ZoneId.of( "UTC" ) );
-    System.out.println( "UTC: " + startTimeInUTC );
-    // Convert the ZonedDateTime into a Timestamp so that it can be used in the database
-    Timestamp      startTimestamp = Timestamp.valueOf( startTimeInUTC.toLocalDateTime( ) );
-    StringProperty startProperty  = new SimpleStringProperty( startTimestamp.toString( ) );
-  
-  
-    // Get the LocalDate from the endDatePicker
-    LocalDate endDate = endDatePicker.getValue( );
-    // Get the value in the endTimeTextField and convert it to a LocalTime
-    LocalTime endTime = LocalTime.parse( endTimeTextField.getText( ) );
-    // Create a LocalDateTime from the LocalDate and LocalTime values
-    LocalDateTime eldt = endDate.atTime( endTime );
-    // Create a ZonedDateTime from the LocalDateTime
-    ZonedDateTime endTimeInUTC = ZonedDateTime.of( eldt, ZoneId.of( "UTC" ) );
-    // Convert the ZonedDateTime into a Timestamp so it can be used in the database
-    Timestamp      endTimestamp = Timestamp.valueOf( endTimeInUTC.toLocalDateTime( ) );
-    StringProperty endProperty  = new SimpleStringProperty( endTimestamp.toString( ) );
-  
-    // Create an IntegerProperty from the currentAppointmentId
-    IntegerProperty currentAppointmentIdProperty = new SimpleIntegerProperty( currentAppointmentId );
-  
-    // Prepare the SQL statement and connection
-    Connection connection = JDBC.getConnection( );
-    String insertStatement = "INSERT INTO client_schedule.appointments(Title, Description, Location, " +
-                                 "Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?,?,  " +
-                                 "? ,?)";
-  
-    try {
-      DBQuery.setPreparedStatement( connection, insertStatement );
+  if ( overlapCheck ) {
+    // Create and show an error alert
+    Alert appointmentOverlapError = new Alert( Alert.AlertType.ERROR, "The new appointment conflicts with a " +
+                                                                          "previously" +
+                                                                          " " +
+                                                                          "scheduled one. Please adjust the time." );
+    appointmentOverlapError.setTitle( "Appointment Overlap Error" );
     
-      PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
-    
-      // Add the new appointment to the database
-      preparedStatement.setString( 1, titleProperty.getValue( ) );
-      preparedStatement.setString( 2, descriptionProperty.getValue( ) );
-      preparedStatement.setString( 3, locationProperty.getValue( ) );
-      preparedStatement.setString( 4, appointmentTypeProperty.getValue( ) );
-      preparedStatement.setString( 5, String.valueOf( startProperty.getValue( ) ) );
-      preparedStatement.setString( 6, String.valueOf( endProperty.getValue( ) ) );
-      preparedStatement.setString( 7, String.valueOf( customerIdInt ) );
-      preparedStatement.setString( 8, String.valueOf( userIdInt ) );
-      preparedStatement.setString( 9, String.valueOf( contactIdInt ) );
-      preparedStatement.execute( );
-    }
-    catch ( SQLException e ) {
-      e.printStackTrace( );
-    }
-  
-    // Create a new Appointment Object and add it to the ObservableList
-    clientAppointments.add( new Appointment( currentAppointmentIdProperty, titleProperty, descriptionProperty,
-        locationProperty, appointmentTypeProperty, startProperty, endProperty, userIdIntProperty, customerIdIntProperty,
-        contactIdProperty ) );
-  
-    Stage stage = ( Stage ) addAppointmentButton.getScene( ).getWindow( );
-    stage.close( );
+    appointmentOverlapError.show( );
   }
-  else
-  {
-    // Create a new Alert
-    Alert scheduleTimeError = new Alert( Alert.AlertType.ERROR);
-    // Set the title
-    scheduleTimeError.setTitle("Appointment Time Error");
-    // Create the error message
-    String timeError = "The time of the new appointment is not within office hours. Please adjust them so they are " +
-                           "between 8:00am and 10:00pm Eastern Standard Time (8:00 and 22:00)";
-    // Set the alert content
-    scheduleTimeError.setContentText(timeError);
+  else {
+    if ( timeCheck ) {
+      // Obtain the value from the customerIdComboBox
+      String customerIdString = customerIdComboBox.getValue( );
+      int customerIdInt = Integer.parseInt( customerIdString.substring( 0, customerIdString.indexOf(
+          " ", 0 ) ) );
+      IntegerProperty customerIdIntProperty = new SimpleIntegerProperty( customerIdInt );
+      
+      
+      // Obtain the value from the userIdComboBox
+      String          userIdString      = userIdComboBox.getValue( );
+      int             userIdInt         = Integer.parseInt( userIdString.substring( 0,
+          userIdString.indexOf( " ", 0 ) ) );
+      IntegerProperty userIdIntProperty = new SimpleIntegerProperty( userIdInt );
+      
+      //  String userIdString = userIdProperty.getValue().substring(0,userIdProperty.toString().indexOf( " ", 0 ));
+      StringProperty titleProperty           = new SimpleStringProperty( appointmentTitleTextField.getText( ) );
+      StringProperty descriptionProperty     = new SimpleStringProperty( appointmentDescriptionTextField.getText( ) );
+      StringProperty locationProperty        = new SimpleStringProperty( appointmentLocationTextField.getText( ) );
+      StringProperty appointmentTypeProperty = new SimpleStringProperty( appointmentTypeComboBox.getValue( ) );
+      
+      // Obtain the value from the contactComboBox
+      String contactIdString = contactComboBox.getValue( );
+      int contactIdInt = Integer.parseInt( contactIdString.substring( 0, contactIdString.indexOf( " ",
+          0 ) ) );
+      IntegerProperty contactIdProperty = new SimpleIntegerProperty( contactIdInt );
+      
+      // Get the LocalDate from the startDatePicker
+      LocalDate startDate = startDatePicker.getValue( );
+      // Get the value in the startTimeTextField and convert to a LocalTime
+      LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
+      System.out.println( startTime );
+      // Create a LocalDateTime from the LocalDate and LocalTime values
+      LocalDateTime ldt = startDate.atTime( startTime );
+      System.out.println( "LDT: " + ldt );
+      // Create a ZonedDateTime from the LocalDateTime
+      ZonedDateTime startTimeInUTC = ZonedDateTime.of( ldt, ZoneId.of( "UTC" ) );
+      System.out.println( "UTC: " + startTimeInUTC );
+      // Convert the ZonedDateTime into a Timestamp so that it can be used in the database
+      Timestamp      startTimestamp = Timestamp.valueOf( startTimeInUTC.toLocalDateTime( ) );
+      StringProperty startProperty  = new SimpleStringProperty( startTimestamp.toString( ) );
+      
+      
+      // Get the LocalDate from the endDatePicker
+      LocalDate endDate = endDatePicker.getValue( );
+      // Get the value in the endTimeTextField and convert it to a LocalTime
+      LocalTime endTime = LocalTime.parse( endTimeTextField.getText( ) );
+      // Create a LocalDateTime from the LocalDate and LocalTime values
+      LocalDateTime eldt = endDate.atTime( endTime );
+      // Create a ZonedDateTime from the LocalDateTime
+      ZonedDateTime endTimeInUTC = ZonedDateTime.of( eldt, ZoneId.of( "UTC" ) );
+      // Convert the ZonedDateTime into a Timestamp so it can be used in the database
+      Timestamp      endTimestamp = Timestamp.valueOf( endTimeInUTC.toLocalDateTime( ) );
+      StringProperty endProperty  = new SimpleStringProperty( endTimestamp.toString( ) );
+      
+      // Create an IntegerProperty from the currentAppointmentId
+      IntegerProperty currentAppointmentIdProperty = new SimpleIntegerProperty( currentAppointmentId );
+      
+      // Prepare the SQL statement and connection
+      Connection connection = JDBC.getConnection( );
+      String insertStatement = "INSERT INTO client_schedule.appointments(Title, Description, Location, " +
+                                   "Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES (?, ?, ?, ?, ?, ?,?,  " +
+                                   "? ,?)";
+      
+      try {
+        DBQuery.setPreparedStatement( connection, insertStatement );
+        
+        PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
+        
+        // Add the new appointment to the database
+        preparedStatement.setString( 1, titleProperty.getValue( ) );
+        preparedStatement.setString( 2, descriptionProperty.getValue( ) );
+        preparedStatement.setString( 3, locationProperty.getValue( ) );
+        preparedStatement.setString( 4, appointmentTypeProperty.getValue( ) );
+        preparedStatement.setString( 5, String.valueOf( startProperty.getValue( ) ) );
+        preparedStatement.setString( 6, String.valueOf( endProperty.getValue( ) ) );
+        preparedStatement.setString( 7, String.valueOf( customerIdInt ) );
+        preparedStatement.setString( 8, String.valueOf( userIdInt ) );
+        preparedStatement.setString( 9, String.valueOf( contactIdInt ) );
+        preparedStatement.execute( );
+      }
+      catch ( SQLException e ) {
+        e.printStackTrace( );
+      }
+      
+      // Create a new Appointment Object and add it to the ObservableList
+      clientAppointments.add( new Appointment( currentAppointmentIdProperty, titleProperty, descriptionProperty,
+          locationProperty, appointmentTypeProperty, startProperty, endProperty, userIdIntProperty,
+          customerIdIntProperty,
+          contactIdProperty ) );
+      
+      Stage stage = ( Stage ) addAppointmentButton.getScene( ).getWindow( );
+      stage.close( );
+    }
+    else {
+      // Create a new Alert
+      Alert scheduleTimeError = new Alert( Alert.AlertType.ERROR );
+      // Set the title
+      scheduleTimeError.setTitle( "Appointment Time Error" );
+      // Create the error message
+      String timeError = "The time of the new appointment is not within office hours. Please adjust them so they are " +
+                             "between 8:00am and 10:00pm Eastern Standard Time (8:00 and 22:00)";
+      // Set the alert content
+      scheduleTimeError.setContentText( timeError );
+      
+      scheduleTimeError.show( );
+    }
+  }
+}
+
+/**
+ * Checks to see if the times in the form are between office hours
+ *
+ * @return Whether the times are within office hours
+ */
+public boolean checkIfWithinHours( ) {
+  boolean withinOfficeHours;
   
-    scheduleTimeError.show();
+  // Convert the String in the TextField to a LocalTime
+  LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
+  LocalTime endTime   = LocalTime.parse( endTimeTextField.getText( ) );
+  
+  // Get the date from the DatePicker
+  LocalDate startDate = startDatePicker.getValue( );
+  LocalDate endDate   = endDatePicker.getValue( );
+  
+  // Convert the LocalDate and LocalTime to a ZonedDateTime of the user's local timezone
+  ZonedDateTime localZonedAppointmentStartTime = ZonedDateTime.of( startDate, startTime,
+      ZoneId.of( TimeZone.getDefault( ).getID( ) ) );
+  ZonedDateTime easternZonedAppointmentStartTime =
+      localZonedAppointmentStartTime.withZoneSameInstant( ZoneId.of( "America/New_York" ) );
+  
+  System.out.println( "User Timezone Start Time: " + localZonedAppointmentStartTime );
+  System.out.println( "Eastern Timezone Converted Start Time: " + easternZonedAppointmentStartTime );
+  
+  ZonedDateTime localZonedAppointmentEndTime = ZonedDateTime.of( endDate, endTime,
+      ZoneId.of( TimeZone.getDefault( ).getID( ) ) );
+  ZonedDateTime easternZonedAppointmentEndTime = localZonedAppointmentEndTime.withZoneSameInstant( ZoneId.of(
+      "America/New_York" ) );
+  
+  System.out.println( "User Timezone End Time: " + localZonedAppointmentEndTime );
+  System.out.println( "Eastern Timezone Converted End Time: " + easternZonedAppointmentEndTime );
+  
+  // Create the office hour times
+  LocalTime     officeOpenLocalTime  = LocalTime.of( 8, 0, 0 );
+  ZonedDateTime officeOpenTime       = ZonedDateTime.of( startDate, officeOpenLocalTime, ZoneId.of( "America/New_York"
+  ) );
+  LocalTime     officeCloseLocalTime = LocalTime.of( 22, 0, 0 );
+  ZonedDateTime officeCloseTime      = ZonedDateTime.of( startDate, officeCloseLocalTime, ZoneId.of( "America/New_York" ) );
+  
+  // Check if easternZonedAppointmentStartTime is between 8am and 10pm EST (8:00 and 22:00)
+  withinOfficeHours =
+      easternZonedAppointmentStartTime.isAfter( officeOpenTime ) && easternZonedAppointmentEndTime.isBefore( officeCloseTime );
+  
+  return withinOfficeHours;
+}
+
+/**
+ * Checks to see if the times on the form overlap with a customer's previously scheduled appointments
+ *
+ * @return Whether there are any overlapping appointments
+ */
+public boolean customerAppointmentOverlap( ) {
+  boolean appointmentOverlap = false;
+  
+  // Get customer ID from comboBox
+  String customerIdString = customerIdComboBox.getValue( );
+  int customerIdInt = Integer.parseInt( customerIdString.substring( 0, customerIdString.indexOf(
+      " ", 0 ) ) );
+  
+  // Get the time and date from the form
+  LocalDate startDate = startDatePicker.getValue( );
+  LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
+  LocalDate endDate   = endDatePicker.getValue( );
+  LocalTime endTime   = LocalTime.parse( endTimeTextField.getText( ) );
+  
+  // Convert to UTC timestamps to compare with times from the database
+  ZonedDateTime userTimeZoneStartTime = ZonedDateTime.of( startDate, startTime,
+      ZoneId.of( TimeZone.getDefault( ).getID( ) ) );
+  ZonedDateTime utcStartTime          = userTimeZoneStartTime.withZoneSameInstant( ZoneId.of( "UTC" ) );
+  Timestamp     utcStartTimestamp     = Timestamp.from( utcStartTime.toInstant( ) );
+  
+  ZonedDateTime userTimeZoneEndTime = ZonedDateTime.of( endDate, endTime,
+      ZoneId.of( TimeZone.getDefault( ).getID( ) ) );
+  ZonedDateTime utcEndTime          = userTimeZoneEndTime.withZoneSameInstant( ZoneId.of( "UTC" ) );
+  Timestamp     utcEndTimestamp     = Timestamp.from( utcEndTime.toInstant( ) );
+  
+  // Retrieve all appointments for customer
+  ObservableList<Appointment> customerAppointments = DBAppointments.getAllAppointmentsForCustomer( customerIdInt );
+  
+  // Go through the list of appointments and compare the date and time ranges to the one in the form
+  // Checks to see if the utcStartTime and utcEndTime is before the endTime and after the startTime of another or if
+  // the utcStartTime is equal to the starTime of another
+  // Appointment
+  ObservableList<Appointment> overlappingAppointments =
+      customerAppointments.stream( ).filter( a -> (utcStartTimestamp.before( ( Timestamp.valueOf( ( a.endProperty( ).get( ) ) ) ) ) && utcStartTimestamp.after( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ) || utcStartTimestamp.equals( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ))|| utcEndTimestamp.after( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ) && utcEndTimestamp.before( ( Timestamp.valueOf( ( a.endProperty( ).get( ) ) ) ) ) ).collect( Collectors.toCollection( FXCollections::observableArrayList ) );
+  
+  if ( overlappingAppointments.size( ) > 0 ) {
+    appointmentOverlap = true;
+  }
+  else if ( overlappingAppointments.size( ) == 0 ) {
+    appointmentOverlap = false;
   }
   
+  return appointmentOverlap;
 }
 
 /**
@@ -281,50 +394,5 @@ public void cancelButtonListener( ActionEvent actionEvent ) {
   
   Stage stage = ( Stage ) cancelButton.getScene( ).getWindow( );
   stage.close( );
-}
-
-/**
- * Checks to see if the times in the form are between office hours
- * @return Whether the times are within office hours
- */
-public boolean checkIfWithinHours()
-{
-  boolean withinOfficeHours;
-  
-  // Convert the String in the TextField to a LocalTime
-  LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
-  LocalTime endTime = LocalTime.parse(endTimeTextField.getText());
-  
-  // Get the date from the DatePicker
-  LocalDate startDate = startDatePicker.getValue( );
-  LocalDate endDate = endDatePicker.getValue( );
-  
-  // Convert the LocalDate and LocalTime to a ZonedDateTime of the user's local timezone
-  ZonedDateTime localZonedAppointmentStartTime = ZonedDateTime.of(startDate, startTime,
-      ZoneId.of( TimeZone.getDefault( ).getID()));
-  ZonedDateTime easternZonedAppointmentStartTime =
-      localZonedAppointmentStartTime.withZoneSameInstant( ZoneId.of("America/New_York") );
-  
-  System.out.println( "User Timezone Start Time: " + localZonedAppointmentStartTime);
-  System.out.println( "Eastern Timezone Converted Start Time: " + easternZonedAppointmentStartTime );
-  
-  ZonedDateTime localZonedAppointmentEndTime = ZonedDateTime.of(endDate, endTime,
-      ZoneId.of( TimeZone.getDefault( ).getID()));
-  ZonedDateTime easternZonedAppointmentEndTime = localZonedAppointmentEndTime.withZoneSameInstant( ZoneId.of("America/New_York") );
-  
-  System.out.println( "User Timezone End Time: " + localZonedAppointmentEndTime);
-  System.out.println( "Eastern Timezone Converted End Time: " + easternZonedAppointmentEndTime );
-  
-  // Create the office hour times
-  LocalTime officeOpenLocalTime = LocalTime.of(8,0,0);
-  ZonedDateTime officeOpenTime = ZonedDateTime.of(startDate, officeOpenLocalTime, ZoneId.of("America/New_York"));
-  LocalTime officeCloseLocalTime = LocalTime.of(22, 0, 0);
-  ZonedDateTime officeCloseTime = ZonedDateTime.of(startDate, officeCloseLocalTime, ZoneId.of("America/New_York"));
-  
-  // Check if easternZonedAppointmentStartTime is between 8am and 10pm EST (8:00 and 22:00)
-  withinOfficeHours =
-      easternZonedAppointmentStartTime.isAfter( officeOpenTime ) && easternZonedAppointmentEndTime.isBefore( officeCloseTime );
-  
-  return withinOfficeHours;
 }
 }

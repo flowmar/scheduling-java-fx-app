@@ -246,6 +246,8 @@ public void deleteButtonListener( ActionEvent actionEvent ) throws SQLException 
     // Display Delete Confirmation
     deleteAppointmentConfirmationLabel.setText( appointmentType + " with ID " + appointmentId + " has been " +
                                                     "cancelled!" );
+    
+    viewAppointmentsTableView.refresh();
   }
   
   // Handle click of 'Cancel' button
@@ -311,6 +313,9 @@ public void updateButtonListener( ActionEvent actionEvent ) {
  */
 public void allViewRadioButtonListener( ActionEvent actionEvent )
 {
+  deleteAppointmentConfirmationLabel.setText("");
+  // Clear the TableView
+  viewAppointmentsTableView.getItems().clear();
   try {
     displayAppointments( );
   }
@@ -329,6 +334,7 @@ public void allViewRadioButtonListener( ActionEvent actionEvent )
  */
 public void monthViewRadioButtonListener( ActionEvent actionEvent )
 {
+  deleteAppointmentConfirmationLabel.setText("");
   // Check current month
   Month currentMonth = LocalDate.now().getMonth();
   int currentMonthInt = currentMonth.getValue();
@@ -341,6 +347,8 @@ public void monthViewRadioButtonListener( ActionEvent actionEvent )
     // Create a new list from the allAppointments list by filtering
     ObservableList<Appointment> appointmentsThisMonth =
         allAppointments.stream().filter( a -> a.getStartMonthInt() + 1 == currentMonthInt).collect( Collectors.toCollection(FXCollections::observableArrayList));
+    // Clear the TableView
+    viewAppointmentsTableView.getItems().clear();
     // Set the filtered items in the TableView
     viewAppointmentsTableView.setItems( appointmentsThisMonth );
   }
@@ -358,6 +366,7 @@ public void monthViewRadioButtonListener( ActionEvent actionEvent )
  */
 public void weekViewRadioButtonListener( ActionEvent actionEvent )
 {
+  deleteAppointmentConfirmationLabel.setText("");
     // Create a Calendar Object and set the current Date on it
     Calendar      calendar    = Calendar.getInstance();
     // Get the current week number from the calendar
@@ -370,6 +379,8 @@ public void weekViewRadioButtonListener( ActionEvent actionEvent )
       // Create a new list by filtering for appointments that match the current week
       ObservableList<Appointment> appointmentsThisWeek =
           allAppointments.stream().filter(a -> a.getStartWeek() == currentWeekInt).collect(Collectors.toCollection(FXCollections::observableArrayList));
+      // Clear the TableView
+      viewAppointmentsTableView.getItems().clear();
       // Set the filtered items in the TableView
       viewAppointmentsTableView.setItems(appointmentsThisWeek);
     } catch (SQLException e){

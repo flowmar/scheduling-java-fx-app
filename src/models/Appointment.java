@@ -248,6 +248,8 @@ public int getStartWeek()
   return week;
 }
 
+
+
 /**
  * Returns the <code>start</code> time of the <code>Appointment</code> as a <code>SimpleStringProperty</code>
  *
