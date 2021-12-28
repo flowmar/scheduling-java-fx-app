@@ -34,7 +34,9 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -99,7 +101,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" layoutX="853.0" layoutY="25.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: crimson; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" textAlignment="CENTER">
+            <Button fx:id="usersReportButton" alignment="CENTER" layoutX="853.0" layoutY="25.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="150.0" style="-fx-background-color: crimson; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="Users" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
                </cursor>
@@ -131,11 +133,6 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Label fx:id="deleteConfirmationLabel" layoutX="261.0" layoutY="310.0" prefHeight="22.0" prefWidth="534.0" textFill="#ff1212">
-               <font>
-                  <Font name="Arial Bold Italic" size="19.0" />
-               </font>
-            </Label>
             <Button fx:id="viewCustomersButton" alignment="CENTER" layoutX="234.0" layoutY="304.0" mnemonicParsing="false" onAction="#viewCustomersButtonListener" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: darkorchid; -fx-border-color: BLACK; -fx-font-weight: bold; -fx-border-radius: 40%; -fx-background-radius: 17px;" text="View Customers" textAlignment="CENTER">
                <cursor>
                   <Cursor fx:constant="OPEN_HAND" />
@@ -144,6 +141,13 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
+            <ListView fx:id="appoitnmentsListView" layoutX="502.0" layoutY="88.0" prefHeight="200.0" prefWidth="204.0" />
+            <ComboBox fx:id="monthComboBox" layoutX="29.0" layoutY="121.0" prefWidth="150.0" promptText="Select Month..." />
+            <ComboBox fx:id="appointmentTypeComboBox" layoutX="198.0" layoutY="122.0" prefHeight="23.0" prefWidth="194.0" promptText="Select Appointment Type..." />
+            <ListView fx:id="scheduleeListView" layoutX="502.0" layoutY="88.0" prefHeight="200.0" prefWidth="501.0" visible="false" />
+            <ComboBox fx:id="contactComboBox" disable="true" layoutX="29.0" layoutY="200.0" prefWidth="150.0" promptText="Select Contact..." visible="false" />
+            <ListView fx:id="usersListView" disable="true" layoutX="751.0" layoutY="88.0" prefHeight="200.0" prefWidth="204.0" visible="false" />
+            <ComboBox fx:id="usersComboBox" disable="true" layoutX="198.0" layoutY="212.0" prefHeight="23.0" prefWidth="194.0" promptText="Select Location..." visible="false" />
       </children>
     </AnchorPane>
   </children>
