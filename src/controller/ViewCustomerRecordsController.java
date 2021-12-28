@@ -1,9 +1,11 @@
 package controller;
 
+import databaseAccess.DBAppointments;
 import databaseAccess.DBCustomerRecords;
 import databaseAccess.DBQuery;
 import databaseAccess.JDBC;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import models.Appointment;
 import models.Customer;
 import scheduler.Main;
 
@@ -22,8 +25,18 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static scheduler.Main.selectedCustomer;
 
@@ -83,6 +96,7 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
     e.printStackTrace( );
   }
   
+  checkForUpcomingAppointments();
 }
 
 /**
@@ -258,6 +272,70 @@ public void viewAppointmentsButtonListener( ActionEvent actionEvent ) throws IOE
   // Close out the ViewCustomerRecords stage
   Stage customerStage = ( Stage ) viewAppointmentsButton.getScene( ).getWindow( );
   customerStage.close( );
+  
+}
+
+public void checkForUpcomingAppointments()
+{
+  boolean upcomingAppointment;
+  
+  // Create a Timestamp of the current time in UTC
+  ZonedDateTime currentUserZonedTime = ZonedDateTime.now(ZoneId.of(TimeZone.getDefault().getID()));
+  Timestamp currentTimeUTC = Timestamp.from( currentUserZonedTime.withZoneSameInstant( ZoneId.of("UTC") ).toInstant() );
+  
+  Instant plusFifteen =
+      currentTimeUTC.toInstant().plus(Duration.ofMinutes(15));
+  
+  System.out.println( "current Time: " + currentUserZonedTime);
+  System.out.println( "plus fifteen minutes: " + Timestamp.from(plusFifteen));
+  
+  SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm");
+  
+  try {
+    // Get all the appointments in the database
+    ObservableList<Appointment> allAppointments = DBAppointments.getAllAppointmentsForComparison();
+  
+    // Check each appointment startTime and see if it is within 15 minutes of the current time
+    ObservableList<Appointment> foundAppointments =
+        allAppointments.stream().filter(a -> {
+          try {
+            return dateFormat.parse(a.startProperty().get()).toInstant().isBefore(plusFifteen) && dateFormat.parse(a.startProperty().get()).toInstant().isAfter(currentTimeUTC.toInstant());
+          }
+          catch ( ParseException e ) {
+            e.printStackTrace( );
+          }
+          return false;
+        } ).collect( Collectors.toCollection( FXCollections::observableArrayList ));
+  
+    Alert upcomingAppointmentAlert = new Alert(Alert.AlertType.INFORMATION);
+    upcomingAppointmentAlert.setTitle( "Upcoming Appointments" );
+    Stage stage = (Stage) upcomingAppointmentAlert.getDialogPane().getScene().getWindow();
+    stage.setAlwaysOnTop( true );
+    // If any appointments are found, display the appointment information
+    if (foundAppointments.size() > 0)
+    {
+      ObservableList<String> appointments = FXCollections.observableArrayList();
+      Consumer<Appointment> consumer =
+          a -> appointments.add( String.valueOf( new StringBuilder(  ).append("Appointment ID: ").append(a.getAppointmentId()).append(" | On: ").append(a.startProperty().get().substring(0, a.startProperty().get().indexOf(" ") )).append(" at: ").append(a.startProperty().get().substring(a.startProperty().get().indexOf(" ") + 1 )) ) );
+      foundAppointments.stream().forEach(consumer);
+      String appointmentInfo = "";
+      for (String s : appointments) {
+        appointmentInfo = appointmentInfo.concat(s + System.lineSeparator());
+      }
+      upcomingAppointmentAlert.setContentText(appointmentInfo);
+      upcomingAppointmentAlert.show();
+    }
+    else
+    {
+      upcomingAppointmentAlert.setContentText("There are no upcoming appointments.");
+      upcomingAppointmentAlert.show();
+    }
+  
+  }
+  catch ( SQLException e ) {
+    e.printStackTrace( );
+  }
+  
   
 }
 
