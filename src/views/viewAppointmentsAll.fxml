@@ -148,13 +148,10 @@
                   <Font size="16.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="allViewRadioButton" layoutX="264.0" layoutY="32.0" mnemonicParsing="false" onAction="#allViewRadioButtonListener" selected="true" text="All" textFill="WHITE">
+            <RadioButton fx:id="allViewRadioButton" layoutX="264.0" layoutY="32.0" mnemonicParsing="false" onAction="#allViewRadioButtonListener" selected="true" text="All" textFill="WHITE" toggleGroup="$appointmentViewRadioButtonGroup">
                <font>
                   <Font size="16.0" />
                </font>
-               <toggleGroup>
-                  <ToggleGroup fx:id="appointmentViewRadioButtonGroup1" />
-               </toggleGroup>
             </RadioButton>
             <Label fx:id="deleteAppointmentConfirmationLabel" layoutX="307.0" layoutY="309.0" textFill="#ee0d0d">
                <font>

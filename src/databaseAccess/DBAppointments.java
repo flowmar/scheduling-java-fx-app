@@ -115,6 +115,60 @@ public static ObservableList<Appointment> getAllAppointments( ) throws ParseExce
   return appointments;
 }
 
+public static ObservableList<Appointment> getAllAppointmentsForComparison() throws SQLException {
+  ObservableList<Appointment> appointments = FXCollections.observableArrayList( );
+  
+  try {
+  String sql = "SELECT * FROM appointments";
+  
+  PreparedStatement preparedStatement = JDBC.getConnection( ).prepareStatement( sql );
+  
+  ResultSet appointmentsResultSet = preparedStatement.executeQuery( );
+  
+  while ( appointmentsResultSet.next( ) ) {
+    System.out.println( appointmentsResultSet );
+    
+    // Get the information from the database
+    int       appointmentId = appointmentsResultSet.getInt( "Appointment_ID" );
+    String    title         = appointmentsResultSet.getString( "Title" );
+    String    description   = appointmentsResultSet.getString( "Description" );
+    String    location      = appointmentsResultSet.getString( "Location" );
+    String    type          = appointmentsResultSet.getString( "Type" );
+    Timestamp start         = appointmentsResultSet.getTimestamp( "Start" );
+    Timestamp end           = appointmentsResultSet.getTimestamp( "End" );
+    int       customerId    = appointmentsResultSet.getInt( "Customer_ID" );
+    int       userId        = appointmentsResultSet.getInt( "User_ID" );
+    int       contactId     = appointmentsResultSet.getInt( "Contact_ID" );
+  
+    // Convert all to Properties to display in the TableView
+    IntegerProperty appointmentIdProperty = new SimpleIntegerProperty( appointmentId );
+    StringProperty  titleProperty         = new SimpleStringProperty( title );
+    StringProperty  descriptionProperty   = new SimpleStringProperty( description );
+    StringProperty  locationProperty      = new SimpleStringProperty( location );
+    StringProperty  typeProperty          = new SimpleStringProperty( type );
+    StringProperty  startProperty         = new SimpleStringProperty( start.toString() );
+    StringProperty  endProperty           = new SimpleStringProperty( end.toString() );
+    IntegerProperty customerIdProperty    = new SimpleIntegerProperty( customerId );
+    IntegerProperty userIdProperty        = new SimpleIntegerProperty( userId );
+    IntegerProperty contactIdProperty     = new SimpleIntegerProperty( contactId );
+    
+  
+    // Create a new Appointment using the data obtained from the database
+    Appointment currentAppointment = new Appointment( appointmentIdProperty, titleProperty, descriptionProperty,
+        locationProperty, typeProperty, startProperty, endProperty, userIdProperty,
+        customerIdProperty, contactIdProperty );
+  
+    // Add the customer to the customers ArrayList
+    appointments.add( currentAppointment );
+  }
+}
+  catch ( SQLException e ) {
+  e.printStackTrace( );
+}
+  
+  return appointments;
+}
+
 /**
  * Retrieves an <code>ObservableList</code> of <code>Contact</code>s from the database
  *

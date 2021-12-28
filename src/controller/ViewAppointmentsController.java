@@ -1,6 +1,5 @@
 package controller;
 
-import databaseAccess.DBAppointments;
 import databaseAccess.DBQuery;
 import databaseAccess.JDBC;
 import javafx.application.Platform;
@@ -24,8 +23,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Calendar;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
+import static databaseAccess.DBAppointments.getAllAppointments;
+import static databaseAccess.DBAppointments.getAllAppointmentsForComparison;
 
 public class ViewAppointmentsController implements Initializable {
 
@@ -126,7 +132,7 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
 public void displayAppointments( ) throws SQLException, ParseException {
   System.out.println( "Display appointment records." );
   // Obtain all Appointments from the database
-  clientAppointments        = DBAppointments.getAllAppointments( );
+  clientAppointments        = getAllAppointments( );
   Main.currentAppointmentId = clientAppointments.size( );
   
   // Create the columns for the TableView
@@ -298,17 +304,74 @@ public void updateButtonListener( ActionEvent actionEvent ) {
 
 ;
 
-public void allViewRadioButtonListener( ActionEvent actionEvent ) { }
+/**
+ * Displays all scheduled appointments
+ * @param actionEvent User click on 'All' <code>RadioButton</code>
+ */
+public void allViewRadioButtonListener( ActionEvent actionEvent )
+{
+  try {
+    displayAppointments( );
+  }
+  catch ( SQLException | ParseException e ) {
+    e.printStackTrace( );
+  }
+}
 
 ;
 
-public void monthViewRadioButtonListener( ActionEvent actionEvent ) { }
+/**
+ * Displays scheduled appointments in the current month
+ * @param actionEvent User click on 'Month' <code>RadioButton</code>
+ */
+public void monthViewRadioButtonListener( ActionEvent actionEvent )
+{
+  // Check current month
+  Month currentMonth = LocalDate.now().getMonth();
+  int currentMonthInt = currentMonth.getValue();
+  System.out.println( currentMonth + " : " + currentMonthInt);
+  
+  // Filter ObservableList clientAppointments for Appointments occurring this month
+  try {
+    // Create a new list containing all appointments
+    ObservableList<Appointment> allAppointments = getAllAppointmentsForComparison();
+    // Create a new list from the allAppointments list by filtering
+    ObservableList<Appointment> appointmentsThisMonth =
+        allAppointments.stream().filter( a -> a.getStartMonthInt() + 1 == currentMonthInt).collect( Collectors.toCollection(FXCollections::observableArrayList));
+    // Set the filtered items in the TableView
+    viewAppointmentsTableView.setItems( appointmentsThisMonth );
+  }
+  catch ( SQLException e ) {
+    e.printStackTrace( );
+  }
+}
+
+
+/**
+ * Displays scheduled appointments in the current week
+ * @param actionEvent User click on 'Week' <code>RadioButton</code>
+ */
+public void weekViewRadioButtonListener( ActionEvent actionEvent )
+{
+    // Create a Calendar Object and set the current Date on it
+    Calendar      calendar    = Calendar.getInstance();
+    // Get the current week number from the calendar
+    int currentWeekInt = calendar.get(Calendar.WEEK_OF_YEAR);
+    System.out.println( "Current week int: " + currentWeekInt );
+  
+    try {
+      // Create a new list containing all appointments
+      ObservableList<Appointment> allAppointments = getAllAppointmentsForComparison( );
+      // Create a new list by filtering for appointments that match the current week
+      ObservableList<Appointment> appointmentsThisWeek =
+          allAppointments.stream().filter(a -> a.getStartWeek() == currentWeekInt).collect(Collectors.toCollection(FXCollections::observableArrayList));
+      // Set the filtered items in the TableView
+      viewAppointmentsTableView.setItems(appointmentsThisWeek);
+    } catch (SQLException e){
+      e.printStackTrace();
+    }
+}
 
 ;
-
-public void weekViewRadioButtonListener( ActionEvent actionEvent ) { }
-
-;
-
 
 }

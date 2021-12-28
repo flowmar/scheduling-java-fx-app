@@ -1,9 +1,16 @@
 package models;
 
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -178,6 +185,67 @@ public StringProperty typeProperty( ) {
  */
 public String getStart( ) {
   return startProperty( ).get( );
+}
+
+/**
+ * Returns the <code>int</code> equivalent of the month of the <code>Appointment</code> start date, with January being 0
+ * @return The <code>int</code> equivalent of the month
+ */
+public int getStartMonthInt() {
+  // Get the startProperty
+  String startTimestampString =  startProperty().get();
+  // Create a DateFormat to be parsed
+  SimpleDateFormat dateFormat     = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss.SSS" );
+  
+  int month = 0;
+  
+  try {
+    // Create a new Date Object from the Timestamp String using the dateFormat
+    Date             parsedDate     = dateFormat.parse(startTimestampString);
+    // Get an instance of the Calendar object
+    Calendar calendar = Calendar.getInstance();
+    // Set the time of the Calendar object to the Date
+    calendar.setTime(parsedDate);
+    // Get the int equivalent of the month
+    month = calendar.get(Calendar.MONTH);
+  }
+  catch ( ParseException e ) {
+    e.printStackTrace( );
+  }
+  System.out.println("Month: " + month );
+  return month;
+}
+
+/**
+ * Returns the week number that an <code>Appointment</code> is scheduled
+ * @return The week number of a scheduled <code>Appointment</code>
+ */
+public int getStartWeek()
+{
+  // Get the start property
+  String startTimestampString = startProperty().get( );
+  // Create a dateFormat
+  SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss.SSS");
+  
+  int week = 0;
+  
+  try
+  {
+    // Create a new Date Object from the Timestamp String using the dateFormat
+    Date parsedDate = dateFormat.parse(startTimestampString);
+    // Get an instance of the Calendar Object
+    Calendar calendar = Calendar.getInstance();
+    // Set the time of the Calendar object to the Date
+    calendar.setTime(parsedDate);
+    // Get the week number of the Date set on the Calendar object
+    week = calendar.get(Calendar.WEEK_OF_YEAR);
+    
+  }
+  catch (ParseException e) {
+    e.printStackTrace();
+  }
+  System.out.println( "Week: " + week );
+  return week;
 }
 
 /**
