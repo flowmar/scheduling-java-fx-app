@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -36,7 +37,7 @@ public class LoginController implements Initializable {
 private TextField usernameTextField;
 
 @FXML
-private TextField passwordTextField;
+private PasswordField passwordField;
 
 @FXML
 private Button loginButton;
@@ -148,7 +149,7 @@ public void loginButtonListener( ActionEvent actionEvent ) throws SQLException {
   // Get the text from the Username and Password TextFields
   System.out.println( "Login Clicked!" );
   String usernameText = usernameTextField.getText( );
-  String passwordText = passwordTextField.getText( );
+  String passwordText = passwordField.getText( );
   
   boolean checkPassed = checkCredentials( usernameText, passwordText );
   
