@@ -21,8 +21,14 @@
 
 ---
 
-***Directions:
+***Directions: To run the program, you must make sure that a mySQL server is running on your machine. Open the
+project in IntelliJ, and click on the hammer icon to build the project.
+You must have certain VM Options set in order to properly run the JavaFX application:
+ --add-modules javafx.controls,javafx.fxml,javafx.media,javafx.base,javafx.graphics --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED
+Click the play button to run it.
 
-***Additional Report Information:
+***Additional Report Information: The additional report I created was a User report that allows the user to select from
+a list of Users. The appointments that the selected User has entered into the system are displayed along with the total
+number of appointments.
 
 

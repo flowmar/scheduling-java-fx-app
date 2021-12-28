@@ -308,6 +308,7 @@ public void appointmentTypeComboBoxListener( ) {
 
 /**
  * Creates and displays the Appointments Report
+ * The Lambdas are used here as per the Stream API
  */
 public void createAndDisplayAppointmentReport(){
   
@@ -353,6 +354,7 @@ public void contactComboBoxListener( ) {
 
 /**
  * Creates and displays the schedule report
+ * The Lambdas are used here as per the Stream API
  */
 public void createAndDisplayScheduleReport() {
   try {
@@ -386,6 +388,7 @@ public void usersComboBoxListener() {
 /**
  * Creates and displays the User Report. This report shows a list of the Appointments that the selected User has
  * entered into the system. It also gives the total number of Appointments the user has scheduled.
+ * The Lambdas are used here as per the Stream API
  */
 public void createAndDisplayUserReport(){
     try {

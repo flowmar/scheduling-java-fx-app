@@ -419,7 +419,7 @@ public boolean checkIfWithinHours()
 
 /**
  * Checks to see if the times on the form overlap with a customer's previously scheduled appointments
- *
+ * The Lambda is used here as per the Stream API
  * @return Whether there are any overlapping appointments
  */
 public boolean customerAppointmentOverlap( ) {
