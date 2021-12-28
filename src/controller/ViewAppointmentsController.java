@@ -126,7 +126,8 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
 
 /**
  * Obtains the stored <code>Appointment</code> records and displays them within a <code>TableView</code>
- *
+ * Lambdas are used here to shorten the code and forego the use of a return statement and the type declaration of
+ * each column, '(CellDataFeatures<Appointment, {Type}> cell)'
  * @throws SQLException Thrown if the SQL is malformed
  */
 public void displayAppointments( ) throws SQLException, ParseException {
@@ -321,7 +322,9 @@ public void allViewRadioButtonListener( ActionEvent actionEvent )
 ;
 
 /**
- * Displays scheduled appointments in the current month
+ * Displays scheduled appointments in the current month.
+ * A Lambda expression is used here to shorten the code and forego a return statement and declaring the type
+ * 'Appointment'
  * @param actionEvent User click on 'Month' <code>RadioButton</code>
  */
 public void monthViewRadioButtonListener( ActionEvent actionEvent )
@@ -349,6 +352,8 @@ public void monthViewRadioButtonListener( ActionEvent actionEvent )
 
 /**
  * Displays scheduled appointments in the current week
+ * A Lambda expression is used here to shorten the code and forego a return statement and declaring the type
+ *  * 'Appointment'
  * @param actionEvent User click on 'Week' <code>RadioButton</code>
  */
 public void weekViewRadioButtonListener( ActionEvent actionEvent )

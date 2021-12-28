@@ -8,10 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import models.Appointment;
 import scheduler.Main;
@@ -24,6 +21,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.*;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import static controller.ViewAppointmentsController.clientAppointments;
 import static databaseAccess.DBAppointments.getAllAppointments;
@@ -252,80 +250,98 @@ public void retrieveAndPopulateAppointment( ) {
 public void updateAppointmentButtonListener( ActionEvent actionEvent ) throws ParseException {
   System.out.println( "Update appointment!" );
   
-  try {
-    // Get the connection
-    Connection connection = JDBC.getConnection( );
-    // Update SQL Statement
-    String updateStatement = "UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type " +
-                                 "= " +
-                                 "?, " +
-                                 "Start = ?, " +
-                                 "End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+  boolean timeCheck = checkIfWithinHours();
+  
+  if (timeCheck) {
+  
+    try {
+      // Get the connection
+      Connection connection = JDBC.getConnection( );
+      // Update SQL Statement
+      String updateStatement = "UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type " +
+                                   "= " +
+                                   "?, " +
+                                   "Start = ?, " +
+                                   "End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
     
-    DBQuery.setPreparedStatement( connection, updateStatement );
+      DBQuery.setPreparedStatement( connection, updateStatement );
     
-    PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
+      PreparedStatement preparedStatement = DBQuery.getPreparedStatement( );
     
-    // Get the values from the startDatePicker and startTimeTextField and combine them into a Timestamp
-    LocalDate startDate = startDatePicker.getValue( );
-    LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
-    // Create a LocalDateTime from the values
-    LocalDateTime ldt = startDate.atTime( startTime );
-    // Create a ZonedDateTime from the LocalDateTime
-    ZonedDateTime startTimeInUTC = ZonedDateTime.of( ldt, ZoneId.of( "UTC" ) );
-    // Convert the ZonedDateTime into a Timestamp so that it can be used in the database
-    Timestamp startTimestamp = Timestamp.valueOf( startTimeInUTC.toLocalDateTime( ) );
+      // Get the values from the startDatePicker and startTimeTextField and combine them into a Timestamp
+      LocalDate startDate = startDatePicker.getValue( );
+      LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
+      // Create a LocalDateTime from the values
+      LocalDateTime ldt = startDate.atTime( startTime );
+      // Create a ZonedDateTime from the LocalDateTime
+      ZonedDateTime startTimeInUTC = ZonedDateTime.of( ldt, ZoneId.of( "UTC" ) );
+      // Convert the ZonedDateTime into a Timestamp so that it can be used in the database
+      Timestamp startTimestamp = Timestamp.valueOf( startTimeInUTC.toLocalDateTime( ) );
     
-    // Get the values from the endDatePicker and endTimeTextField and combine them into a Timestamp
-    LocalDate endDate = endDatePicker.getValue( );
-    LocalTime endTime = LocalTime.parse( endTimeTextField.getText( ) );
-    // Create a LocalDateTime from the values
-    LocalDateTime endldt = endDate.atTime( endTime );
-    // Create a ZonedDateTime from the LocalDateTime
-    ZonedDateTime endTimeInUTC = ZonedDateTime.of( endldt, ZoneId.of( "UTC" ) );
-    // Convert the ZonedDateTime into a Timestamp so that it can be stored in the database
-    Timestamp endTimestamp = Timestamp.valueOf( endTimeInUTC.toLocalDateTime( ) );
+      // Get the values from the endDatePicker and endTimeTextField and combine them into a Timestamp
+      LocalDate endDate = endDatePicker.getValue( );
+      LocalTime endTime = LocalTime.parse( endTimeTextField.getText( ) );
+      // Create a LocalDateTime from the values
+      LocalDateTime endldt = endDate.atTime( endTime );
+      // Create a ZonedDateTime from the LocalDateTime
+      ZonedDateTime endTimeInUTC = ZonedDateTime.of( endldt, ZoneId.of( "UTC" ) );
+      // Convert the ZonedDateTime into a Timestamp so that it can be stored in the database
+      Timestamp endTimestamp = Timestamp.valueOf( endTimeInUTC.toLocalDateTime( ) );
     
-    // Get the value from the customerIdComboBox and extract only the integer
-    String customerIdString = customerIdComboBox.getValue( );
-    int    customerIdInt    = Integer.parseInt( customerIdString.substring( 0, customerIdString.indexOf( " ", 0 ) ) );
+      // Get the value from the customerIdComboBox and extract only the integer
+      String customerIdString = customerIdComboBox.getValue( );
+      int    customerIdInt    = Integer.parseInt( customerIdString.substring( 0, customerIdString.indexOf( " ", 0 ) ) );
     
-    // Get the value from the userIdComboBox and extract only the integer
-    String userIdString = userIdComboBox.getValue( );
-    int    userIdInt    = Integer.parseInt( userIdString.substring( 0, userIdString.indexOf( " ", 0 ) ) );
+      // Get the value from the userIdComboBox and extract only the integer
+      String userIdString = userIdComboBox.getValue( );
+      int    userIdInt    = Integer.parseInt( userIdString.substring( 0, userIdString.indexOf( " ", 0 ) ) );
     
-    // Get the value from the contactIdComboBox and extract only the integer
-    String contactIdString = contactComboBox.getValue( );
-    int    contactIdInt    = Integer.parseInt( contactIdString.substring( 0, contactIdString.indexOf( " ", 0 ) ) );
+      // Get the value from the contactIdComboBox and extract only the integer
+      String contactIdString = contactComboBox.getValue( );
+      int    contactIdInt    = Integer.parseInt( contactIdString.substring( 0, contactIdString.indexOf( " ", 0 ) ) );
     
-    // Set the values into the SQL statement
-    preparedStatement.setString( 1, appointmentTitleTextField.getText( ) );
-    preparedStatement.setString( 2, appointmentDescriptionTextField.getText( ) );
-    preparedStatement.setString( 3, appointmentLocationTextField.getText( ) );
-    preparedStatement.setString( 4, appointmentTypeComboBox.getValue( ) );
-    preparedStatement.setString( 5, String.valueOf( startTimestamp ) );
-    preparedStatement.setString( 6, String.valueOf( endTimestamp ) );
-    preparedStatement.setString( 7, String.valueOf( customerIdInt ) );
-    preparedStatement.setString( 8, String.valueOf( userIdInt ) );
-    preparedStatement.setString( 9, String.valueOf( contactIdInt ) );
-    preparedStatement.setString( 10, appointmentIdTextField.getText( ) );
-    preparedStatement.execute( );
+      // Set the values into the SQL statement
+      preparedStatement.setString( 1, appointmentTitleTextField.getText( ) );
+      preparedStatement.setString( 2, appointmentDescriptionTextField.getText( ) );
+      preparedStatement.setString( 3, appointmentLocationTextField.getText( ) );
+      preparedStatement.setString( 4, appointmentTypeComboBox.getValue( ) );
+      preparedStatement.setString( 5, String.valueOf( startTimestamp ) );
+      preparedStatement.setString( 6, String.valueOf( endTimestamp ) );
+      preparedStatement.setString( 7, String.valueOf( customerIdInt ) );
+      preparedStatement.setString( 8, String.valueOf( userIdInt ) );
+      preparedStatement.setString( 9, String.valueOf( contactIdInt ) );
+      preparedStatement.setString( 10, appointmentIdTextField.getText( ) );
+      preparedStatement.execute( );
     
+    }
+    catch ( SQLException e ) {
+      e.printStackTrace( );
+    }
+  
+    // Create a new ObservableList containing the updated Appointment
+    ObservableList<Appointment> newAppointmentList = FXCollections.observableArrayList( getAllAppointments( ) );
+  
+    // Update the ObservableList to update the table
+    clientAppointments.setAll( newAppointmentList );
+  
+    // Close out the window
+    Stage stage = ( Stage ) updateAppointmentButton.getScene( ).getWindow( );
+    stage.close( );
   }
-  catch ( SQLException e ) {
-    e.printStackTrace( );
+  else
+  {
+    // Create a new Alert
+    Alert scheduleTimeError = new Alert( Alert.AlertType.ERROR);
+    // Set the title
+    scheduleTimeError.setTitle("Appointment Time Error");
+    // Create the error message
+    String timeError = "The time of the new appointment is not within office hours. Please adjust them so they are " +
+                           "between 8:00am and 10:00pm Eastern Standard Time (8:00 and 22:00)";
+    // Set the alert content
+    scheduleTimeError.setContentText(timeError);
+  
+    scheduleTimeError.show();
   }
-  
-  // Create a new ObservableList containing the updated Appointment
-  ObservableList<Appointment> newAppointmentList = FXCollections.observableArrayList( getAllAppointments( ) );
-  
-  // Update the ObservableList to update the table
-  clientAppointments.setAll( newAppointmentList );
-  
-  // Close out the window
-  Stage stage = ( Stage ) updateAppointmentButton.getScene( ).getWindow( );
-  stage.close( );
-  
 }
 
 /**
@@ -338,6 +354,51 @@ public void cancelButtonListener( ActionEvent actionEvent ) {
   
   Stage stage = ( Stage ) cancelButton.getScene( ).getWindow( );
   stage.close( );
+}
+
+/**
+ * Checks to see if the times in the form are between office hours
+ * @return Whether the times are within office hours
+ */
+public boolean checkIfWithinHours()
+{
+  boolean withinOfficeHours;
+  
+  // Convert the String in the TextField to a LocalTime
+  LocalTime startTime = LocalTime.parse( startTimeTextField.getText( ) );
+  LocalTime endTime = LocalTime.parse(endTimeTextField.getText());
+  
+  // Get the date from the DatePicker
+  LocalDate startDate = startDatePicker.getValue( );
+  LocalDate endDate = endDatePicker.getValue( );
+  
+  // Convert the LocalDate and LocalTime to a ZonedDateTime of the user's local timezone
+  ZonedDateTime localZonedAppointmentStartTime = ZonedDateTime.of(startDate, startTime,
+      ZoneId.of( TimeZone.getDefault( ).getID()));
+  ZonedDateTime easternZonedAppointmentStartTime =
+      localZonedAppointmentStartTime.withZoneSameInstant( ZoneId.of("America/New_York") );
+  
+  System.out.println( "User Timezone Start Time: " + localZonedAppointmentStartTime);
+  System.out.println( "Eastern Timezone Converted Start Time: " + easternZonedAppointmentStartTime );
+  
+  ZonedDateTime localZonedAppointmentEndTime = ZonedDateTime.of(endDate, endTime,
+      ZoneId.of( TimeZone.getDefault( ).getID()));
+  ZonedDateTime easternZonedAppointmentEndTime = localZonedAppointmentEndTime.withZoneSameInstant( ZoneId.of("America/New_York") );
+  
+  System.out.println( "User Timezone End Time: " + localZonedAppointmentEndTime);
+  System.out.println( "Eastern Timezone Converted End Time: " + easternZonedAppointmentEndTime );
+  
+  // Create the office hour times
+  LocalTime officeOpenLocalTime = LocalTime.of(8,0,0);
+  ZonedDateTime officeOpenTime = ZonedDateTime.of(startDate, officeOpenLocalTime, ZoneId.of("America/New_York"));
+  LocalTime officeCloseLocalTime = LocalTime.of(22, 0, 0);
+  ZonedDateTime officeCloseTime = ZonedDateTime.of(startDate, officeCloseLocalTime, ZoneId.of("America/New_York"));
+  
+  // Check if easternZonedAppointmentStartTime is between 8am and 10pm EST (8:00 and 22:00)
+  withinOfficeHours =
+      easternZonedAppointmentStartTime.isAfter( officeOpenTime ) && easternZonedAppointmentEndTime.isBefore( officeCloseTime );
+  
+  return withinOfficeHours;
 }
 
 }
