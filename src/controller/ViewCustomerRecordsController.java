@@ -70,6 +70,8 @@ private Button                         deleteButton;
 @FXML
 private Button                         viewAppointmentsButton;
 @FXML
+private Button                         viewReportsButton;
+@FXML
 private Button                         updateButton;
 @FXML
 private Button                         addButton;
@@ -275,6 +277,10 @@ public void viewAppointmentsButtonListener( ActionEvent actionEvent ) throws IOE
   
 }
 
+/**
+ * Checks the database for upcoming appointments within 15 minutes of the current time and displays an alert
+ * containing information about them if any are found.
+ */
 public void checkForUpcomingAppointments()
 {
   boolean upcomingAppointment;
@@ -337,6 +343,27 @@ public void checkForUpcomingAppointments()
   }
   
   
+}
+
+/**
+ * Handles click of 'View Reports' <code>Button</code>
+ * @throws IOException If the FXML file is not found.
+ */
+public void viewReportsButtonListener() throws IOException
+{
+  
+  // Load the View Reports FXML
+  Parent reportsFXML = FXMLLoader.load( getClass( ).getResource( "../views/reports.fxml" ) );
+  // Create the new stage and scene
+  Scene viewReportsScene = new Scene( reportsFXML, 975, 400 );
+  Stage viewReportsStage = new Stage( );
+  viewReportsStage.setTitle( "View Reports" );
+  viewReportsStage.setScene( viewReportsScene );
+  viewReportsStage.show( );
+  
+  // Close out the ViewCustomerRecords stage
+//  Stage customerStage = ( Stage ) viewReportsButton.getScene( ).getWindow( );
+//  customerStage.close( );
 }
 
 }
