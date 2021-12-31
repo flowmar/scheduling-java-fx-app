@@ -15,7 +15,7 @@
 ---
 
 #### IDE: IntelliJ Community 2021.3
-#### JDK Version: Coretto-11.0.13
+#### JDK Version: JDK- 11.0.11
 #### JavaFX Version: JavaFX-SDK-16
 #### MySQL Connector Driver Version: mysql-connector-java-8.0.27
 

@@ -9,10 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -62,6 +59,10 @@ private Label passwordLabel;
 
 @FXML
 private Label loginTitleLabel;
+
+private String errorMessage ="Invalid credentials! Please check your username and password combination.";
+
+Alert alert = new Alert(Alert.AlertType.ERROR, errorMessage );
 
 /**
  * Methods
@@ -120,6 +121,9 @@ public void translateLabels( ) {
       loginInstructionsLabel.setText( propertiesFr.getProperty( "instructions" ) );
       usernameLabel.setText( propertiesFr.getProperty( "usernameLabel" ) );
       passwordLabel.setText( propertiesFr.getProperty( "passwordLabel" ) );
+      errorMessage = propertiesFr.getProperty( "errorMessage" );
+      alert.setContentText( errorMessage );
+      
       
       
       System.out.println( propertiesFr.getProperty( "title" ) );
@@ -195,8 +199,12 @@ public void loginButtonListener( ActionEvent actionEvent ) throws SQLException {
   else {
     logLoginAttempt( createLoginAttempt( false ) );
 //     Display error message if credentials are incorrect
-    loginErrorLabel.setText( "Invalid Credentials." );
-    loginErrorLabel.setTextFill( Color.RED );
+//    loginErrorLabel.setText( "Invalid Credentials." );
+//    loginErrorLabel.setTextFill( Color.RED );
+  
+    errorMessage ="Invalid credentials! Please check your username and password combination.";
+    
+    alert.show();
   }
   
 }
