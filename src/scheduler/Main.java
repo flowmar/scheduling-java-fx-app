@@ -77,13 +77,15 @@ public static void main( String[] args ) throws SQLException {
 public void start( Stage primaryStage ) throws Exception {
   Locale locale = Locale.getDefault( );
   
+  System.out.println(locale);
+  
   if ( locale.toString( ).equals( "en_US" ) ) {
     Parent root = FXMLLoader.load( getClass( ).getResource( "../views/login.fxml" ) );
     primaryStage.setTitle( "Welcome" );
     primaryStage.setScene( new Scene( root, 640, 378 ) );
     primaryStage.show( );
   }
-  else if ( locale.toString( ).equals( "fr_US" ) ) {
+  else if ( locale.toString( ).contains( "fr" ) ) {
     Parent root = FXMLLoader.load( getClass( ).getResource( "../views/login.fxml" ) );
     primaryStage.setTitle( "Bienvenue" );
     Scene scene = new Scene( root, 640, 380 );

@@ -103,7 +103,7 @@ public void findUserLocation( ) {
 public void translateLabels( ) {
   Locale locale = Locale.getDefault( );
   
-  if ( locale.toString( ).equals( "fr_US" ) ) {
+  if ( locale.toString( ).contains( "fr" ) ) {
     // Try-with-resources for French properties
     try ( InputStream inputProperties = new FileInputStream( "src/resources/LoginFormResource_fr.properties" ) ) {
       // Create a new Properties Object
