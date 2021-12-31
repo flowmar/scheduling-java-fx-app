@@ -17,10 +17,7 @@ import javafx.stage.Stage;
 import models.Appointment;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.*;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
@@ -272,13 +269,32 @@ public void addAppointmentButtonListener( ActionEvent actionEvent ) {
       stage.close( );
     }
     else {
+      
+      // Get the user's timezone
+      TimeZone userTimeZone = TimeZone.getDefault();
+      
+      // Create 8:00EST and 22:00EST
+      LocalTime officeOpenLocalTime = LocalTime.of(8,0,0);
+      ZonedDateTime officeOpen =
+          ZonedDateTime.of(LocalDate.now(),officeOpenLocalTime, ZoneId.of("America/New_York"));
+      LocalTime officeCloseLocalTime = LocalTime.of(22, 0, 0);
+      ZonedDateTime officeClose = ZonedDateTime.of(LocalDate.now(), officeCloseLocalTime, ZoneId.of("America/New_York"));
+      
+      // Convert the times to the user's timezone
+      ZonedDateTime officeOpenInUserTimeZone = officeOpen.withZoneSameInstant( ZoneId.of(userTimeZone.getID()) );
+      ZonedDateTime officeCloseInUserTimeZone = officeClose.withZoneSameInstant( ZoneId.of(userTimeZone.getID()));
+      
+      System.out.println( "Office Open in User TimeZone: " + officeOpenInUserTimeZone );
+      System.out.println("Office Close in User TimeZone: " + officeCloseInUserTimeZone);
+      
       // Create a new Alert
       Alert scheduleTimeError = new Alert( Alert.AlertType.ERROR );
       // Set the title
       scheduleTimeError.setTitle( "Appointment Time Error" );
       // Create the error message
       String timeError = "The time of the new appointment is not within office hours. Please adjust them so they are " +
-                             "between 8:00am and 10:00pm Eastern Standard Time (8:00 and 22:00)";
+                             "between 8:00am and 10:00pm Eastern Standard Time (" + officeOpenInUserTimeZone.getHour() + ":00" +
+                             " and " + officeCloseInUserTimeZone.getHour() + ":00" + " in your Timezone.)";
       // Set the alert content
       scheduleTimeError.setContentText( timeError );
       

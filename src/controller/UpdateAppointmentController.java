@@ -394,6 +394,7 @@ public boolean checkIfWithinHours()
   ZonedDateTime easternZonedAppointmentStartTime =
       localZonedAppointmentStartTime.withZoneSameInstant( ZoneId.of("America/New_York") );
   
+  System.out.println("User Time Zone: " + TimeZone.getDefault().getID());
   System.out.println( "User Timezone Start Time: " + localZonedAppointmentStartTime);
   System.out.println( "Eastern Timezone Converted Start Time: " + easternZonedAppointmentStartTime );
   
@@ -412,7 +413,7 @@ public boolean checkIfWithinHours()
   
   // Check if easternZonedAppointmentStartTime is between 8am and 10pm EST (8:00 and 22:00)
   withinOfficeHours =
-      easternZonedAppointmentStartTime.isAfter( officeOpenTime ) && easternZonedAppointmentEndTime.isBefore( officeCloseTime );
+      (easternZonedAppointmentStartTime.isAfter( officeOpenTime ) || easternZonedAppointmentStartTime.equals(officeOpenTime)) && ((easternZonedAppointmentEndTime.isBefore( officeCloseTime )) || easternZonedAppointmentEndTime.equals( officeCloseTime ));
   
   return withinOfficeHours;
 }
@@ -455,7 +456,8 @@ public boolean customerAppointmentOverlap( ) {
   // the utcStartTime is equal to the starTime of another
   // Appointment
   ObservableList<Appointment> overlappingAppointments =
-      customerAppointments.stream( ).filter( a -> (utcStartTimestamp.before( ( Timestamp.valueOf( ( a.endProperty( ).get( ) ) ) ) ) && utcStartTimestamp.after( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ) || utcStartTimestamp.equals( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ))|| utcEndTimestamp.after( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ) && utcEndTimestamp.before( ( Timestamp.valueOf( ( a.endProperty( ).get( ) ) ) ) ) ).collect( Collectors.toCollection( FXCollections::observableArrayList ) );
+      customerAppointments.stream( ).filter( a -> (utcStartTimestamp.before( ( Timestamp.valueOf( ( a.endProperty( ).get( ) ) ) ) ) && utcStartTimestamp.after( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ) || utcStartTimestamp.equals( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ))|| utcEndTimestamp.after( ( Timestamp.valueOf( ( a.startProperty( ).get( ) ) ) ) ) && utcEndTimestamp.before( ( Timestamp.valueOf( ( a.endProperty( ).get( ) ) ) ) ) ).filter(a -> a.getAppointmentId() != Integer.parseInt(appointmentIdTextField.getText())).collect( Collectors.toCollection( FXCollections::observableArrayList ) );
+  
   
   if ( overlappingAppointments.size( ) > 0 ) {
     appointmentOverlap = true;
