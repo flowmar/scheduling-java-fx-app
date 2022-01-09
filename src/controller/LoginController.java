@@ -20,9 +20,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class LoginController implements Initializable {
 
@@ -87,15 +89,22 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
  * Obtains the user's system locale and displays it on the Login form.
  */
 public void findUserLocation( ) {
-  Locale locale = Locale.getDefault( );
-  System.out.println( locale );
-  localeLabel.setText( "Locale: " + locale.getDefault( ).toString( ) );
+//  Locale locale = Locale.getDefault( );
+//  System.out.println( locale );
+//  localeLabel.setText( "Locale: " + locale.getDefault( ).toString( ) );
 
 //  Locale localeFr = new Locale.Builder( ).setLanguage( "fr" ).setRegion( "US" ).build( );
 //  Locale.setDefault( localeFr );
 //  System.out.println( locale.getDefault( ) );
-  localeLabel.setText( "Locale: " + locale.getDefault( ).toString( ) );
+//  localeLabel.setText( "Locale: " + locale.getDefault( ).toString( ) );
+//  TimeZone.setDefault(TimeZone.getTimeZone( ZoneId.of("America/New_York")));
   
+  // Get the default TimeZone
+  TimeZone userTimeZone = TimeZone.getDefault();
+  // Get the ZoneID from the TimeZone
+  String userZone = userTimeZone.getID();
+  // Set the location on the UI
+  localeLabel.setText("Location: " + userZone);
 }
 
 /**

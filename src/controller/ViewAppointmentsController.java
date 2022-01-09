@@ -134,7 +134,7 @@ public void displayAppointments( ) throws SQLException, ParseException {
   System.out.println( "Display appointment records." );
   // Obtain all Appointments from the database
   clientAppointments        = getAllAppointments( );
-  Main.currentAppointmentId = clientAppointments.size( );
+//  Main.currentAppointmentId = clientAppointments.size( ) + 1;
   
   // Create the columns for the TableView
   TableColumn<Appointment, Number> colAppointmentId = new TableColumn<>( "Appointment_ID" );

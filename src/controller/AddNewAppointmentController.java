@@ -19,6 +19,7 @@ import models.Appointment;
 import java.net.URL;
 import java.sql.*;
 import java.time.*;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
@@ -98,13 +99,18 @@ public void initialize( URL url, ResourceBundle resourceBundle ) {
  * Auto generates a new <code>appointmentId</code>
  */
 public void autogenerateAppointmentId( ) {
-  int appointmentsSize   = clientAppointments.size( );
-  int lastAppointmentInt = appointmentsSize - 1;
-  currentAppointmentId = clientAppointments.get( lastAppointmentInt ).getAppointmentId( );
-  if ( currentAppointmentId == lastAppointmentInt ) {
-    int r = ( int ) ( Math.random( ) * ( 1000 - 1 ) + 1 );
-    currentAppointmentId += r;
-  }
+//  int appointmentsSize   = clientAppointments.size( ) + 5;
+  Random randomNumber = new Random();
+//  if(appointmentsSize <= 1)
+//  {
+    currentAppointmentId = randomNumber.nextInt( 10000);
+//  } else {
+
+//  }
+//  if ( currentAppointmentId == lastAppointmentInt ) {
+//    int r = ( int ) ( Math.random( ) * ( 1000 - 1 ) + 1 );
+//    currentAppointmentId += r;
+//  }
   appointmentIdTextField.setText( String.valueOf( currentAppointmentId ) );
 }
 
