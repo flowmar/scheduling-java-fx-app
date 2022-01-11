@@ -48,7 +48,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainLoginWindow" alignment="CENTER" prefHeight="378.0" prefWidth="640.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<VBox fx:id="mainLoginWindow" alignment="CENTER" prefHeight="378.0" prefWidth="640.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
   <children>
       <GridPane prefHeight="378.0" prefWidth="640.0" style="-fx-background-color: navy;">
         <columnConstraints>
@@ -121,10 +121,13 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="localeLabel" alignment="TOP_LEFT" prefHeight="17.0" prefWidth="89.0" text="Locale: " textFill="WHITE" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <Label fx:id="localeLabel" alignment="TOP_LEFT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="636.0" text="Locale: " textFill="WHITE" wrapText="true" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets right="5.0" />
-               </GridPane.margin></Label>
+               </GridPane.margin>
+               <padding>
+                  <Insets left="15.0" />
+               </padding></Label>
             <Label fx:id="usernameLabel" text="Username:" textFill="WHITE" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="14.0" />

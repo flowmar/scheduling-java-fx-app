@@ -351,8 +351,7 @@ public boolean checkIfWithinHours( ) {
   
   // Check if easternZonedAppointmentStartTime is between 8am and 10pm EST (8:00 and 22:00)
   withinOfficeHours =
-      easternZonedAppointmentStartTime.isAfter( officeOpenTime ) && easternZonedAppointmentEndTime.isBefore( officeCloseTime );
-  
+      easternZonedAppointmentStartTime.isAfter( officeOpenTime ) || easternZonedAppointmentStartTime.equals( officeOpenTime ) && easternZonedAppointmentEndTime.isBefore( officeCloseTime ) || easternZonedAppointmentEndTime.equals( officeCloseTime );
   return withinOfficeHours;
 }
 
