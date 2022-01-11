@@ -215,8 +215,9 @@ public void retrieveAndPopulateAppointment( ) {
   System.out.println( "Timestamp String: " + timestampString );
   // Separate the date from the time
   String startDate = timestampString.substring( 0, timestampString.indexOf( " ", 0 ) );
-  int    indexOfT  = timestampString.indexOf( "t" );
-  String startTime = timestampString.substring( indexOfT + 2 );
+  int    indexOfT  = timestampString.indexOf( " " );
+  int    startTimestampLength = timestampString.length();
+  String startTime = timestampString.substring( indexOfT + 1, startTimestampLength - 5 );
   
   System.out.println( "Start Date: " + startDate );
   System.out.println( "Start Time: " + startTime );
@@ -232,8 +233,9 @@ public void retrieveAndPopulateAppointment( ) {
   
   // Separate the date from the time
   String endDate     = endTimestampString.substring( 0, endTimestampString.indexOf( " ", 0 ) );
-  int    indexOfTEnd = timestampString.indexOf( "t" );
-  String endTime     = endTimestampString.substring( indexOfTEnd + 2 );
+  int    indexOfTEnd = timestampString.indexOf( " " );
+  int    endTimestampLength = endTimestampString.length( );
+  String endTime     = endTimestampString.substring( indexOfTEnd + 1, endTimestampLength - 5  );
   
   System.out.println( "End Date: " + endDate );
   System.out.println( "End Time: " + endTime );

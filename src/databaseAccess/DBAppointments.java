@@ -77,13 +77,13 @@ public static ObservableList<Appointment> getAllAppointments( ) throws ParseExce
           userLocalStartTimeString.indexOf( "T" ) );
       String startTime = userLocalStartTimeString.substring( userLocalStartTimeString.indexOf( "T", 0 ) + 1,
           userLocalStartTimeString.indexOf( "T", 0 ) + 6 );
-      String formattedStartDateTime = startDate + " at " + startTime;
+      String formattedStartDateTime = startDate + " " + startTime;
       
       String userLocalEndTimeString = userLocalEndTime.toString( );
       String endDate                = userLocalEndTimeString.substring( 0, userLocalEndTimeString.indexOf( "T" ) );
       String endTime = userLocalEndTimeString.substring( userLocalEndTimeString.indexOf( "T", 0 ) + 1,
           userLocalEndTimeString.indexOf( "T", 0 ) + 6 );
-      String formattedEndDateTime = endDate + " at " + endTime;
+      String formattedEndDateTime = endDate + " " + endTime;
       
       // Convert all to Properties to display in the TableView
       IntegerProperty appointmentIdProperty = new SimpleIntegerProperty( appointmentId );
