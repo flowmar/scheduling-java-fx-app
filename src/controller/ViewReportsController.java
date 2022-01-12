@@ -400,7 +400,7 @@ public void createAndDisplayUserReport(){
       filteredAppointments.forEach(a -> appointmentInfo.add(appointmentInfoString.concat("Appointment ID: " + a.getAppointmentId() + System.lineSeparator( ) + " Appointment Type: " + a.getType())));
       
       usersListView.setItems( appointmentInfo );
-      totalsLabel.setText("Appointments set by user: " + filteredAppointments.size());
+      totalsLabel.setText("Appointments Set By User: " + filteredAppointments.size());
       
     }
     catch ( SQLException e){

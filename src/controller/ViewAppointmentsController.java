@@ -348,7 +348,38 @@ public void monthViewRadioButtonListener( ActionEvent actionEvent )
     ObservableList<Appointment> appointmentsThisMonth =
         allAppointments.stream().filter( a -> a.getStartMonthInt() + 1 == currentMonthInt).collect( Collectors.toCollection(FXCollections::observableArrayList));
     // Clear the TableView
-    viewAppointmentsTableView.getItems().clear();
+    viewAppointmentsTableView.getColumns().clear();
+  
+    // Create the columns for the TableView
+    TableColumn<Appointment, Number> colAppointmentId = new TableColumn<>( "Appointment_ID" );
+    TableColumn<Appointment, String> colTitle         = new TableColumn<>( "Title" );
+    TableColumn<Appointment, String> colDescription   = new TableColumn<>( "Description" );
+    TableColumn<Appointment, String> colLocation      = new TableColumn<>( "Location" );
+    TableColumn<Appointment, String> colType          = new TableColumn<>( "Type" );
+    TableColumn<Appointment, String> colStart         = new TableColumn<>( "Start" );
+    TableColumn<Appointment, String> colEnd           = new TableColumn<>( "End" );
+    TableColumn<Appointment, Number> colCustomerId    = new TableColumn<>( "Customer_ID" );
+    TableColumn<Appointment, Number> colUserId        = new TableColumn<>( "User_ID" );
+    TableColumn<Appointment, Number> colContactId     = new TableColumn<>( "Contact_ID" );
+  
+    // Set the cell values for each column
+    colAppointmentId.setCellValueFactory( cell -> cell.getValue( ).appointmentIdProperty( ) );
+    colTitle.setCellValueFactory( cell -> cell.getValue( ).titleProperty( ) );
+    colDescription.setCellValueFactory( cell -> cell.getValue( ).descriptionProperty( ) );
+    colLocation.setCellValueFactory( cell -> cell.getValue( ).locationProperty( ) );
+    colType.setCellValueFactory( cell -> cell.getValue( ).typeProperty( ) );
+    colStart.setCellValueFactory( cell -> cell.getValue( ).startProperty( ) );
+    colEnd.setCellValueFactory( cell -> cell.getValue( ).endProperty( ) );
+    colCustomerId.setCellValueFactory( cell -> cell.getValue( ).customerIdProperty( ) );
+    colUserId.setCellValueFactory( cell -> cell.getValue( ).userIdProperty( ) );
+    colContactId.setCellValueFactory( cell -> cell.getValue( ).contactIdProperty( ) );
+  
+    // Set the items in the TableView
+    viewAppointmentsTableView.setItems( clientAppointments );
+    viewAppointmentsTableView.getColumns( ).addAll( colAppointmentId, colTitle, colDescription, colLocation, colType,
+        colStart, colEnd, colCustomerId, colUserId, colContactId );
+    
+    
     // Set the filtered items in the TableView
     viewAppointmentsTableView.setItems( appointmentsThisMonth );
   }
@@ -380,7 +411,37 @@ public void weekViewRadioButtonListener( ActionEvent actionEvent )
       ObservableList<Appointment> appointmentsThisWeek =
           allAppointments.stream().filter(a -> a.getStartWeek() == currentWeekInt).collect(Collectors.toCollection(FXCollections::observableArrayList));
       // Clear the TableView
-      viewAppointmentsTableView.getItems().clear();
+      viewAppointmentsTableView.getColumns().clear();
+  
+      // Create the columns for the TableView
+      TableColumn<Appointment, Number> colAppointmentId = new TableColumn<>( "Appointment_ID" );
+      TableColumn<Appointment, String> colTitle         = new TableColumn<>( "Title" );
+      TableColumn<Appointment, String> colDescription   = new TableColumn<>( "Description" );
+      TableColumn<Appointment, String> colLocation      = new TableColumn<>( "Location" );
+      TableColumn<Appointment, String> colType          = new TableColumn<>( "Type" );
+      TableColumn<Appointment, String> colStart         = new TableColumn<>( "Start" );
+      TableColumn<Appointment, String> colEnd           = new TableColumn<>( "End" );
+      TableColumn<Appointment, Number> colCustomerId    = new TableColumn<>( "Customer_ID" );
+      TableColumn<Appointment, Number> colUserId        = new TableColumn<>( "User_ID" );
+      TableColumn<Appointment, Number> colContactId     = new TableColumn<>( "Contact_ID" );
+  
+      // Set the cell values for each column
+      colAppointmentId.setCellValueFactory( cell -> cell.getValue( ).appointmentIdProperty( ) );
+      colTitle.setCellValueFactory( cell -> cell.getValue( ).titleProperty( ) );
+      colDescription.setCellValueFactory( cell -> cell.getValue( ).descriptionProperty( ) );
+      colLocation.setCellValueFactory( cell -> cell.getValue( ).locationProperty( ) );
+      colType.setCellValueFactory( cell -> cell.getValue( ).typeProperty( ) );
+      colStart.setCellValueFactory( cell -> cell.getValue( ).startProperty( ) );
+      colEnd.setCellValueFactory( cell -> cell.getValue( ).endProperty( ) );
+      colCustomerId.setCellValueFactory( cell -> cell.getValue( ).customerIdProperty( ) );
+      colUserId.setCellValueFactory( cell -> cell.getValue( ).userIdProperty( ) );
+      colContactId.setCellValueFactory( cell -> cell.getValue( ).contactIdProperty( ) );
+  
+      // Set the items in the TableView
+      viewAppointmentsTableView.setItems( clientAppointments );
+      viewAppointmentsTableView.getColumns( ).addAll( colAppointmentId, colTitle, colDescription, colLocation, colType,
+          colStart, colEnd, colCustomerId, colUserId, colContactId );
+      
       // Set the filtered items in the TableView
       viewAppointmentsTableView.setItems(appointmentsThisWeek);
     } catch (SQLException e){
