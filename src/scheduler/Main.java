@@ -55,7 +55,7 @@ public static void main( String[] args ) throws SQLException {
   JDBC.makeConnection( );
   
   // Converts the Date and time.
-  DBCountries.checkDateConversion( );
+//  DBCountries.checkDateConversion( );
   
   // Assign the connection to a variable
   Connection connection = JDBC.getConnection( );

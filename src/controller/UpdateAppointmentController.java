@@ -211,13 +211,12 @@ public void retrieveAndPopulateAppointment( ) {
   
   // Get the Start Timestamp from the database
   String selectedAppointmentStartTimestamp = selectedAppointmentToUpdate.startProperty( ).getValue( );
-  String timestampString                   = selectedAppointmentStartTimestamp.toString( );
-  System.out.println( "Timestamp String: " + timestampString );
+  System.out.println( "Timestamp String: " + selectedAppointmentStartTimestamp );
   // Separate the date from the time
-  String startDate = timestampString.substring( 0, timestampString.indexOf( " ", 0 ) );
-  int    indexOfT  = timestampString.indexOf( " " );
-  int    startTimestampLength = timestampString.length();
-  String startTime = timestampString.substring( indexOfT + 1);
+  String startDate = selectedAppointmentStartTimestamp.substring( 0, selectedAppointmentStartTimestamp.indexOf( " ", 0 ) );
+  int    indexOfT  = selectedAppointmentStartTimestamp.indexOf( " " );
+  int    startTimestampLength = selectedAppointmentStartTimestamp.length();
+  String startTime = selectedAppointmentStartTimestamp.substring( indexOfT + 1);
   
   System.out.println( "Start Date: " + startDate );
   System.out.println( "Start Time: " + startTime );
@@ -228,14 +227,13 @@ public void retrieveAndPopulateAppointment( ) {
   
   // Get the End Timestamp from the database
   String selectedAppointmentEndTimestamp = selectedAppointmentToUpdate.endProperty( ).getValue( );
-  String endTimestampString              = selectedAppointmentEndTimestamp.toString( );
-  System.out.println( "Timestamp String: " + endTimestampString );
+  System.out.println( "Timestamp String: " + selectedAppointmentEndTimestamp );
   
   // Separate the date from the time
-  String endDate     = endTimestampString.substring( 0, endTimestampString.indexOf( " ", 0 ) );
-  int    indexOfTEnd = timestampString.indexOf( " " );
-  int    endTimestampLength = endTimestampString.length( );
-  String endTime     = endTimestampString.substring( indexOfTEnd + 1);
+  String endDate     = selectedAppointmentEndTimestamp.substring( 0, selectedAppointmentEndTimestamp.indexOf( " ", 0 ) );
+  int    indexOfTEnd = selectedAppointmentStartTimestamp.indexOf( " " );
+  int    endTimestampLength = selectedAppointmentEndTimestamp.length( );
+  String endTime     = selectedAppointmentEndTimestamp.substring( indexOfTEnd + 1);
   
   System.out.println( "End Date: " + endDate );
   System.out.println( "End Time: " + endTime );

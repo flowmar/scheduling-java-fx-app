@@ -48,42 +48,44 @@ public static ObservableList<Appointment> getAllAppointments( ) throws ParseExce
       String    description   = appointmentsResultSet.getString( "Description" );
       String    location      = appointmentsResultSet.getString( "Location" );
       String    type          = appointmentsResultSet.getString( "Type" );
-      Timestamp start         = appointmentsResultSet.getTimestamp( "Start" );
-      Timestamp end           = appointmentsResultSet.getTimestamp( "End" );
+      String start         = appointmentsResultSet.getString( "Start" );
+      String end           = appointmentsResultSet.getString( "End" );
       int       customerId    = appointmentsResultSet.getInt( "Customer_ID" );
       int       userId        = appointmentsResultSet.getInt( "User_ID" );
       int       contactId     = appointmentsResultSet.getInt( "Contact_ID" );
       
       // Convert the Timestamps from UTC to the Local timezone
-      TimeZone userTimeZone = TimeZone.getDefault( );
-      System.out.println( "User Time Zone: " + userTimeZone );
+//      TimeZone userTimeZone = TimeZone.getDefault( );
+//      System.out.println( "User Time Zone: " + userTimeZone );
+//      System.out.println( "Start: " + start);
+//      System.out.println( "End: " + end);
       
-      // Create an Instant from the Timestamp in the database (UTC)
-      Instant utcStartTime = start.toInstant( );
-      Instant utcEndTime   = end.toInstant( );
-      
-      // Convert the UTC time to the user's system timezone
-      ZonedDateTime userLocalStartTime = utcStartTime.atZone( ZoneId.of( userTimeZone.getID( ) ) );
-      ZonedDateTime userLocalEndTime   = utcEndTime.atZone( ZoneId.of( userTimeZone.getID( ) ) );
-      
-      System.out.println( "UTC Start: " + utcStartTime );
-      System.out.println( "UTC End: " + utcEndTime );
-      System.out.println( "User localStartTime: " + userLocalStartTime );
-      System.out.println( "User localEndTime: " + userLocalEndTime );
-      
-      // Extract the date and time and format them for the TableView
-      String userLocalStartTimeString = userLocalStartTime.toString( );
-      String startDate                = userLocalStartTimeString.substring( 0,
-          userLocalStartTimeString.indexOf( "T" ) );
-      String startTime = userLocalStartTimeString.substring( userLocalStartTimeString.indexOf( "T", 0 ) + 1,
-          userLocalStartTimeString.indexOf( "T", 0 ) + 6 );
-      String formattedStartDateTime = startDate + " " + startTime;
-      
-      String userLocalEndTimeString = userLocalEndTime.toString( );
-      String endDate                = userLocalEndTimeString.substring( 0, userLocalEndTimeString.indexOf( "T" ) );
-      String endTime = userLocalEndTimeString.substring( userLocalEndTimeString.indexOf( "T", 0 ) + 1,
-          userLocalEndTimeString.indexOf( "T", 0 ) + 6 );
-      String formattedEndDateTime = endDate + " " + endTime;
+//      // Create an Instant from the Timestamp in the database (UTC)
+//      Instant utcStartTime = start.toInstant( );
+//      Instant utcEndTime   = end.toInstant( );
+//
+//      // Convert the UTC time to the user's system timezone
+//      ZonedDateTime userLocalStartTime = utcStartTime.atZone( ZoneId.of( userTimeZone.getID( ) ) );
+//      ZonedDateTime userLocalEndTime   = utcEndTime.atZone( ZoneId.of( userTimeZone.getID( ) ) );
+//
+//      System.out.println( "UTC Start: " + utcStartTime );
+//      System.out.println( "UTC End: " + utcEndTime );
+//      System.out.println( "User localStartTime: " + userLocalStartTime );
+//      System.out.println( "User localEndTime: " + userLocalEndTime );
+//
+//      // Extract the date and time and format them for the TableView
+//      String userLocalStartTimeString = userLocalStartTime.toString( );
+//      String startDate                = userLocalStartTimeString.substring( 0,
+//          userLocalStartTimeString.indexOf( "T" ) );
+//      String startTime = userLocalStartTimeString.substring( userLocalStartTimeString.indexOf( "T", 0 ) + 1,
+//          userLocalStartTimeString.indexOf( "T", 0 ) + 6 );
+//      String formattedStartDateTime = startDate + " " + startTime;
+//
+//      String userLocalEndTimeString = userLocalEndTime.toString( );
+//      String endDate                = userLocalEndTimeString.substring( 0, userLocalEndTimeString.indexOf( "T" ) );
+//      String endTime = userLocalEndTimeString.substring( userLocalEndTimeString.indexOf( "T", 0 ) + 1,
+//          userLocalEndTimeString.indexOf( "T", 0 ) + 6 );
+//      String formattedEndDateTime = endDate + " " + endTime;
       
       // Convert all to Properties to display in the TableView
       IntegerProperty appointmentIdProperty = new SimpleIntegerProperty( appointmentId );
@@ -91,8 +93,8 @@ public static ObservableList<Appointment> getAllAppointments( ) throws ParseExce
       StringProperty  descriptionProperty   = new SimpleStringProperty( description );
       StringProperty  locationProperty      = new SimpleStringProperty( location );
       StringProperty  typeProperty          = new SimpleStringProperty( type );
-      StringProperty  startProperty         = new SimpleStringProperty( formattedStartDateTime );
-      StringProperty  endProperty           = new SimpleStringProperty( formattedEndDateTime );
+      StringProperty  startProperty         = new SimpleStringProperty( start.toString() );
+      StringProperty  endProperty           = new SimpleStringProperty( end.toString() );
       IntegerProperty customerIdProperty    = new SimpleIntegerProperty( customerId );
       IntegerProperty userIdProperty        = new SimpleIntegerProperty( userId );
       IntegerProperty contactIdProperty     = new SimpleIntegerProperty( contactId );

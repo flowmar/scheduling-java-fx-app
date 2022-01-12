@@ -178,14 +178,7 @@ public StringProperty typeProperty( ) {
   return typeProperty;
 }
 
-/**
- * Returns the <code>start</code> time of the <code>Appointment</code>
- *
- * @return The <code>start</code> time of the <code>Appointment</code>
- */
-public String getStart( ) {
-  return startProperty( ).get( );
-}
+
 
 /**
  * Returns the <code>int</code> equivalent of the month of the <code>Appointment</code> start date, with January being 0
@@ -248,6 +241,15 @@ public int getStartWeek()
   return week;
 }
 
+
+/**
+ * Returns the <code>start</code> time of the <code>Appointment</code>
+ *
+ * @return The <code>start</code> time of the <code>Appointment</code>
+ */
+public String getStart( ) {
+  return startProperty( ).get( );
+}
 
 
 /**
